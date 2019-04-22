@@ -7,7 +7,7 @@ ENV LANG C.UTF-8
 
 ENV RAILS_ENV production
 
-ENV APP_HOME /pos_system
+ENV APP_HOME /rails_app
 WORKDIR $APP_HOME
 
 # Install gems

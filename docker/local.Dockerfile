@@ -5,7 +5,7 @@
 FROM ruby@sha256:7fdd3e9ab2f9797c280deeb1a97d8158b28bd33eb98531b928cb006270712d2e
 ENV LANG C.UTF-8
 
-ENV APP_HOME /pos_system
+ENV APP_HOME /rails_app
 WORKDIR $APP_HOME
 
 # Install apk package
