@@ -1,3 +1,10 @@
+# テンプレートの変更
+
+- `env.sh`, `nfs.env.sh` の `project_name` を変更する
+- `config/database.yml` のデータベース名を変更する
+- `config/application.rb` のmodule名を変更する
+
+
 # 開発環境動かすまで
 
 ```
@@ -64,37 +71,7 @@ rails c
 ```
 # 基本
 rake db:seed_fu
-
-# Schedule スケジュール 
-bundle exec thor schedules:create # Schedule を適当にたくさん生成
-bundle exec thor schedules:clean # Schedule のレコードだけ全クリア
-
-# Information 最新情報
-bundle exec thor informations:create # Information を適当にたくさん生成
-bundle exec thor informations:clean # Information のレコードだけ全クリア
-
-# Discography ディスコグラフィ
-bundle exec thor discographies:create # Discography を適当にたくさん生成
-bundle exec thor discographies:clean # Discography のレコードだけ全クリア
-
-# Notification お知らせ
-bundle exec thor notifications:create # Notification を適当にたくさん生成
-bundle exec thor notifications:clean # Notification のレコードだけ全クリア
-
-# Private Notification 個人に結びつくお知らせ
-bundle exec thor private_notifications:create # ファンがしたコメントに対していいねと返信のお知らせを生成（コメントが存在している必要あり）
-bundle exec thor private_notifications:clean # Private Notification のレコードだけ全クリア
 ```
-
-
-# 管理画面
-
-- アドミン画面
-  - http://shishamo.fanapp.localhost:3000/admin
-  - `artist-admin0@example.com` / `password`
-- システムの管理画面
-  - http://fanapp.localhost:3000/management
-  - `system-admin0@example.com` / `password`
 
 
 # テスト / Rubocop
