@@ -11,11 +11,11 @@ default: &default
 
 development: &development
   <<: *default
-  database: pos_system_development
+  database: rails_template_development
 
 test:
   <<: *default
-  database: pos_system_test
+  database: rails_template_test
 
 production:
   <<: *default

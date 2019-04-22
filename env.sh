@@ -1,7 +1,7 @@
 # ==============================================================================
 # env
 # ==============================================================================
-project_name='pos_system'
+project_name='rails_template'
 alias docker-compose="docker-compose -p $project_name"
 alias build="docker-compose build"
 alias up="docker-compose up"
