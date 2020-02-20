@@ -1,8 +1,8 @@
 # ==============================================================================
 # docker - Dockerfile
 # ==============================================================================
-# ruby:2.5.3-alpine
-FROM ruby@sha256:7fdd3e9ab2f9797c280deeb1a97d8158b28bd33eb98531b928cb006270712d2e
+# ruby:2.6.5-alpine
+FROM ruby@sha256:da560e130d6a4b75b099e932a98331ec3b2420b914d51a88edc4fe3c60aee9b1
 ENV LANG C.UTF-8
 
 ENV RAILS_ENV production

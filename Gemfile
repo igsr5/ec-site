@@ -4,146 +4,134 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.1'
+ruby '2.6.5'
 
 
 # ------------------------------------------------------------------------------
 # Core, DB
 # ------------------------------------------------------------------------------
 # Rails
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0'
+# Webpacker
+gem 'webpacker'
 # Use Puma as the app server
-gem 'puma', '~> 3.12'
+gem 'puma', '~> 4.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1', '>= 1.1.4'
+gem 'pg', '~> 1.1'
 # Use Redis for in-memory database
-gem 'redis', '~> 4.0', '>= 4.0.2'
+gem 'redis', '~> 4.1'
 gem 'redis-namespace', '~> 1.6'
 # Support for Cross-Origin Resource Sharing (CORS) for Rack compatible web applications
-gem 'rack-cors', '~> 1.0', '>= 1.0.2'
+gem 'rack-cors', '~> 1.0'
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.3', '>= 1.3.1', require: false
+gem 'bootsnap', '~> 1.4', require: false
 # Use ridgepole for schema management
-gem 'ridgepole', '~> 0.7.4'
+gem 'ridgepole', '~> 0.8'
 # Simple, efficient background processing for Ruby
-gem 'sidekiq', '~> 5.2'
+gem 'sidekiq', '~> 6.0'
 # adds support for queueing jobs in a recurring way to sidekiq
 gem 'sidekiq-scheduler', '~> 3.0'
 # An extension to the sidekiq message processing to track your jobs
 gem 'sidekiq-status', '~> 1.1'
 # Enable per-request global storage
-gem 'request_store', '~> 1.4', '>= 1.4.1'
+gem 'request_store', '~> 1.4'
 # Authorization
-gem 'pundit', '~> 2.0'
+gem 'pundit', '~> 2.1'
 # Secure hash algorithm
-gem 'bcrypt', '~> 3.1', '>= 3.1.12'
-# A library for bulk inserting data using ActiveRecord
-gem 'activerecord-import', '~> 1.0'
-# Dynamic nested forms using jQuery
-gem 'cocoon', '~> 1.2', '>= 1.2.11'
+gem 'bcrypt', '~> 3.1'
 # Preload using if condition
-gem 'activerecord-belongs_to_if', '~> 0.1.1'
+gem 'activerecord-belongs_to_if', '~> 0.1'
+# Logical Delete
+gem 'paranoia', '~> 2.4'
 
 
 # ------------------------------------------------------------------------------
 # Front
 # ------------------------------------------------------------------------------
-gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
-# Vector icons
-gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0', '>= 5.0.7'
-gem 'semantic-ui-sass', '~> 2.4'
-gem 'slim-rails', '~> 3.1', '>= 3.1.3'
+gem 'sass-rails', '~> 6.0'
+# Use slim as template language
+gem 'slim-rails', '~> 3.2'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '~> 4.1', '>= 4.1.18'
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5.2'
+gem 'uglifier', '~> 4.1'
 # JSON API serializer
-gem 'fast_jsonapi', '~> 1.4'
+gem 'fast_jsonapi', '~> 1.5'
 # Pagination
-gem 'pagy', '~> 1.3', '>= 1.3.2'
-gem 'api-pagination', '~> 4.8', '>= 4.8.2'
-# Give css class to active navigation
-gem 'active_link_to', '~> 1.0', '>= 1.0.5'
+gem 'pagy', '~> 3.5'
+gem 'api-pagination', '~> 4.8'
 
 
 # ------------------------------------------------------------------------------
 # Utilities
 # ------------------------------------------------------------------------------
 # Use Pry as rails console
-gem 'pry-rails', '~> 0.3.9'
+gem 'pry-rails', '~> 0.3'
 # Manage multi-environment settings
-gem 'config', '~> 1.7', '>= 1.7.1'
-# Provides a client interface for the Sentry error logger
-gem 'sentry-raven', '~> 2.9'
-# Make managing seeds better
-gem 'seed-fu', '~> 2.3', '>= 2.3.9'
-# Easily generater of fake data
-gem 'ffaker', '~> 2.10'
-# Json Web Token
-gem 'json-jwt', '~> 1.10'
-gem 'jwt', '~> 2.1'
+gem 'config', '~> 2.0'
 # Middleware to handle HTTP caching
-gem 'faraday', '~> 0.15.4'
-gem 'faraday_middleware', '~> 0.13.0'
+gem 'faraday', '~> 0.15'
+gem 'faraday_middleware', '~> 0.13'
 gem 'faraday-http-cache', '~> 2.0'
-gem 'faraday_middleware-aws-sigv4', '~> 0.2.4'
+gem 'faraday_middleware-aws-sigv4', '~> 0.2'
+# Provides a client interface for the Sentry error logger
+gem 'sentry-raven', '~> 2.11'
+# Make managing seeds better
+gem 'seed-fu', '~> 2.3'
+# Easily generater of fake data
+gem 'ffaker', '~> 2.12'
+# Json Web Token
+gem 'jwt', '~> 2.2'
+gem 'json-jwt', '~> 1.10'
 # Use rails-i18n as a set of common locale data
-gem 'rails-i18n', '~> 5.1'
+gem 'rails-i18n', '~> 6.0'
 # Framework for factories
 gem 'factory_bot_rails', '~> 5.0'
 # Enumerated attributes with I18n
-gem 'enumerize', '~> 2.2', '>= 2.2.2'
+gem 'enumerize', '~> 2.3'
+# Convert between prefecture code and prefecture name
+gem 'jp_prefecture', '~> 0.10'
+# AWS client gems
+gem 'aws-sdk-s3', '~> 1.48'
+gem 'aws-sdk-rails', '~> 2.1'
 # Encrypt yaml
-gem 'yaml_vault', '~> 1.1', '>= 1.1.2'
+gem 'yaml_vault', '~> 1.1'
 # Make command line utilities
-gem 'thor', '~> 0.20.0'
-# Generate normal random number
-gem 'random_bell', '~> 0.2.0'
-# A simple HTTP and REST client
-gem 'rest-client', '~> 2.0', '>= 2.0.2'
-# Convert japan prefecture code(JIS X 0402 based) into prefecture name
-gem 'jp_prefecture', '~> 0.9.0'
-# Tame Rails' multi-line logging into a single line per request
-gem 'lograge', '~> 0.10.0'
-# Client for Firebase Cloud Messaging
-gem 'andpush', '~> 0.2.1'
-# Twitter API interface
-gem 'twitter', '~> 6.2'
-gem 'twitter-text', '~> 3.0'
-gem 'omniauth', '~> 1.9'
-gem 'omniauth-twitter', '~> 1.4'
-
+gem 'thor', '~> 0.20'
+# For counter caches
+gem 'counter_culture', '~> 2.2'
+# Authorization for google apis
+gem 'googleauth', '~> 0.10'
+# Google api client
+gem 'google-api-client', '~> 0.36'
 
 # ------------------------------------------------------------------------------
 # Development and Test Only
 # ------------------------------------------------------------------------------
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'pry-byebug', '~> 3.6'
+  gem 'pry-byebug', '~> 3.7'
   # Ruby code style checking
-  gem 'rubocop', '~> 0.63.1'
+  gem 'rubocop', '~> 0.74'
+  # A RuboCop extension focused on enforcing Rails best practices and coding conventions
+  gem 'rubocop-rails', '~> 2.3'
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
   # Speed up RSpec using Spring
-  gem 'spring-commands-rspec', '~> 1.0', '>= 1.0.4'
-  # Simplify test code
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'spring-commands-rspec', '~> 1.0'
   # Simplify request test code
-  gem 'rspec-request_describer', '~> 0.2.2'
+  gem 'rspec-request_describer', '~> 0.3'
+  # Simplify test code
+  gem 'shoulda-matchers', '~> 4.1'
   # Run RSpec parallel
-  gem 'parallel_tests', '~> 2.27', '>= 2.27.1'
+  gem 'parallel_tests', '~> 2.29'
   # Strategies for cleaning databases
   gem 'database_cleaner', '~> 1.7'
   # Code coverage
-  gem 'simplecov', '~> 0.16.1', require: false
-  # API documentation tool
-  gem 'rswag', '~> 2.0', '>= 2.0.5'
-  # Detect N+1 queries
-  gem 'bullet', '~> 5.7', '>= 5.7.6'
-  # Allows stubbing HTTP requests
-  gem 'webmock', '~> 3.5'
+  gem 'simplecov', '~> 0.17', require: false
+  # Detect N + 1 queries
+  gem 'bullet', '~> 6.0'
+  # Filesystem event
+  gem 'listen', '~> 3.1'
 end
 
 
@@ -151,10 +139,13 @@ end
 # Development Only
 # ------------------------------------------------------------------------------
 group :development do
-  # Enable web console
-  gem 'web-console', '>= 3.3.0'
+  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
+  gem 'web-console', '~> 4.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  gem 'spring', '~> 2.1'
+  gem 'spring-watcher-listen', '~> 2.0'
   # Run db:reset without stopping app
-  gem 'pgreset', '~> 0.1.1'
+  gem 'pgreset', '~> 0.1'
+  # IDE tools for code completion, inline documentation, and static analysis
+  gem 'solargraph', '~> 0.37'
 end

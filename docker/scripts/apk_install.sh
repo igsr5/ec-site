@@ -8,6 +8,7 @@ apk --update --no-cache add \
   postgresql-client \
   postgresql-dev \
   nodejs \
+  yarn \
   tzdata \
   less \
   libidn-dev
