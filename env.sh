@@ -17,3 +17,4 @@ alias rubocop="docker-compose run -e RAILS_ENV=development --rm app bundle exec 
 alias rubocop_show_class="docker-compose run -e RAILS_ENV=development --rm app bundle exec rubocop -D"
 alias guard="docker-compose run -e RAILS_ENV=test --rm app bundle exec guard"
 alias rswag="docker-compose run -e RAILS_ENV=test --rm app bundle exec rails rswag:specs:swaggerize"
+alias yarn="docker-compose run -e RAILS_ENV=development --rm app yarn"
