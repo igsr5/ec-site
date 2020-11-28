@@ -1,7 +1,7 @@
 # ==============================================================================
 # nfs.env
 # ==============================================================================
-project_name='rails_template'
+project_name='ichigo-ec'
 alias docker-compose="docker-compose -p $project_name -f nfs.docker-compose.yml"
 alias build="docker-compose build"
 alias up="docker-compose up"
