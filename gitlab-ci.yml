@@ -1,0 +1,91 @@
+# ==============================================================================
+# .gitlab-ci
+# ==============================================================================
+variables:
+  RUBY_VERSION: 'ruby-2.7.1-alpine'
+
+cache: &cache
+  paths:
+    - vendor/bundle
+    - tmp/cache/assets
+
+stages:
+  - prepare
+  - test
+  - deploy
+  - build
+
+bundle-package:
+  image: twogate/alpine-for-rails:ruby2.7.1
+  stage: prepare
+  cache:
+    <<: *cache
+    key: ${RUBY_VERSION}
+  script:
+    - bundle install --jobs=`nproc` --deployment
+    - bundle clean
+  except:
+    - /^deploy-.*$/
+
+rubocop:
+  image: twogate/alpine-for-rails:ruby2.7.1
+  stage: test
+  cache:
+    <<: *cache
+    key: ${RUBY_VERSION}
+    policy: pull
+  variables:
+    RAILS_ENV: test
+    ALLOW_ORIGINS: '[]'
+  before_script:
+    - /bin/sh docker/scripts/bundle_install.sh
+  script:
+    - bundle exec rubocop -DESP
+  except:
+    - /^deploy-.*$/
+
+rspec:
+  image: twogate/alpine-for-rails:ruby2.7.1
+  stage: test
+  cache:
+    <<: *cache
+    key: ${RUBY_VERSION}
+    policy: pull
+  variables:
+    RAILS_ENV: test
+    POSTGRES_PASSWORD: postgres
+    REDIS_URL: redis://redis:6379/0
+    ALLOW_ORIGINS: '[]'
+  before_script:
+    - /bin/sh docker/scripts/bundle_install.sh
+  services:
+    - postgres:11-alpine
+    - redis:6.0-alpine
+  script:
+    - bundle exec rake db:create db:structure:load
+    - bundle exec rspec
+    - touch log/bullet.log
+    - cat log/bullet.log
+  except:
+    - /^deploy-.*$/
+
+assets:precompile:
+  image: twogate/alpine-for-rails:ruby2.7.1
+  stage: test
+  cache:
+    <<: *cache
+    key: ${RUBY_VERSION}
+    policy: pull
+  variables:
+    RAILS_ENV: production
+    SECRET_KEY_BASE: 624f3f2f2f595f395e54a55781788ecd925723d8fb8f0dbd15a3a00fa3e018b624c5d3e4bf55e43b14bd9b7e8d7a108a221ac32d88dade7c3b0debe3aa385d18
+  script:
+    - /bin/sh docker/scripts/bundle_install.sh
+    - bundle exec rails assets:precompile --trace
+  stage: test
+  artifacts:
+    expire_in: 1d
+    paths:
+      - public/packs
+  only:
+    - deploy-production
