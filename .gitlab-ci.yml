@@ -2,7 +2,7 @@
 # .gitlab-ci
 # ==============================================================================
 variables:
-  RUBY_VERSION: 'ruby-2.7.1-alpine'
+  RUBY_VERSION: 'ruby-2.6.5-alpine'
 
 cache: &cache
   paths:
@@ -16,7 +16,7 @@ stages:
   - build
 
 rubocop:
-  image: twogate/alpine-for-rails:ruby2.7.1
+  image: twogate/alpine-for-rails:ruby2.6.5
   stage: test
   cache:
     <<: *cache
@@ -33,7 +33,7 @@ rubocop:
     - /^deploy-.*$/
 
 rspec:
-  image: twogate/alpine-for-rails:ruby2.7.1
+  image: twogate/alpine-for-rails:ruby2.6.5
   stage: test
   cache:
     <<: *cache
@@ -58,7 +58,7 @@ rspec:
     - /^deploy-.*$/
 
 assets:precompile:
-  image: twogate/alpine-for-rails:ruby2.7.1
+  image: twogate/alpine-for-rails:ruby2.6.5
   stage: test
   cache:
     <<: *cache
