@@ -1,11 +1,10 @@
 class OrderDetailsController < ApplicationController
-    def create
+  def create
+  end
 
-    end
-    def update
+  def update
+  end
 
-    end
-    def destroy
-
-    end
+  def destroy
+  end
 end
