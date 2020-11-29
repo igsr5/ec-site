@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_29_083235) do
+ActiveRecord::Schema.define(version: 2020_11_29_084855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_11_29_083235) do
     t.string "name", null: false
     t.integer "card_num", null: false
     t.datetime "expiration_date", null: false
-    t.integer "security_code"
+    t.integer "security_code", null: false
   end
 
   create_table "carts", force: :cascade do |t|
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(version: 2020_11_29_083235) do
     t.text "description"
     t.integer "price", null: false
     t.text "image", default: "https://lh3.googleusercontent.com/proxy/dnjS9wh1fZY69IOgfhi1kkE2gbA9sM9KW-5fpHJ7Lsfhy84sKN0fpmFHk4hqNPFUXCJiv6_g_tFjGKSTE7JfHdaAYa5qZpg1awLEGYQ"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "receipts", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "address_id", null: false
+    t.integer "card_id", null: false
+    t.integer "total_price", null: false
+    t.integer "total_price_tax", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
