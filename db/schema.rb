@@ -10,11 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_28_142500) do
+ActiveRecord::Schema.define(version: 2020_11_29_081830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.integer "postal_code", null: false
+    t.string "prefecture", null: false
+    t.string "city", null: false
+    t.text "address1", null: false
+    t.text "address2"
+    t.string "family_name", null: false
+    t.string "given_name", null: false
+    t.string "email", null: false
+  end
 
   create_table "products", force: :cascade do |t|
     t.string "title", null: false
