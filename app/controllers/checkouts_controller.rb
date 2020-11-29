@@ -1,23 +1,22 @@
 class CheckoutsController < ApplicationController
-    def address_form_show
+  def address_form_show
+  end
 
-    end
-    def address_set_session
+  def address_set_session
+  end
 
-    end
-    def card_form_show
+  def card_form_show
+  end
 
-    end
-    def card_set_session
+  def card_set_session
+  end
 
-    end
-    def confirm
+  def confirm
+  end
 
-    end
-    def issue_receipt
+  def issue_receipt
+  end
 
-    end
-    def completion_show
-
-    end
+  def completion_show
+  end
 end

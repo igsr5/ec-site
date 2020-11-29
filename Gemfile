@@ -111,9 +111,9 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry-byebug', '~> 3.7'
   # Ruby code style checking
-  gem 'rubocop', '~> 0.74'
+  gem 'rubocop', '~> 0.92.0'
   # A RuboCop extension focused on enforcing Rails best practices and coding conventions
-  gem 'rubocop-rails', '~> 2.3'
+  gem 'rubocop-rails', '~> 2.8.0'
   # Testing framework
   gem 'rspec-rails', '~> 3.8'
   # Speed up RSpec using Spring
