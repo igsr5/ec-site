@@ -1,12 +1,12 @@
 doctype html
 html
-  head
+    head
     title
-      | This is a template
+        | 商品ページ
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
-  body
+    body
     .container
-      = yield
+        = yield
