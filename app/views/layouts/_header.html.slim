@@ -1,4 +1,9 @@
 header.nav
     .container
-        = link_to root_path
-            = image_tag  "nike_logo.png",width:"80px"
+        .row
+            = link_to root_path,class: "col-2"
+                = image_tag  "nike_logo.png",width:"80px"
+            ul.col-2.offset-8
+                li
+                    = link_to carts_path
+                        = icon('fas fa-2x', 'shopping-bag')
