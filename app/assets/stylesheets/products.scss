@@ -1,6 +1,8 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+// index.html.slim
 .product-cards{
     width: 85%;
     margin: 0 auto;
@@ -17,4 +19,20 @@
         width: 100%;
         margin: 0 auto;
     }
+}
+
+// show.html.slim
+.product-box{
+    img{
+        width: 100%;
+    }
+    p{
+        color: #333333;
+    }
+}
+.product-price{
+    font-size: 20px;
+}
+.product-count{
+    width: 60px;
 }
