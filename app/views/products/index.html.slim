@@ -1,8 +1,9 @@
-.row
-    - @products.each do |product|
-        .col-4.mb-4
-            = link_to product_path(product)
-                .product-card
-                    img.mb-3 src= -product.image
-                    p = product.title
-                    p = "¥#{product.price}"
+.container
+    .row.product-cards
+        - @products.each do |product|
+            .col-4.mb-4
+                = link_to product_path(product)
+                    .product-card
+                        img.mb-3 src= -product.image
+                        p = product.title
+                        p = "¥#{product.price}"
