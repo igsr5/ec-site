@@ -59,7 +59,11 @@ gem 'fast_jsonapi', '~> 1.5'
 # Pagination
 gem 'pagy', '~> 3.5'
 gem 'api-pagination', '~> 4.8'
-
+# Bootstrap
+gem 'bootstrap'
+gem 'bootstrap-sass'
+#font-awesome
+gem "font-awesome-sass"
 
 # ------------------------------------------------------------------------------
 # Utilities

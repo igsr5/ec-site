@@ -1,3 +1,20 @@
 // Place all the styles related to the products controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.product-cards{
+    width: 85%;
+    margin: 0 auto;
+}
+.product-card {
+    transition: .3s;
+    padding: 8px 8px;
+    &:hover{
+        opacity: 0.8;
+        background-color: #dfdfdf;
+    }
+    img{
+        display: block;
+        width: 100%;
+        margin: 0 auto;
+    }
+}
