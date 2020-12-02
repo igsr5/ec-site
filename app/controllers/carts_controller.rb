@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  def index
+  def show
     @carts=Cart.all
   end
 end

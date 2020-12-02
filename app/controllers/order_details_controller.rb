@@ -2,7 +2,7 @@ class OrderDetailsController < ApplicationController
   def create
     @orderDetail = OrderDetail.new(order_detail_param)
     if @orderDetail.save
-      redirect_to carts_path
+      redirect_to carts_path(@orderDetail.cart_id)
     else
       redirect_to product_path(@orderDetail.product_id)
     end
