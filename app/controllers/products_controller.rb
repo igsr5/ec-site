@@ -7,6 +7,6 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
-    @orderDetail= OrderDetail.new
+    @order_detail= OrderDetail.new
   end
 end
