@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
   def show
-    @carts=Cart.all
+    @cart=Cart.find(session[:cart_id])
   end
 end
