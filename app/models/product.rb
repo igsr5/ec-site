@@ -1,4 +1,6 @@
 class Product < ApplicationRecord
+    has_one :order_detail
+
     def price_add_tax_comma
         price_tax=price_tax(self.price)
         price_tax_comma=price_add_comma(price_tax)
