@@ -1,8 +1,8 @@
 class OrderDetailsController < ApplicationController
   def create
     @orderDetail = OrderDetail.new(order_detail_param)
-    if @task.save
-      redirect_to carts_path, notice: "タスク「#{@orderDetail.title}」をカートに入れました。"
+    if @orderDetail.save
+      redirect_to carts_path
     else
       redirect_to product_path(@orderDetail.product_id)
     end
@@ -15,6 +15,6 @@ class OrderDetailsController < ApplicationController
   end
 
   def order_detail_param
-    params.require(:orderDetail).permit(:product_id, :product_count,:cart_id)
+    params.require(:order_detail).permit(:product_id, :product_count,:cart_id)
   end
 end
