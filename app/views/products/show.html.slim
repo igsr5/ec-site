@@ -4,7 +4,7 @@
             img.mb-3 src= -@product.image
         .col-5.offset-1
             h2 = @product.title
-            p.product-price.mb-4 = "¥ #{@product.price}"
+            p.product-price.mb-4 = "¥ #{@product.price_add_tax_comma()} （税込）"
             = form_with model: @orderDetail, local: true do |f|
                 .row
                     = f.hidden_field :product_id,:value =>@product.id
