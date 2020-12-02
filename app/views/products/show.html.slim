@@ -4,10 +4,11 @@
             img.mb-3 src= -@product.image
         .col-5.offset-1
             h2 = @product.title
-            p.product-price.mb-4 = "¥ #{@product.price}"
+            p.product-price.mb-4 = "¥ #{@product.price_add_tax_comma()} （税込）"
             = form_with model: @orderDetail, local: true do |f|
                 .row
                     = f.hidden_field :product_id,:value =>@product.id
+                    = f.hidden_field :cart_id,:value =>session[:cart_id]
                     = f.submit 'カートに入れる',class: "btn btn-dark ml-2 mb-4 col-4"
                     = f.number_field :product_count,min: 1,value: 1,class: "form-control ml-2 product-count"
             p.mt-3 = @product.description

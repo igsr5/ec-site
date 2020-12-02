@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   layout 'products'
   def index
     @products=Product.all
+    @cart_id=session[:cart_id]
   end
 
   def show
