@@ -15,6 +15,6 @@ class OrderDetailsController < ApplicationController
   end
 
   def order_detail_param
-    params.require(:order_detail).permit(:product_id, :product_count,:cart_id)
+    params.require(:order_detail).permit(:product_id, :product_count, :cart_id)
   end
 end
