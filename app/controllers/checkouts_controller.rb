@@ -1,5 +1,8 @@
 class CheckoutsController < ApplicationController
+  layout "checkouts"
+
   def address_form_show
+    render "address_form"
   end
 
   def address_set_session
