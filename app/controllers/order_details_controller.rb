@@ -2,7 +2,7 @@ class OrderDetailsController < ApplicationController
   def create
     @order_detail = OrderDetail.new(order_detail_param)
     if @order_detail.save
-      redirect_to carts_path(@order_detail.cart_id)
+      redirect_to carts_path(session[:cart_id])
     else
       redirect_to product_path(@order_detail.product_id)
     end
@@ -12,6 +12,9 @@ class OrderDetailsController < ApplicationController
   end
 
   def destroy
+    order_detail=OrderDetail.find(params[:id])
+    order_detail.destroy
+    redirect_to carts_path(session[:cart_id])
   end
 
   def order_detail_param
