@@ -62,8 +62,8 @@ gem 'api-pagination', '~> 4.8'
 # Bootstrap
 gem 'bootstrap'
 gem 'bootstrap-sass'
-#font-awesome
-gem "font-awesome-sass"
+# font-awesome
+gem 'font-awesome-sass'
 
 # ------------------------------------------------------------------------------
 # Utilities

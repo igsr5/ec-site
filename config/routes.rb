@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :products, only: [:index, :show]
   resources :order_details, only: [:create, :update, :destroy]
-  resources :carts, only: [:index]
+  resource :carts, only: [:show]
   get 'checkouts/address', to: 'checkouts#address_form_show'
   post 'checkouts/address', to: 'checkouts#address_set_session'
   get 'checkouts/card', to: 'checkouts#card_form_show'
