@@ -2,7 +2,7 @@ class Cart < ApplicationRecord
   has_many :order_details
 
   def price_sum
-    orde_details = self.order_details
+    order_details = self.order_details
     @price_sum = 0
 
     order_details.each do |order_detail|
