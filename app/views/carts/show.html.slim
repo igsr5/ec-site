@@ -22,11 +22,11 @@
       h2.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
         p 小計
-        p =
+        p = "¥ #{@cart.price_sum()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
         p ¥ 550
       .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
         p 合計
-        p 1000
+        p ="¥ #{@cart.price_add_fee()}"
       = link_to 'ご購入の手続き',checkouts_address_path,class: 'btn btn-info mt-3'
