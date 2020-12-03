@@ -1,3 +1,15 @@
 // Place all the styles related to the carts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.carts{
+    h2{
+        font-size: 24px;
+    }
+    img{
+        width: 130px;
+    }
+}
+
+.order-detail-item{
+    padding: 10px 10px 10px 0;
+}

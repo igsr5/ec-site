@@ -1,6 +1,16 @@
-.container
+.container.mt-5.carts
   .row
-    .col-7
-      h2 カート
-    .col-5
-      h2 ご注文金額
+    .col-6.offset-1
+      h2.mb-3 カート
+      - @order_details.each do |order_detail|
+        .row.pb-4.border-bottom.order-detail-item
+          .col-3.mr-4
+            img src= -order_detail.product.image
+          .col-8
+            .row.justify-content-around
+              p.pt-1.mr-5 = order_detail.product.title
+              p.pt-1.ml-5 = "¥ #{order_detail.product.price_add_tax_comma()}"
+
+
+    .col-4.offset-1
+      h2.mb-3 ご注文金額
