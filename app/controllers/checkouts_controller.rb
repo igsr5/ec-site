@@ -1,5 +1,6 @@
 class CheckoutsController < ApplicationController
   layout "checkouts"
+  before_action :is_cart
 
   def address_form_show
     render "address_form"
@@ -21,5 +22,12 @@ class CheckoutsController < ApplicationController
   end
 
   def completion_show
+  end
+
+  def is_cart
+    order_count=Cart.find(session[:cart_id]).order_details.count
+    if order_count==0
+      redirect_to carts_path
+    end
   end
 end
