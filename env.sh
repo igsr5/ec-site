@@ -14,6 +14,7 @@ alias rake="docker-compose run -e RAILS_ENV=development --rm app bundle exec rak
 alias seed_fu="rake db:seed_fu FIXTURE_PATH=db/seeds/development/"
 alias rspec="docker-compose run -e RAILS_ENV=test --rm spring spring rspec"
 alias rubocop="docker-compose run -e RAILS_ENV=development --rm app bundle exec rubocop -DESP"
+alias rubocopa="docker-compose run -e RAILS_ENV=development --rm app bundle exec rubocop -a"
 alias rubocop_show_class="docker-compose run -e RAILS_ENV=development --rm app bundle exec rubocop -D"
 alias guard="docker-compose run -e RAILS_ENV=test --rm app bundle exec guard"
 alias rswag="docker-compose run -e RAILS_ENV=test --rm app bundle exec rails rswag:specs:swaggerize"
