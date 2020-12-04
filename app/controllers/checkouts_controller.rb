@@ -24,6 +24,8 @@ class CheckoutsController < ApplicationController
   def completion_show
   end
 
+  private
+
   def is_cart
     order_count=Cart.find(session[:cart_id]).order_details.count
     if order_count==0
