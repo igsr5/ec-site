@@ -1,8 +1,6 @@
 // Place all the styles related to the checkouts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
-.address-form{
-}
 
 .form-title{
     background: #222222;
@@ -13,4 +11,7 @@
 
 .current-form{
     border: 1px solid #dee2e6;
+    form{
+        padding: 15px;
+    }
 }

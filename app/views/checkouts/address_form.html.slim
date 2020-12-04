@@ -4,31 +4,35 @@
       article.mb-4.current-form
         h3.form-title 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "address-form",local: true do |f|
-          .form-group
-            = f.label :postal_code
-            = f.text_field :postal_code,class: 'form-control'
-          .form-group
-            = f.label :prefecture
-            = f.text_field :prefecture,class: 'form-control'
-          .form-group
-            = f.label :city
-            = f.text_field :city,class: 'form-control'
-          .form-group
-            = f.label :address1
-            = f.text_field :address1,class: 'form-control'
-          .form-group
-            = f.label :address2
-            = f.text_field :address2,class: 'form-control'
-          .form-group
-            = f.label :family_name
-            = f.text_field :family_name,class: 'form-control'
-          .form-group
-            = f.label :given_name
-            = f.text_field :given_name,class: 'form-control'
+          .row
+            .form-group.col-6
+              = f.label :family_name
+              = f.text_field :family_name,class: 'form-control', required: true
+            .form-group.col-6
+              = f.label :given_name
+              = f.text_field :given_name,class: 'form-control', required: true
+          .row
+            .form-group.col-4
+              = f.label :postal_code
+              = f.text_field :postal_code,class: 'form-control', required: true
+            .form-group.col-4
+              = f.label :prefecture
+              = f.select :prefecture, {'愛知県': 1, '東京都': 2}, { include_blank: '都道府県を選択'}, { class: 'form-control' , required: true }
+            .form-group.col-4
+              = f.label :city
+              = f.text_field :city,class: 'form-control', required: true
+          .row
+            .form-group.col-6
+              = f.label :address1
+              = f.text_field :address1,class: 'form-control', required: true
+            .form-group.col-6
+              = f.label :address2
+              = f.text_field :address2,class: 'form-control'
           .form-group
             = f.label :email
-            = f.email_field :email,class: 'form-control'
-          = f.submit "次に進む"
+            = f.email_field :email,class: 'form-control', required: true
+          .text-right.mt-5
+            = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
         h3.form-title 2．お支払方法/ご請求情報
       article.mb-3
