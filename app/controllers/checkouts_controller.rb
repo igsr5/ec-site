@@ -3,6 +3,8 @@ class CheckoutsController < ApplicationController
   before_action :is_cart
 
   def address_form_show
+    @address=Address.new
+    @cart=Cart.find(session[:cart_id])
     render "address_form"
   end
 

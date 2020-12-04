@@ -1,0 +1,46 @@
+.container.mt-5.checkouts
+  .row
+    .col-7.offset-1
+      article.mb-4.current-form
+        h3.form-title 1．お届け先情報
+        =form_with model: @address,url: checkouts_address_path,class: "address-form",local: true do |f|
+          .form-group
+            = f.label :postal_code
+            = f.text_field :postal_code,class: 'form-control'
+          .form-group
+            = f.label :prefecture
+            = f.text_field :prefecture,class: 'form-control'
+          .form-group
+            = f.label :city
+            = f.text_field :city,class: 'form-control'
+          .form-group
+            = f.label :address1
+            = f.text_field :address1,class: 'form-control'
+          .form-group
+            = f.label :address2
+            = f.text_field :address2,class: 'form-control'
+          .form-group
+            = f.label :family_name
+            = f.text_field :family_name,class: 'form-control'
+          .form-group
+            = f.label :given_name
+            = f.text_field :given_name,class: 'form-control'
+          .form-group
+            = f.label :email
+            = f.email_field :email,class: 'form-control'
+          = f.submit "次に進む"
+      article.mb-3
+        h3.form-title 2．お支払方法/ご請求情報
+      article.mb-3
+        h3.form-title 3．ご注文の確認
+    .col-3
+      h4.mb-4 ご注文金額
+      .row.justify-content-between.mb-2.ml-1
+        p 小計
+        p = "¥ #{@cart.price_sum()}"
+      .row.justify-content-between.mb-3.ml-1
+        p 配送手数料
+        p ¥ 550
+      .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
+        p 合計
+        p ="¥ #{@cart.price_add_fee()}"
