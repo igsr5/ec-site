@@ -9,6 +9,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
+    session[:address]=params[:address]
     redirect_to :checkouts_card
   end
 
