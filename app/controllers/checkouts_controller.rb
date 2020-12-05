@@ -9,7 +9,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
-    session[:address]=params[:address]
+    session[:address]=address_param
     redirect_to :checkouts_card
   end
 
@@ -36,5 +36,9 @@ class CheckoutsController < ApplicationController
     if order_count==0
       redirect_to carts_path
     end
+  end
+
+  def address_param
+    params.require(:address).permit(:postal_code,:prefecture,:city,:address1,:address2,:family_name, :given_name,:email)
   end
 end
