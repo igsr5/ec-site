@@ -5,13 +5,15 @@ class CheckoutsController < ApplicationController
   def address_form_show
     @address=Address.new
     @cart=Cart.find(session[:cart_id])
-    render "address_form"
+    render :address_form
   end
 
   def address_set_session
+    redirect_to :checkouts_card
   end
 
   def card_form_show
+    render :card_form
   end
 
   def card_set_session
