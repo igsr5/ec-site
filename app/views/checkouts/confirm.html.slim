@@ -23,9 +23,12 @@
             p = session[:card]["card_num"]
             p.ml-3 = "期限：#{session[:card]["expiration_date"]}"
           p = "名義：#{session[:card]["name"]}"
-      article.mb-3
+      article.mb-3.current-form
         .form-title
           h3 3．ご注文の確認
+        p.pt-3.pl-3 注文を確定します。
+        .confirm_section
+          = link_to "注文を確定",checkouts_path,method: :post,class: "btn btn-success"
     .col-3
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
