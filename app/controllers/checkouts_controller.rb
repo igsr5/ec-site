@@ -25,6 +25,7 @@ class CheckoutsController < ApplicationController
   end
 
   def confirm
+    @cart = Cart.find(session[:cart_id])
   end
 
   def issue_receipt
