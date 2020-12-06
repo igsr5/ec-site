@@ -20,6 +20,8 @@ class CheckoutsController < ApplicationController
   end
 
   def card_set_session
+    session[:card] = card_param
+    redirect_to :checkouts_confirm
   end
 
   def confirm
@@ -42,5 +44,8 @@ class CheckoutsController < ApplicationController
 
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
+  end
+  def card_param
+    params.require(:card).permit(:name, :card_num, :expiration_date, :security_code)
   end
 end
