@@ -8,30 +8,30 @@
           .row
             .form-group.col-6
               = f.label :family_name
-              = f.text_field :family_name,class: 'form-control', required: true,value: session[:address]["family_name"]
+              = f.text_field :family_name,class: 'form-control', required: true
             .form-group.col-6
               = f.label :given_name
-              = f.text_field :given_name,class: 'form-control', required: true,value: session[:address]["given_name"]
+              = f.text_field :given_name,class: 'form-control', required: true
           .row
             .form-group.col-4
               = f.label :postal_code
-              = f.text_field :postal_code,class: 'form-control', required: true,value: session[:address]["postal_code"]
+              = f.text_field :postal_code,class: 'form-control', required: true
             .form-group.col-4
               = f.label :prefecture
               = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
             .form-group.col-4
               = f.label :city
-              = f.text_field :city,class: 'form-control', required: true,value: session[:address]["city"]
+              = f.text_field :city,class: 'form-control', required: true
           .row
             .form-group.col-6
               = f.label :address1
-              = f.text_field :address1,class: 'form-control', required: true,value: session[:address]["address1"]
+              = f.text_field :address1,class: 'form-control', required: true
             .form-group.col-6
               = f.label :address2
-              = f.text_field :address2,class: 'form-control',value: session[:address]["address2"]
+              = f.text_field :address2,class: 'form-control'
           .form-group
             = f.label :email
-            = f.email_field :email,class: 'form-control', required: true,value: session[:address]["email"]
+            = f.email_field :email,class: 'form-control', required: true
           .text-right.mt-5
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
