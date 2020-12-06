@@ -1,1 +1,47 @@
-= session[:address]
+.container.mt-5.checkouts
+  .row
+    .col-7.offset-1
+      article.mb-4.border
+        .form-title.d-flex
+          = icon('fas', 'check')
+          h3 1．お届け先情報
+          = link_to "編集",checkouts_address_path
+        .form-section
+          h5 配送先住所
+          p = "#{session[:address]["family_name"]} #{session[:address]["given_name"]}"
+          p = session[:address]["postal_code"]
+          p = "#{session[:address]["prefecture"]}#{session[:address]["city"]}#{session[:address]["address1"]}#{session[:address]["address2"]}"
+      article.mb-3.current-form
+        .form-title
+          h3 2．お支払方法/ご請求情報
+        =form_with model: @card,url: checkouts_confirm_path,local: true do |f|
+          .row
+            .form-group.col-6
+                = f.label :name
+                = f.text_field :name,class: 'form-control', required: true
+          .row
+            .form-group.col-6
+              = f.label :card_num
+              = f.text_field :card_num,class: 'form-control', required: true
+            .form-group.col-3
+              = f.label :expiration_date
+              = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
+            .form-group.col-3
+              = f.label :security_code
+              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××"
+          .text-right.mt-3
+            = f.submit "次に進む",class: 'btn btn-dark'
+      article.mb-3
+        .form-title
+          h3 3．ご注文の確認
+    .col-3
+      h4.mb-4 ご注文金額
+      .row.justify-content-between.mb-2.ml-1
+        p 小計
+        p = "¥ #{@cart.price_sum()}"
+      .row.justify-content-between.mb-3.ml-1
+        p 配送手数料
+        p ¥ 550
+      .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
+        p 合計
+        p ="¥ #{@cart.price_add_fee()}"
