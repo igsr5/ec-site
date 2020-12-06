@@ -41,6 +41,7 @@
     p{
         color: rgb(61, 61, 61);
         font-size: 14px;
+        line-height: 2;
     }
 }
 
@@ -49,4 +50,9 @@
     form{
         padding: 15px;
     }
+}
+
+.confirm_section{
+    padding: 0 15px 15px;
+    text-align: right;
 }
