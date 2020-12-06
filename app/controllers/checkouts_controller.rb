@@ -14,6 +14,8 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
+    @address = Address.new
+    @cart = Cart.find(session[:cart_id])
     render :card_form
   end
 

@@ -2,7 +2,8 @@
   .row
     .col-7.offset-1
       article.mb-4.current-form
-        h3.form-title 1．お届け先情報
+        .form-title
+          h3 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "address-form",local: true do |f|
           .row
             .form-group.col-6
@@ -34,9 +35,11 @@
           .text-right.mt-5
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
-        h3.form-title 2．お支払方法/ご請求情報
+        .form-title
+          h3 2．お支払方法/ご請求情報
       article.mb-3
-        h3.form-title 3．ご注文の確認
+        .form-title
+          h3 3．ご注文の確認
     .col-3
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1

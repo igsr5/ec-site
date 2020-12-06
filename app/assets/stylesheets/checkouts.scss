@@ -3,10 +3,41 @@
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
 .form-title{
+    position: relative;
+    width: 100%;
     background: #222222;
-    color: #fff;
     padding: 12px 20px;
-    font-size: 20px;
+    h3{
+        font-size: 20px;
+        color: #fff;
+        margin: 0;
+    }
+    i{
+        font-size: 24px;
+        margin-right: 10px;
+        color: #4CAF50;
+    }
+    a{
+        color:#fff;
+        text-decoration: underline;
+        position: absolute;
+        right: 20px;
+    }
+}
+
+.border{
+    border: 1px solid #dee2e6;
+}
+
+.form-section{
+    padding: 15px;
+    h5{
+        font-size: 16px;
+    }
+    p{
+        color: rgb(61, 61, 61);
+        font-size: 14px;
+    }
 }
 
 .current-form{
