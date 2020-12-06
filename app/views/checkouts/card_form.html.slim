@@ -9,12 +9,13 @@
         .form-section
           h5 配送先住所
           p = "#{session[:address]["family_name"]} #{session[:address]["given_name"]}"
+          p = session[:address]["email"]
           p = session[:address]["postal_code"]
           p = "#{session[:address]["prefecture"]}#{session[:address]["city"]}#{session[:address]["address1"]}#{session[:address]["address2"]}"
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_confirm_path,local: true do |f|
+        =form_with model: @card,url: checkouts_card_path,local: true do |f|
           .row
             .form-group.col-6
                 = f.label :name
