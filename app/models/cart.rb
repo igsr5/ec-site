@@ -2,8 +2,8 @@ class Cart < ApplicationRecord
   has_many :order_details
 
   def is_cart_zero
-    order_count=self.order_details.count
-    order_count==0
+    order_count = self.order_details.count
+    order_count == 0
   end
 
   def price_sum
