@@ -19,7 +19,7 @@ html
         function numberAndHyphenOnly(id){
             var element = document.getElementById(id);
             char_length=element.value.length;
-            if (char_length == 2){
+            if (char_length == 2 && !element.value.match("/")){
                 element.value+="/"
             }
             var regex = /[^0-9\/]/gi;
