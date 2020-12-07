@@ -9,8 +9,13 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
-    session[:address] = address_param
-    redirect_to :checkouts_card
+    @address=Address.new(address_param)
+    if @address.valid?
+      session[:address] = address_param
+      redirect_to :checkouts_card
+    else
+      redirect_to :checkouts_address
+    end
   end
 
   def card_form_show
@@ -20,8 +25,13 @@ class CheckoutsController < ApplicationController
   end
 
   def card_set_session
-    session[:card] = card_param
-    redirect_to :checkouts_confirm
+    @card=Card.new(card_param)
+    if @card.valid?
+      session[:card] = card_param
+      redirect_to :checkouts_confirm
+    else
+      redirect_to :checkouts_card
+    end
   end
 
   def confirm
