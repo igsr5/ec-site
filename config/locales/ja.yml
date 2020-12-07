@@ -7,6 +7,21 @@ ja:
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+    attributes:
+      address:
+        family_name: 姓
+        given_name: 名
+        postal_code: 郵便番号
+        prefecture: 都道府県
+        city: 市町村
+        address1: 住所１
+        address2: 住所２
+        email: メールアドレス
+      card:
+        name: 名義
+        card_num: カード番号
+        expiration_date: 有効期限
+        security_code: CVC
   date:
     abbr_day_names:
     - 日
