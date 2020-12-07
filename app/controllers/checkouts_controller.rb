@@ -3,7 +3,11 @@ class CheckoutsController < ApplicationController
   before_action :is_cart
 
   def address_form_show
-    @address = Address.new
+    if session[:address]
+      @address = Address.new(session[:address])
+    else
+      @address= Address.new
+    end
     @cart = Cart.find(session[:cart_id])
     render :address_form
   end
@@ -20,7 +24,11 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    @card = Card.new
+    if session[:card]
+      @card = Card.new(session[:card])
+    else
+      @card = Card.new
+    end
     @cart = Cart.find(session[:cart_id])
     render :card_form
   end
