@@ -4,7 +4,7 @@
       article.mb-4.current-form
         .form-title
           h3 1．お届け先情報
-        =form_with model: @address,url: checkouts_address_path,class: "address-form",local: true do |f|
+        =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
           .row
             .form-group.col-6
               = f.label :family_name,class: "require-label"
@@ -15,7 +15,7 @@
           .row
             .form-group.col-4
               = f.label :postal_code,class: "require-label"
-              = f.number_field :postal_code,class: 'form-control', required: true
+              = f.number_field :postal_code,class: 'form-control', required: true,placeholder: "例)0000000"
             .form-group.col-4
               = f.label :prefecture,class: "require-label"
               = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}

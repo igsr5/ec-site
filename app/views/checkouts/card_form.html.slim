@@ -10,12 +10,12 @@
           h5 配送先住所
           p = "#{session[:address]["family_name"]} #{session[:address]["given_name"]}"
           p = session[:address]["email"]
-          p = session[:address]["postal_code"]
+          p = session[:address]["postal_code"].insert(3," ")
           p = "#{session[:address]["prefecture"]}#{session[:address]["city"]}#{session[:address]["address1"]}#{session[:address]["address2"]}"
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_card_path,local: true do |f|
+        =form_with model: @card,url: checkouts_card_path,class: "checkout-form",local: true do |f|
           .row
             .form-group.col-6
                 = f.label :name,class: "require-label"
@@ -23,7 +23,7 @@
           .row
             .form-group.col-6
               = f.label :card_num,class: "require-label"
-              = f.number_field :card_num,class: 'form-control', required: true
+              = f.number_field :card_num,class: 'form-control', required: true,placeholder: "例)0000000000000000"
             .form-group.col-3
               = f.label :expiration_date,class: "require-label"
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
