@@ -23,13 +23,13 @@
           .row
             .form-group.col-6
               = f.label :card_num
-              = f.text_field :card_num,class: 'form-control', required: true
+              = f.number_field :card_num,class: 'form-control', required: true
             .form-group.col-3
               = f.label :expiration_date
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
             .form-group.col-3
               = f.label :security_code
-              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××"
+              = f.number_field :security_code,class: 'form-control', required: true,placeholder: "×××"
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3

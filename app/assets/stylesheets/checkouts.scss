@@ -56,3 +56,20 @@
     padding: 0 15px 15px;
     text-align: right;
 }
+
+
+// 数字入力フォーム用
+// スピンボタン非表示
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance:textfield;
+}
+
+// リセットボタン非表示
+input::-ms-clear {
+    visibility:hidden
+}
