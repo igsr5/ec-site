@@ -15,7 +15,7 @@
           .row
             .form-group.col-4
               = f.label :postal_code,class: "require-label"
-              = f.number_field :postal_code,class: 'form-control', required: true,placeholder: "例)0000000"
+              = f.text_field :postal_code,class: 'form-control', required: true,placeholder: "例)0000000",maxlength: 7,oninput: "numberOnly(this.id)"
             .form-group.col-4
               = f.label :prefecture,class: "require-label"
               = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}

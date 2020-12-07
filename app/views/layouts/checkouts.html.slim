@@ -10,3 +10,9 @@ html
     body
     = render partial: "layouts/header"
     = yield
+    javascript:
+        function numberOnly(id) {
+        var element = document.getElementById(id);
+        var regex = /[^0-9]/gi;
+        element.value = element.value.replace(regex, "");
+        }

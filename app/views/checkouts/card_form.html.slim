@@ -23,7 +23,7 @@
           .row
             .form-group.col-6
               = f.label :card_num,class: "require-label"
-              = f.number_field :card_num,class: 'form-control', required: true,placeholder: "例)0000000000000000"
+              = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
             .form-group.col-3
               = f.label :expiration_date,class: "require-label"
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
