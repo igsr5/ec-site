@@ -3,25 +3,45 @@ class CheckoutsController < ApplicationController
   before_action :is_cart
 
   def address_form_show
-    @address = Address.new
+    if session[:address]
+      @address = Address.new(session[:address])
+    else
+      @address= Address.new
+    end
     @cart = Cart.find(session[:cart_id])
     render :address_form
   end
 
   def address_set_session
-    session[:address] = address_param
-    redirect_to :checkouts_card
+    @address=Address.new(address_param)
+    if @address.valid?
+      session[:address] = address_param
+      redirect_to :checkouts_card
+    else
+      @cart = Cart.find(session[:cart_id])
+      render :address_form
+    end
   end
 
   def card_form_show
-    @card = Card.new
+    if session[:card]
+      @card = Card.new(session[:card])
+    else
+      @card = Card.new
+    end
     @cart = Cart.find(session[:cart_id])
     render :card_form
   end
 
   def card_set_session
-    session[:card] = card_param
-    redirect_to :checkouts_confirm
+    @card=Card.new(card_param)
+    if @card.valid?
+      session[:card] = card_param
+      redirect_to :checkouts_confirm
+    else
+      @cart = Cart.find(session[:cart_id])
+      render :card_form
+    end
   end
 
   def confirm
