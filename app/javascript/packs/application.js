@@ -20,6 +20,3 @@
 //= require bootstrap-sprockets
 
 import './styles/main'
-
-console.log('Hello World from Webpacker')
-

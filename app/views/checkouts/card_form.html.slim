@@ -10,26 +10,26 @@
           h5 配送先住所
           p = "#{session[:address]["family_name"]} #{session[:address]["given_name"]}"
           p = session[:address]["email"]
-          p = session[:address]["postal_code"]
+          p = session[:address]["postal_code"].insert(3," ")
           p = "#{session[:address]["prefecture"]}#{session[:address]["city"]}#{session[:address]["address1"]}#{session[:address]["address2"]}"
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_card_path,local: true do |f|
+        =form_with model: @card,url: checkouts_card_path,class: "checkout-form",local: true do |f|
           .row
             .form-group.col-6
-                = f.label :name
+                = f.label :name,class: "require-label"
                 = f.text_field :name,class: 'form-control', required: true
           .row
             .form-group.col-6
-              = f.label :card_num
-              = f.text_field :card_num,class: 'form-control', required: true
+              = f.label :card_num,class: "require-label"
+              = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
             .form-group.col-3
-              = f.label :expiration_date
-              = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
+              = f.label :expiration_date,class: "require-label"
+              = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
             .form-group.col-3
-              = f.label :security_code
-              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××"
+              = f.label :security_code,class: "require-label"
+              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
