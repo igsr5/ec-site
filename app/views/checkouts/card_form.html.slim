@@ -29,7 +29,7 @@
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
             .form-group.col-3
               = f.label :security_code,class: "require-label"
-              = f.number_field :security_code,class: 'form-control', required: true,placeholder: "×××"
+              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
