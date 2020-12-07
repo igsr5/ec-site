@@ -31,7 +31,8 @@ class CheckoutsController < ApplicationController
       session[:card] = card_param
       redirect_to :checkouts_confirm
     else
-      redirect_to :checkouts_card
+      @cart = Cart.find(session[:cart_id])
+      render :card_form
     end
   end
 

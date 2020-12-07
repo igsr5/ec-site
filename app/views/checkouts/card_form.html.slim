@@ -24,12 +24,18 @@
             .form-group.col-6
               = f.label :card_num,class: "require-label"
               = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
+              - if @card.errors.include?(:card_num)
+                p.form-error = @card.errors.full_messages_for(:card_num).first
             .form-group.col-3
               = f.label :expiration_date,class: "require-label"
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
+              - if @card.errors.include?(:expiration_date)
+                p.form-error = @card.errors.full_messages_for(:expiration_date).first
             .form-group.col-3
               = f.label :security_code,class: "require-label"
               = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
+              - if @card.errors.include?(:security_code)
+                p.form-error = @card.errors.full_messages_for(:security_code).first
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
