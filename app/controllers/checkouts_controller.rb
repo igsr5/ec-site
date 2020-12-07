@@ -1,6 +1,6 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
-  before_action :is_cart_empty
+  before_action :is_cart
 
   def address_form_show
     @address = Address.new
@@ -36,9 +36,9 @@ class CheckoutsController < ApplicationController
 
   private
 
-  def is_cart_empty
-    order_count = Cart.find(session[:cart_id]).order_details.count
-    if order_count == 0
+  def is_cart
+    cart = Cart.find(session[:cart_id])
+    if cart.is_cart_empty
       redirect_to carts_path
     end
   end
@@ -46,6 +46,7 @@ class CheckoutsController < ApplicationController
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
+
   def card_param
     params.require(:card).permit(:name, :card_num, :expiration_date, :security_code)
   end

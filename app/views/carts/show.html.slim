@@ -2,7 +2,7 @@
   .row
     .col-6.offset-1
       h2.mb-3 カート
-      - if @cart.is_cart_zero
+      - if @cart.is_cart_empty
         p.cart_zero カートに商品はありません。
       - @order_details.each do |order_detail|
         .row.pb-4.border-bottom.order-detail-item
@@ -27,13 +27,13 @@
         p = "¥ #{@cart.price_sum()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
-        - if @cart.is_cart_zero
+        - if @cart.is_cart_empty
           p ¥ 0
         - else
           p ¥ 550
       .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
         p 合計
-        - if @cart.is_cart_zero
+        - if @cart.is_cart_empty
           p ¥ 0
         - else
           p ="¥ #{@cart.price_add_fee()}"
