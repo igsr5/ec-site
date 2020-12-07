@@ -3,7 +3,7 @@ class Cart < ApplicationRecord
 
   def is_cart_empty
     order_count = self.order_details.count
-    order_count == 0
+    order_count.zero?
   end
 
   def price_sum
