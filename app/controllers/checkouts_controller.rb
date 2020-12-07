@@ -14,7 +14,8 @@ class CheckoutsController < ApplicationController
       session[:address] = address_param
       redirect_to :checkouts_card
     else
-      redirect_to :checkouts_address
+      @cart = Cart.find(session[:cart_id])
+      render :address_form
     end
   end
 
