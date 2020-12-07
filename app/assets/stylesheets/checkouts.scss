@@ -57,6 +57,12 @@
     text-align: right;
 }
 
+.require-label{
+    &::after{
+        content: "(＊)";
+        color: #ff0000;
+    }
+}
 
 // 数字入力フォーム用
 // スピンボタン非表示

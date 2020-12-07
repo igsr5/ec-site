@@ -18,17 +18,17 @@
         =form_with model: @card,url: checkouts_card_path,local: true do |f|
           .row
             .form-group.col-6
-                = f.label :name
+                = f.label :name,class: "require-label"
                 = f.text_field :name,class: 'form-control', required: true
           .row
             .form-group.col-6
-              = f.label :card_num
+              = f.label :card_num,class: "require-label"
               = f.number_field :card_num,class: 'form-control', required: true
             .form-group.col-3
-              = f.label :expiration_date
+              = f.label :expiration_date,class: "require-label"
               = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY"
             .form-group.col-3
-              = f.label :security_code
+              = f.label :security_code,class: "require-label"
               = f.number_field :security_code,class: 'form-control', required: true,placeholder: "×××"
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
