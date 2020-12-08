@@ -1,5 +1,6 @@
 class Cart < ApplicationRecord
   has_many :order_details
+  has_one :receipt
 
   def is_cart_empty
     order_count = self.order_details.count
@@ -14,7 +15,7 @@ class Cart < ApplicationRecord
       price = order_detail.product.price * order_detail.product_count
       @price_sum += price
     end
-    return @price_sum
+    @price_sum
   end
 
   def price_sum_tax

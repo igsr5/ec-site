@@ -1,4 +1,6 @@
 class Address < ApplicationRecord
+  has_one :receipt
+
   validates :family_name, presence: true
   validates :given_name, presence: true
   validates :postal_code, presence: true, length: { within: 7..7, message: 'は7桁です。' }
