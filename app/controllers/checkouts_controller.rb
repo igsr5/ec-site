@@ -1,6 +1,7 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
   before_action :is_cart, except: [:completed]
+  before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
     @address = if session[:address]
@@ -60,6 +61,7 @@ class CheckoutsController < ApplicationController
 
   def completed
     @receipt=Receipt.find(session[:receipt_id])
+    session.delete(:receipt_id)
     render :completion
   end
 
@@ -72,6 +74,12 @@ class CheckoutsController < ApplicationController
     end
   end
 
+  def has_receipt_session
+    unless session[:receipt_id]
+      redirect_to root_path
+    end
+  end
+
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
@@ -79,4 +87,5 @@ class CheckoutsController < ApplicationController
   def card_param
     params.require(:card).permit(:name, :card_num, :expiration_date, :security_code)
   end
+
 end
