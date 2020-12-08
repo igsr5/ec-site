@@ -14,7 +14,7 @@
           span.mr-1.link.text = @address.get_full_name
           .fukidashi
             p.font-weight-bold = @address.get_full_name
-            p = @address.postal_code
+            p#postal_code = @address.postal_code
             p = "#{@address.prefecture} #{@address.city}#{@address.address1}"
             p = @address.address2
             p = @address.email
