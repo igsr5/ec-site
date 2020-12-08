@@ -72,7 +72,6 @@
 // 数字入力フォーム用
 // スピンボタン非表示
 .checkout-form{
-
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -86,4 +85,28 @@
     input::-ms-clear {
         visibility:hidden
     }
+}
+
+.order-history{
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.history-items{
+    border: solid 1px #a1a1a1;
+    padding: 0 15px 10px;
+    img{
+        width: 100px;
+    }
+}
+
+.history-head{
+    border-bottom: solid 1px #a1a1a1;
+    padding: 10px 0;
+    background: #f6f6f6;
+}
+
+.history-body{
+    padding-top: 10px;
 }
