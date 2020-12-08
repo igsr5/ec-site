@@ -105,6 +105,24 @@
     border-bottom: solid 1px #a1a1a1;
     padding: 10px 0;
     background: #f6f6f6;
+    p{
+        font-size: 13px;
+    }
+    i{
+        font-size: 13px;
+    }
+    span{
+        font-size: 13px;
+    }
+}
+
+.link{
+    color: #0066c0;
+    cursor: pointer;
+    &:hover{
+        color: rgb(184, 28, 0);
+        text-decoration: underline;
+    }
 }
 
 .history-body{

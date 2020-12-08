@@ -1,23 +1,24 @@
 .container.mt-5.order-history
   h2 注文履歴
-  - @order_details.each do |order_detail|
-    .history-items.mt-5
-      .history-head.row
-        .order-date.col-3
-          p 注文日
-          p = @receipt.created_at.strftime('%Y年%m月%d日')
-        .price.col-3
-          p 合計
-          p = "¥ #{@cart.price_add_comma()}円"
-        .address.col-3
-          p お届け先
-          article
-            span = @address.get_full_name
-            = icon("fas","angle-down")
-      .history-body
-        .row
-          .col-2
-            img src= -order_detail.product.image
-          .col-8
-            p.pt-1 = order_detail.product.title
-            p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
+  .history-items.mt-5
+    .history-head.row
+      .order-date.col-2.mr-2
+        p 注文日
+        p = @receipt.created_at.strftime('%Y年%m月%d日')
+      .price.col-2.mr-2
+        p 合計
+        p = "¥ #{@cart.price_add_comma()}円"
+      .address.col-2
+        p お届け先
+        article
+          span.mr-1.link = @address.get_full_name
+          = icon("fas","angle-down")
+    .history-body
+    - @order_details.each do |order_detail|
+      .row.mb-2
+        .col-2
+          img src= -order_detail.product.image
+        .col-8
+          = link_to (product_path(order_detail.product_id)) do
+            p.pt-1.link = order_detail.product.title
+          p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
