@@ -49,9 +49,10 @@ class CheckoutsController < ApplicationController
   end
 
   def issue_receipt
-  end
-
-  def completion_show
+    @cart = Cart.find(session[:cart_id])
+    @card = Card.new(card_param)
+    @address = Address.new(address_param)
+    redirect_to :checkouts
   end
 
   private
