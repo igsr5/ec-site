@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   post 'checkouts/card', to: 'checkouts#card_set_session'
   get 'checkouts/confirm', to: 'checkouts#confirm'
   post 'checkouts', to: 'checkouts#issue_receipt'
+  get 'checkouts/completion', to: 'checkouts#completed'
 end

@@ -6,4 +6,8 @@ class Address < ApplicationRecord
   validates :city, presence: true
   validates :address1, presence: true
   validates :email, presence: true
+
+  def get_id
+    self.id
+  end
 end
