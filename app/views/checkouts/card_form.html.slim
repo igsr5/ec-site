@@ -45,7 +45,7 @@
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
         p 小計
-        p = "¥ #{@cart.price_sum()}"
+        p = "¥ #{@cart.price_sum_tax()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
         p ¥ 550
