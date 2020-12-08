@@ -31,6 +31,11 @@ class Cart < ApplicationRecord
   end
 
   def price_add_fee
+    @price_add_fee = self.price_sum + 550
+    @price_add_fee
+  end
+
+  def price_tax_add_fee
     @price_add_fee = self.price_sum_tax + 550
     @price_add_fee
   end

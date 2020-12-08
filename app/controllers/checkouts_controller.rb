@@ -1,7 +1,7 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
   before_action :is_cart, except: [:completed]
-  before_action :has_receipt_session, only: [:completed]
+  # before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
     @address = if session[:address]
@@ -53,7 +53,7 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     address = Address.create(session[:address])
-    receipt=Receipt.create(cart_id: cart.id,address_id: address.get_id,card_id: card.id,total_price: cart.price_sum,total_price_tax: cart.price_sum_tax);
+    receipt=Receipt.create(cart_id: cart.id,address_id: address.get_id,card_id: card.id,total_price: cart.price_add_fee,total_price_tax: cart.price_tax_add_fee);
     reset_session
     session[:receipt_id]=receipt.id
     redirect_to :checkouts_completion
