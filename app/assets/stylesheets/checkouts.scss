@@ -1,6 +1,7 @@
 // Place all the styles related to the checkouts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+@import "fukidasi";
 
 .form-title{
     position: relative;
@@ -72,7 +73,6 @@
 // 数字入力フォーム用
 // スピンボタン非表示
 .checkout-form{
-
     input[type="number"]::-webkit-outer-spin-button,
     input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -86,4 +86,46 @@
     input::-ms-clear {
         visibility:hidden
     }
+}
+
+.order-history{
+    width: 70%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.history-items{
+    border: solid 1px #a1a1a1;
+    padding: 0 15px 10px;
+    img{
+        width: 100px;
+    }
+}
+
+.history-head{
+    border-bottom: solid 1px #a1a1a1;
+    padding: 10px 0;
+    background: #f6f6f6;
+    p{
+        font-size: 13px;
+    }
+    i{
+        font-size: 13px;
+    }
+    span{
+        font-size: 13px;
+    }
+}
+
+.link{
+    color: #0066c0;
+    cursor: pointer;
+    &:hover{
+        color: rgb(184, 28, 0);
+        text-decoration: underline;
+    }
+}
+
+.history-body{
+    padding-top: 10px;
 }

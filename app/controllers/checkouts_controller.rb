@@ -1,6 +1,7 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
   before_action :is_cart, except: [:completed]
+  # before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
     @address = if session[:address]
@@ -52,12 +53,20 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     address = Address.create(session[:address])
-    @receipt=Receipt.create(cart_id: cart.id,address_id: address.get_id,card_id: card.id,total_price: cart.price_sum,total_price_tax: cart.price_sum_tax);
-    reset_session
+    receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+    # reset_session
+    session.delete(:cart_id)
+    session[:receipt_id] = receipt.id
     redirect_to :checkouts_completion
   end
 
   def completed
+    @receipt = Receipt.find(session[:receipt_id])
+    # session.delete(:receipt_id)
+    @cart = @receipt.cart
+    @address = @receipt.address
+    @card = @receipt.card
+    @order_details = @cart.order_details
     render :completion
   end
 
@@ -70,6 +79,12 @@ class CheckoutsController < ApplicationController
     end
   end
 
+  def has_receipt_session
+    unless session[:receipt_id]
+      redirect_to root_path
+    end
+  end
+
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
@@ -77,4 +92,5 @@ class CheckoutsController < ApplicationController
   def card_param
     params.require(:card).permit(:name, :card_num, :expiration_date, :security_code)
   end
+
 end

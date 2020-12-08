@@ -1,0 +1,51 @@
+.text {
+  position: relative;
+  padding-bottom: 10px;
+}
+.fukidashi {
+  padding-top: 15px;
+  display: none;
+  width: 200px;
+  position: absolute;
+  top: 50px;
+  left: -40px;
+  padding: 10px;
+  border-radius: 3px;
+  background: #ffffff;
+  z-index: 10000;
+  border:1px solid #000000;
+}
+.fukidashi:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -20px;
+  left: 60px;
+  border: solid transparent;
+  border-bottom-color: #000000;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+  z-index: 10000;
+}
+
+.fukidashi:before {
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: -18px;
+  left: 61px;
+  border: solid transparent;
+  border-bottom-color: #ffffff;
+  border-width: 9px;
+  pointer-events: none;
+  content: " ";
+  z-index: 10001;
+}
+.text:hover + .fukidashi {
+  display: block;
+}
+
+.fukidashi:hover{
+  display: block;
+}
