@@ -10,6 +10,6 @@ class Address < ApplicationRecord
   validates :email, presence: true
 
   def get_full_name
-    self.family_name+self.given_name
+    self.family_name + self.given_name
   end
 end

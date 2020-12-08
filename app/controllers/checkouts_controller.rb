@@ -53,20 +53,20 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     address = Address.create(session[:address])
-    receipt=Receipt.create(cart_id: cart.id,address_id: address.id,card_id: card.id,total_price: cart.price_add_fee,total_price_tax: cart.price_tax_add_fee);
+    receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
     # reset_session
     session.delete(:cart_id)
-    session[:receipt_id]=receipt.id
+    session[:receipt_id] = receipt.id
     redirect_to :checkouts_completion
   end
 
   def completed
-    @receipt=Receipt.find(session[:receipt_id])
+    @receipt = Receipt.find(session[:receipt_id])
     # session.delete(:receipt_id)
-    @cart=@receipt.cart
-    @address=@receipt.address
-    @card=@receipt.card
-    @order_details=@cart.order_details
+    @cart = @receipt.cart
+    @address = @receipt.address
+    @card = @receipt.card
+    @order_details = @cart.order_details
     render :completion
   end
 
