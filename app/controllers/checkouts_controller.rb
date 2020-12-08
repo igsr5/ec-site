@@ -62,6 +62,10 @@ class CheckoutsController < ApplicationController
   def completed
     @receipt=Receipt.find(session[:receipt_id])
     # session.delete(:receipt_id)
+    cart=@receipt.cart
+    @address=@receipt.address
+    @card=@receipt.card
+    @order_details=cart.order_details
     render :completion
   end
 
