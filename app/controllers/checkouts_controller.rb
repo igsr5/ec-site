@@ -49,9 +49,11 @@ class CheckoutsController < ApplicationController
   end
 
   def issue_receipt
-    @cart = Cart.find(session[:cart_id])
-    @card = Card.new(session[:card])
-    @address = Address.new(session[:address])
+    cart = Cart.find(session[:cart_id]).save
+    card = Card.new(session[:card]).save
+    address = Address.new(session[:address]).save
+    @receipt=Receipt.new(cart_id: cart.id,address_id: address_id,card_id: card.id,total_price: cart.price_sum,total_price_tax: cart.price_sum_tax);
+    @receipt.save
     render :completion
   end
 
