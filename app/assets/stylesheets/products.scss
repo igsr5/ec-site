@@ -36,3 +36,20 @@
 .product-count{
     width: 60px;
 }
+
+.paginate{
+    li{
+        margin-right: 10px;
+        padding: 0 5px;
+        font-size: 22px;
+    }
+    li:not(.next ,.prev){
+        transition: .5s;
+        &:hover{
+            transform: translateY(-7px);
+        }
+    }
+    .current{
+        border-bottom: #df392a 2px solid;
+    }
+}
