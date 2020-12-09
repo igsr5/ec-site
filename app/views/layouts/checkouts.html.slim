@@ -6,26 +6,7 @@ html
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-    = javascript_pack_tag 'application'
     body
     = render partial: "layouts/header"
     = yield
-    javascript:
-        function numberOnly(id) {
-        var element = document.getElementById(id);
-        var regex = /[^0-9]/gi;
-        element.value = element.value.replace(regex, "");
-        }
-        function numberAndHyphenOnly(id){
-            var element = document.getElementById(id);
-            char_length=element.value.length;
-            if (char_length == 2 && !element.value.match("/")){
-                element.value+="/"
-            }
-            var regex = /[^0-9\/]/gi;
-            element.value = element.value.replace(regex, "");
-        }
-
-        var postal_code = document.getElementById("postal_code");
-        console.log(postal_code.textContent)
-        postal_code.textContent="〒"+postal_code.textContent.slice(0,3)+"-"+postal_code.textContent.slice(3,7)
+    = javascript_pack_tag 'application'
