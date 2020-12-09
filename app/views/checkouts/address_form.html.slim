@@ -43,23 +43,4 @@
         .form-title
           h3 3．ご注文の確認
     .col-3
-      h4.mb-4 ご注文金額
-      .row.justify-content-between.mb-2.ml-1
-        p 小計
-        p = "¥ #{@cart.price_sum_tax()}"
-      .row.justify-content-between.mb-3.ml-1
-        p 配送手数料
-        p ¥ 550
-      .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
-        p 合計
-        p ="¥ #{@cart.price_tax_add_fee()}"
-      h4.mt-4.mb-4 ご注文商品
-      - @order_details.each do |order_detail|
-        .row.mb-3
-          .col-2
-            img width="70px" src= -order_detail.product.image
-          .col-8.offset-2
-            = link_to (product_path(order_detail.product_id)) do
-              p.pt-1.link = order_detail.product.title
-            p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
-            p = "数量：#{order_detail.product_count}"
+      = render partial: "layouts/checkout-side"
