@@ -66,8 +66,6 @@ class CheckoutsController < ApplicationController
   end
 
   def completed
-    # @receipt = Receipt.find(session[:receipt_id])
-
     @receipts = Receipt.find(session[:receipt].sort!.reverse!)
     render :completion
   end
