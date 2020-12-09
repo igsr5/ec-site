@@ -30,13 +30,5 @@
         .confirm_section
           = button_to "注文を確定",checkouts_path,method: :post,class: "btn btn-success"
     .col-3
-      h4.mb-4 ご注文金額
-      .row.justify-content-between.mb-2.ml-1
-        p 小計
-        p = "¥ #{@cart.price_sum_tax()}"
-      .row.justify-content-between.mb-3.ml-1
-        p 配送手数料
-        p ¥ 550
-      .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
-        p 合計
-        p ="¥ #{@cart.price_tax_add_fee()}"
+      = render partial: "layouts/checkout-side"
+
