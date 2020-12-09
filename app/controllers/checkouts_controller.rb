@@ -60,16 +60,15 @@ class CheckoutsController < ApplicationController
     address = Address.create(session[:address])
     receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
     session.delete(:cart_id)
-    session[:receipt_id] = receipt.id
+    session[:receipt] = [] unless session[:receipt]
+    session[:receipt] << receipt.id
     redirect_to :checkouts_completion
   end
 
   def completed
-    @receipt = Receipt.find(session[:receipt_id])
-    @cart = @receipt.cart
-    @address = @receipt.address
-    @card = @receipt.card
-    @order_details = @cart.order_details
+    # @receipt = Receipt.find(session[:receipt_id])
+
+    @receipts = Receipt.find(session[:receipt].sort!.reverse!)
     render :completion
   end
 
@@ -95,7 +94,7 @@ class CheckoutsController < ApplicationController
   end
 
   def has_receipt_session
-    unless session[:receipt_id]
+    unless session[:receipt]
       render :completion
     end
   end
