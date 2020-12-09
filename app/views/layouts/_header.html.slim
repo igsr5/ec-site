@@ -3,7 +3,10 @@ header.nav
         .row
             = link_to root_path,class: "col-2"
                 = image_tag  "nike_logo.png",width:"80px"
-            ul.col-2.offset-8
-                li
+            ul.col-2.offset-8.row
+                li.col-2.offset-1
                     = link_to carts_path(session[:cart_id])
                         = icon('fas fa-2x', 'shopping-bag')
+                li.col-2.offset-5
+                    = link_to checkouts_completion_path
+                        = icon('fas fa-2x', 'history')
