@@ -1,6 +1,7 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
   before_action :is_cart, except: [:completed]
+  before_action :has_address_session, only: [:card_form_show,:confirm]
   before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
@@ -73,6 +74,12 @@ class CheckoutsController < ApplicationController
   def is_cart
     cart = Cart.find(session[:cart_id])
     if cart.is_cart_empty
+      redirect_to carts_path
+    end
+  end
+
+  def has_address_session
+    unless session[:address]
       redirect_to carts_path
     end
   end
