@@ -12,6 +12,7 @@ class CheckoutsController < ApplicationController
       Address.new
     end
     @cart = Cart.find(session[:cart_id])
+    @order_details = @cart.order_details
     render :address_form
   end
 
@@ -33,6 +34,7 @@ class CheckoutsController < ApplicationController
       Card.new
     end
     @cart = Cart.find(session[:cart_id])
+    @order_details = @cart.order_details
     render :card_form
   end
 
@@ -49,6 +51,7 @@ class CheckoutsController < ApplicationController
 
   def confirm
     @cart = Cart.find(session[:cart_id])
+    @order_details = @cart.order_details
   end
 
   def issue_receipt
