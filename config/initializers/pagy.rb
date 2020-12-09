@@ -1,0 +1,5 @@
+require 'pagy/extras/navs'
+require 'pagy/extras/semantic'
+require 'pagy/extras/foundation'
+require 'pagy/extras/semantic'
+require 'pagy/extras/materialize'
