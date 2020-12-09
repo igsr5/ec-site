@@ -1,7 +1,7 @@
 class CheckoutsController < ApplicationController
   layout 'checkouts'
   before_action :is_cart, except: [:completed]
-  # before_action :has_receipt_session, only: [:completed]
+  before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
     @address = if session[:address]
