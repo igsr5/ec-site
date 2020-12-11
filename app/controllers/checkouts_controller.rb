@@ -23,6 +23,7 @@ class CheckoutsController < ApplicationController
       redirect_to :checkouts_card
     else
       @cart = Cart.find(session[:cart_id])
+      @order_details = @cart.order_details
       render :address_form
     end
   end
@@ -45,6 +46,7 @@ class CheckoutsController < ApplicationController
       redirect_to :checkouts_confirm
     else
       @cart = Cart.find(session[:cart_id])
+      @order_details = @cart.order_details
       render :card_form
     end
   end
