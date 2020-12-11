@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   include Pagy::Backend
-  layout 'products'
   def index
     @pagy, @products = pagy(Product.all, items: 9)
     @cart_id = session[:cart_id]
