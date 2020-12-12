@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'users/show'
+  get 'users/new'
+  get 'users/edit'
   get 'admins/new'
   get 'admins/create'
   get 'admins/destroy'
