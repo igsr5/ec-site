@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_11_154647) do
+ActiveRecord::Schema.define(version: 2020_12_12_142104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2020_12_11_154647) do
     t.string "family_name", null: false
     t.string "given_name", null: false
     t.string "email", null: false
+    t.integer "user_id"
   end
 
   create_table "cards", force: :cascade do |t|
@@ -31,9 +32,11 @@ ActiveRecord::Schema.define(version: 2020_12_11_154647) do
     t.text "card_num", null: false
     t.text "expiration_date", null: false
     t.integer "security_code", null: false
+    t.integer "user_id"
   end
 
   create_table "carts", force: :cascade do |t|
+    t.integer "user_id"
   end
 
   create_table "order_details", force: :cascade do |t|
@@ -65,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_12_11_154647) do
     t.integer "total_price_tax", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
