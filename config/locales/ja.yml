@@ -22,6 +22,11 @@ ja:
         card_num: カード番号
         expiration_date: 有効期限
         security_code: CVC
+      user:
+        name: 氏名
+        email: メールアドレス
+        password: パスワード
+        password_comfirmation: パスワード（確認）
   date:
     abbr_day_names:
     - 日
