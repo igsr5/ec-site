@@ -1,2 +1,17 @@
-h1 Users#new
-p Find me in app/views/users/new.html.slim
+- content_for :title ,'登録'
+.user-create
+  .d-flex.justify-content-center
+    = image_tag  "nike_logo.png",width:"80px"
+  h1 ナイキメンバーに登録する
+  p ナイキ メンバーのプロフィールを作成して、Nikeの最高の商品、インスピレーション、コミュニティにいち早くアクセスしよう。
+  = form_with model: @user,class: 'user-form',local: true do |f|
+    .form-group
+      = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name)
+    .form-group
+      = f.text_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email)
+    .form-group
+      = f.text_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password)
+    .form-group
+      = f.text_field :password_confirmation,class: 'form-control',placeholder: User.human_attribute_name(:password_comfirmation)
+    p アカウントを作成することで、Nikeのプライバシー ポリシーと利用規約に同意したものとみなされます。
+    = f.submit "登録",class: 'btn btn-dark'
