@@ -1,16 +1,20 @@
 Rails.application.routes.draw do
-  get 'users/show'
-  get 'users/new'
-  get 'users/edit'
+  # root
+  root to: 'products#index'
+
+  # users
+  resource :users
+  # products
+  resources :products, only: [:index, :show]
+  # order_details
+  resources :order_details, only: [:create, :update, :destroy]
+  # carts
+  resource :carts, only: [:show]
+  # admin
   get 'admins/new'
   get 'admins/create'
   get 'admins/destroy'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'products#index'
-
-  resources :products, only: [:index, :show]
-  resources :order_details, only: [:create, :update, :destroy]
-  resource :carts, only: [:show]
+  # checkouts
   get 'checkouts/address', to: 'checkouts#address_form_show'
   post 'checkouts/address', to: 'checkouts#address_set_session'
   get 'checkouts/card', to: 'checkouts#card_form_show'

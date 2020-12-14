@@ -1,6 +1,6 @@
 class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
-  before_action :has_address_session, only: [:card_form_show,:confirm]
+  before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
   before_action :has_receipt_session, only: [:completed]
 
