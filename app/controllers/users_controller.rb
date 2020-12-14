@@ -7,8 +7,13 @@ class UsersController < ApplicationController
     @user=User.new
   end
   def create
-    @user=User.create(user_params)
-    redirect_to :users if @user.valid?
+    @user=User.new(user_params)
+
+    if @user.save
+      redirect_to :users if @user.valid?
+    else
+      render :new
+    end
   end
 
   def edit
