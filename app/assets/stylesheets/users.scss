@@ -5,10 +5,27 @@
   padding: 28px;
   max-width: 380px;
   margin: 0 auto;
+  h1{
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
+    width:85%;
+    margin: 0 auto;
+  }
+  p{
+    font-size: 14px;
+    color: #8d8d8d;
+  }
 }
 
 .user-form{
-  .btn{
+    .btn{
+    height: 45px;
     width: 100%;
   }
 }
+.form-control{
+  color: #8d8d8d;
+  border-color: #a1a1a1;
+}
+
