@@ -2,10 +2,13 @@
 .login
   .d-flex.justify-content-center
     = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
-  h1.mb-5 １つのアカウント で 全てのNIKEサービスにアクセス 
-  = form_with url: login_path,class: 'user-form',local: true do |f|
-    .form-group
-      = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true
+  h1.pb-4 １つのアカウント で 全てのNIKEサービスにアクセス 
+  = form_with scope: :admin,class: 'user-form',local: true do |f|
+    - if @error_msg
+      .mb-3.form-error = @error_msg
+    .form-group.mt-3
+      = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true unless @error_msg
+      = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true,value: @email if @error_msg
 
     .form-group
       = f.password_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password),required: true

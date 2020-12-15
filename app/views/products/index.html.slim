@@ -9,7 +9,4 @@
                         p = product.title
                         p = "¥ #{product.price_add_tax_comma()} （税込）"
     .d-flex.justify-content-center.mb-3.paginate
-        / == pagy_nav(@pagy)
         == pagy_foundation_nav(@pagy)
-        / == pagy_semantic_nav(@pagy)
-        / == pagy_materialize_nav(@pagy)
