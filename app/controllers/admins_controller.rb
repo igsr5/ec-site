@@ -8,6 +8,7 @@ class AdminsController < ApplicationController
       session[:current_user]=user.id
       redirect_to :root
     else
+      @error_msg="入力されたメールアドレスまたはパスワードに誤りがあります。"
       render :new  
     end
   end
