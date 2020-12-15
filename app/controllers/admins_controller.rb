@@ -5,7 +5,7 @@ class AdminsController < ApplicationController
   def create
     @user=User.find_by(email: admin_params[:email])
     if @user&.authenticate(admin_params[:password])
-      session[:current_user]=user.id
+      session[:current_user]=@user.id
       redirect_to :root
     else
       @email=admin_params[:email]
