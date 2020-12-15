@@ -1,2 +1,18 @@
-h1 Admins#new
-p Find me in app/views/admins/new.html.slim
+- content_for :title ,'ログイン'
+.login
+  .d-flex.justify-content-center
+    = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
+  h1.mb-5 １つのアカウント で 全てのNIKEサービスにアクセス 
+  = form_with url: login_path,class: 'user-form',local: true do |f|
+    .form-group
+      = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true
+
+    .form-group
+      = f.password_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password),required: true
+
+    p.mt-4.mb-4 アカウントにログインすることで、Nikeのプライバシー ポリシーと利用規約に同意したものとみなされます。
+    = f.submit "登録",class: 'btn btn-dark'
+
+  .mt-2
+    p.mt-2 まだアカウントをお持ちではないですか？  
+    =link_to "一緒に始めよう",new_users_path,class: "mt-3"
