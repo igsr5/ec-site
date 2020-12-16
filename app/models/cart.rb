@@ -1,5 +1,6 @@
 class Cart < ApplicationRecord
   has_many :order_details
+  belongs_to :user
   has_one :receipt
 
   def is_cart_empty
