@@ -9,9 +9,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cart_id_session
-    unless session[:cart_id]
+    if current_user
+      carts=current_user.carts
+      if carts.count.zero?
+        cart=Cart.create!(user_id: current_user.id)
+        session[:cart_id] = cart.id
+      else
+        session[:cart_id] = carts.last.id
+      end
+    elsif session[:cart_id].nil?
       cart = Cart.new
-      if cart.save
+      if cart.save!
         session[:cart_id] = cart.id
       end
     end

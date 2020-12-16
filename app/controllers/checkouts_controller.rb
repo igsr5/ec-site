@@ -61,6 +61,7 @@ class CheckoutsController < ApplicationController
     address = Address.create(session[:address])
     receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
     session.delete(:cart_id)
+    cart=Cart.create!(user_id: current_user.id) if current_user
     session[:receipt] = [] unless session[:receipt]
     session[:receipt] << receipt.id
     redirect_to :checkouts_completion
