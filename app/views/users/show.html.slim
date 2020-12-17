@@ -1,7 +1,10 @@
 - content_for :title ,"マイページ"
-.container.mt-5
+.container.mt-5.user-mypage
   .row
-    .col-6.offset-1
+    .col-7
+      h2.mb-4 = "#{current_user.name}さん"
+      p.mb-2.ml-2 = "メールアドレス：#{current_user.email}"
+      p.ml-2 パスワード　　：******
     .col-3.offset-2
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
