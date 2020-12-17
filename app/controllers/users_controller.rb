@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def show
-    @users=User.all
+    @cart=Cart.find(session[:cart_id])
+    @order_details=@cart.order_details
   end
 
   def new
