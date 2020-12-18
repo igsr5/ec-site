@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   # admin
   get 'login', to: 'admins#new'
   post 'login', to: 'admins#create'
-  post 'logout' , to: 'admins#destroy'
+  post 'logout', to: 'admins#destroy'
   # checkouts
   get 'checkouts/address', to: 'checkouts#address_form_show'
   post 'checkouts/address', to: 'checkouts#address_set_session'

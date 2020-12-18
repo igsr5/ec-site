@@ -1,4 +1,43 @@
-h1 Users#show
-p Find me in app/views/users/show.html.slim
-- @users.each do |user| 
-  p =user.name
+- content_for :title ,"マイページ"
+.container.mt-5.user-mypage
+  .row
+    .col-7
+      h2.mb-3 = "#{current_user.name}さん"
+      = button_to "ログアウト",logout_path,method: :post,class: "btn btn-dark mb-3"
+      .user-status
+        h3 お客様の登録情報
+        p.mb-2.ml-2 = "名前　　　　　：#{current_user.name}"
+        p.mb-2.ml-2 = "メールアドレス：#{current_user.email}"
+        p.ml-2 パスワード　　：******
+        = link_to "編集",edit_users_path(current_user),class: "edit-user"
+        = link_to "退会",users_path(current_user),class: "delete-user"
+    .col-3.offset-2
+      h4.mb-4 ご注文金額
+      .row.justify-content-between.mb-2.ml-1
+        p 小計
+        p = "¥ #{@cart.price_sum_tax()}"
+      .row.justify-content-between.mb-3.ml-1
+        p 配送手数料
+        - if @order_details.count.zero?
+          p ¥ 0
+        - else
+          p ¥ 550 
+      .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
+        p 合計
+        - if @order_details.count.zero?
+          p ¥ 0
+        - else
+          p ="¥ #{@cart.price_tax_add_fee()}"
+      = link_to 'ご購入の手続き',checkouts_address_path,class: 'btn btn-info mt-3'
+      h4.mt-4.mb-4 ご注文商品
+      - if @order_details.count.zero?
+        p カートに商品はありません。 
+      - @order_details.each do |order_detail|
+        .row.mb-3
+          .col-2
+            img width="70px" src= -order_detail.product.image
+          .col-8.offset-2
+            = link_to (product_path(order_detail.product_id)) do
+              p.pt-1.link = order_detail.product.title
+            p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
+            p = "数量：#{order_detail.product_count}"

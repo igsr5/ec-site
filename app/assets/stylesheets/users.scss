@@ -29,3 +29,38 @@
   border-color: #a1a1a1;
 }
 
+.user-mypage{
+  h2{
+    font-size: 40px;
+  }
+}
+
+.user-status{
+  position: relative; 
+  padding: 10px;
+  border: solid 1px #dee2e6;
+  h3{
+    font-size: 20px;
+  }
+}
+
+.edit-user{
+  color: #333333;
+  position: absolute;
+  bottom: 10px;
+  right: 60px;
+  &:hover{
+    color: #333333;
+    text-decoration: underline;
+  }
+}
+.delete-user{
+  color: #ff0000;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  &:hover{
+    color: #ff0000;
+    text-decoration: underline;
+  }
+}
