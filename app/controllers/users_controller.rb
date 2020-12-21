@@ -25,9 +25,13 @@ class UsersController < ApplicationController
 
   def update
     @user=current_user
-    @user.update_attribute(:name,params[:user][:name])
-    @user.update_attribute(:email,params[:user][:email])
-    redirect_to :users
+    @user.name=params[:user][:name]
+    @user.email=params[:user][:email]
+    if @user.save(context: :hoge) 
+      redirect_to :users
+    else
+      render :edit
+    end
   end
   private
 
