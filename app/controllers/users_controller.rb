@@ -35,9 +35,16 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if params[:delete_confirm]
-      current_usre.destroy()
-      redirect_to :root
+    @user = current_user
+    if params[:password]
+      if @user&.authenticate(params[:password])
+        current_user.destroy()
+        session.clear  
+        redirect_to :root
+      else
+        @error_msg="パスワードが違います。"
+        render :delete_confirm
+      end
     else
       render :delete_confirm
     end

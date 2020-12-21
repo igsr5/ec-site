@@ -1,0 +1,14 @@
+- content_for :title ,'退会'
+.login.mt-5
+  .d-flex.justify-content-center.mt-5
+    = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
+  h1.pb-5 = "#{@user.name}さん"  
+  = form_with url: users_path,method: :delete,class: 'user-form',local: true do |f|
+    - if @error_msg
+      .mb-3.form-error = @error_msg
+    .form-group
+      = f.password_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password),required: true
+
+    p.mt-4.mb-4 一度退会してしまうと元データを復元することはできません。 
+    = f.submit "退会",class: 'btn btn-danger'
+
