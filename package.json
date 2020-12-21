@@ -2,6 +2,7 @@
   "name": "rails_template",
   "private": true,
   "dependencies": {
+    "@rails/ujs": "^6.1.0",
     "@rails/webpacker": "4.2.2",
     "jquery": "^3.5.1"
   },
