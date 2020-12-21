@@ -24,6 +24,10 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user=current_user
+    @user.update_attribute(:name,params[:user][:name])
+    @user.update_attribute(:email,params[:user][:email])
+    redirect_to :users
   end
   private
 
