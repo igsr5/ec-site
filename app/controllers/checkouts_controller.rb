@@ -59,10 +59,10 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     address = Address.create(session[:address])
-    if current_user
-      receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
+    receipt = if current_user
+      Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, user_id: current_user.id)
     else
-      receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+      Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
     end
     session.delete(:cart_id)
     cart = Cart.create!(user_id: current_user.id) if current_user
@@ -72,7 +72,11 @@ class CheckoutsController < ApplicationController
   end
 
   def completed
-    @receipts = Receipt.find(session[:receipt].sort!.reverse!)
+    @receipts = if current_user
+      Receipt.where(user_id: current_user).order(id: 'DESC')
+    else
+      Receipt.find(session[:receipt].sort!.reverse!)
+    end
     render :completion
   end
 
