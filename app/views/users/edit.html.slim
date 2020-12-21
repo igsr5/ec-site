@@ -1,2 +1,17 @@
-h1 Users#edit
-p Find me in app/views/users/edit.html.slim
+- content_for :title ,'ユーザー編集'
+.user-create
+  .d-flex.justify-content-center
+    = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
+  h1.mb-5 ご登録情報の編集 
+  = form_with model: @user,url: users_path,class: 'user-form',local: true do |f|
+    .form-group
+      = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name),required: true,value: @user.name
+      - if @user.errors.include?(:name)
+        span.form-error = @user.errors.full_messages_for(:name).first
+
+    .form-group
+      = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true
+      - if @user.errors.include?(:email)
+        span.form-error = @user.errors.full_messages_for(:email).first
+
+    = f.submit "登録",class: 'btn btn-dark' 

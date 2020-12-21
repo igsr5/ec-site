@@ -8,22 +8,22 @@
     .form-group
       = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name),required: true
       - if @user.errors.include?(:name)
-        p.form-error = @user.errors.full_messages_for(:name).first
+        span.form-error = @user.errors.full_messages_for(:name).first
 
     .form-group
       = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true
       - if @user.errors.include?(:email)
-        p.form-error = @user.errors.full_messages_for(:email).first
+        span.form-error = @user.errors.full_messages_for(:email).first
 
     .form-group
       = f.password_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password),required: true
       - if @user.errors.include?(:password)
-        p.form-error = @user.errors.full_messages_for(:password).first
+        span.form-error = @user.errors.full_messages_for(:password).first
 
     .form-group
       = f.password_field :password_confirmation,class: 'form-control',placeholder: User.human_attribute_name(:password_confirmation),required: true
       - if @user.errors.include?(:password_confirmation)
-        p.form-error = @user.errors.full_messages_for(:password_confirmation).first
+        span.form-error = @user.errors.full_messages_for(:password_confirmation).first
 
     p.mt-2.mb-4 アカウントを作成することで、Nikeのプライバシー ポリシーと利用規約に同意したものとみなされます。
     = f.submit "登録",class: 'btn btn-dark'
