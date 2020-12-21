@@ -10,7 +10,7 @@
         p.mb-2.ml-2 = "メールアドレス：#{current_user.email}"
         p.ml-2 パスワード　　：******
         = link_to "編集",edit_users_path(current_user),class: "edit-user"
-        = link_to "退会",users_path(current_user),class: "delete-user"
+        = link_to "退会",users_path(current_user),method: :post,class: "delete-user"
     .col-3.offset-2
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
