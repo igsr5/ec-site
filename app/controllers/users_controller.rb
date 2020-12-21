@@ -24,7 +24,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    redirect_to :root
   end
   private
 

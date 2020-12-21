@@ -1,9 +1,8 @@
-- content_for :title ,'登録'
+- content_for :title ,'ユーザー編集'
 .user-create
   .d-flex.justify-content-center
     = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
-  h1.mb-3 ナイキメンバーに登録する
-  p.text-center.mb-4 ナイキ メンバーのプロフィールを作成して、Nikeの最高の商品、インスピレーション、コミュニティにいち早くアクセスしよう。
+  h1.mb-5 ご登録情報の編集 
   = form_with model: @user,url: users_path,class: 'user-form',local: true do |f|
     .form-group
       = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name),required: true
@@ -15,15 +14,4 @@
       - if @user.errors.include?(:email)
         span.form-error = @user.errors.full_messages_for(:email).first
 
-    .form-group
-      = f.password_field :password,class: 'form-control',placeholder: User.human_attribute_name(:password),required: true
-      - if @user.errors.include?(:password)
-        span.form-error = @user.errors.full_messages_for(:password).first
-
-    .form-group
-      = f.password_field :password_confirmation,class: 'form-control',placeholder: User.human_attribute_name(:password_confirmation),required: true
-      - if @user.errors.include?(:password_confirmation)
-        span.form-error = @user.errors.full_messages_for(:password_confirmation).first
-
-    p.mt-2.mb-4 アカウントを作成することで、Nikeのプライバシー ポリシーと利用規約に同意したものとみなされます。
     = f.submit "登録",class: 'btn btn-dark' 
