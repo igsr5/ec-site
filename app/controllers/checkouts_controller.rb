@@ -72,7 +72,11 @@ class CheckoutsController < ApplicationController
   end
 
   def completed
-    @receipts = Receipt.find(session[:receipt].sort!.reverse!)
+    if current_user
+      @receipts = Receipt.where(user_id: current_user.id).order(id: 'DESC')
+    else
+      @receipts = Receipt.find(session[:receipt].sort!.reverse!)
+    end
     render :completion
   end
 
