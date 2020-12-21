@@ -38,7 +38,7 @@ class UsersController < ApplicationController
     @user = current_user
     if params[:password]
       if @user&.authenticate(params[:password])
-        current_user.destroy
+        current_user.destroy!
         session.clear
         redirect_to :root
       else

@@ -10,13 +10,13 @@ class OrderDetailsController < ApplicationController
 
   def update
     order_detail = OrderDetail.find(params[:id])
-    order_detail.update(order_detail_param)
+    order_detail.update!(order_detail_param)
     redirect_to carts_path(session[:cart_id])
   end
 
   def destroy
     order_detail = OrderDetail.find(params[:id])
-    order_detail.destroy
+    order_detail.destroy!
     redirect_to carts_path(session[:cart_id])
   end
 
