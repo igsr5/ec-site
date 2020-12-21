@@ -15,7 +15,7 @@ class AdminsController < ApplicationController
   end
 
   def destroy
-    session.clear 
+    session.clear
     redirect_to :root
   end
 

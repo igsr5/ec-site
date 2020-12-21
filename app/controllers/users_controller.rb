@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :has_user_session,except: [:new,:create]
+  before_action :has_user_session, except: [:new, :create]
   def show
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
@@ -20,14 +20,14 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user=current_user
+    @user = current_user
   end
 
   def update
-    @user=current_user
-    @user.name=params[:user][:name]
-    @user.email=params[:user][:email]
-    if @user.save(context: :hoge) 
+    @user = current_user
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    if @user.save(context: :hoge)
       redirect_to :users
     else
       render :edit
@@ -38,17 +38,18 @@ class UsersController < ApplicationController
     @user = current_user
     if params[:password]
       if @user&.authenticate(params[:password])
-        current_user.destroy()
-        session.clear  
+        current_user.destroy
+        session.clear
         redirect_to :root
       else
-        @error_msg="パスワードが違います。"
+        @error_msg = 'パスワードが違います。'
         render :delete_confirm
       end
     else
       render :delete_confirm
     end
   end
+
   private
 
   def user_params
