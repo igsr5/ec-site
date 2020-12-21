@@ -23,6 +23,9 @@ class UsersController < ApplicationController
     @user=current_user
   end
 
+  def update
+    redirect_to :root
+  end
   private
 
   def user_params
