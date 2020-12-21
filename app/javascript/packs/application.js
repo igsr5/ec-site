@@ -18,7 +18,9 @@
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
-
+//= require rails/ujs
+//= require jquery
+//= require jquery_ujs
+import Rails from '@rails/ujs';
+Rails.start();
 import './styles/main'
-
-
