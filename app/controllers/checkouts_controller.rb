@@ -59,7 +59,11 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     address = Address.create(session[:address])
-    receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+    if current_user
+      receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
+    else
+      receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+    end
     session.delete(:cart_id)
     cart = Cart.create!(user_id: current_user.id) if current_user
     session[:receipt] = [] unless session[:receipt]
