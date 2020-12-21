@@ -35,13 +35,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    redirect_to :root
-    # if params[:delete_confirm]
-    #   current_usre.destroy()
-    #   redirect_to :root
-    # else
-    #   render :delete_confirm
-    # end
+    if params[:delete_confirm]
+      current_usre.destroy()
+      redirect_to :root
+    else
+      render :delete_confirm
+    end
   end
   private
 
