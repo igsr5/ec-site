@@ -2,7 +2,6 @@ class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
-  before_action :has_receipt_session, only: [:completed]
 
   def address_form_show
     @address = if session[:address]
@@ -12,7 +11,11 @@ class CheckoutsController < ApplicationController
     end
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
-    render :address_form
+    if current_user
+      render :address_form_user
+    else
+      render :address_form
+    end
   end
 
   def address_set_session
@@ -73,8 +76,8 @@ class CheckoutsController < ApplicationController
 
   def completed
     if current_user
-      @receipts = Receipt.where(user_id: current_user.id).order(id: 'DESC')
-    else
+      @receipts = current_user.receipts.order(id: "DESC")
+    elsif session[:receipt]
       @receipts = Receipt.find(session[:receipt].sort!.reverse!)
     end
     render :completion
@@ -98,12 +101,6 @@ class CheckoutsController < ApplicationController
   def has_card_session
     unless session[:card]
       redirect_to carts_path
-    end
-  end
-
-  def has_receipt_session
-    unless session[:receipt]
-      render :completion
     end
   end
 
