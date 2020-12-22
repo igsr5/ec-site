@@ -1,7 +1,7 @@
 - content_for :title ,"注文履歴"
 .container.mt-5.order-history
   h2 注文履歴
-  - if !@receipts.nil?
+  - if !@receipts.empty?
     - @receipts.each do |receipt|
       .history-items.mt-4.mb-3
         .history-head.row
