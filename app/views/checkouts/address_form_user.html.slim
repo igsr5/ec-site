@@ -20,26 +20,26 @@
             .row
               .form-group.col-6
                 = f.label :family_name,class: "require-label"
-                = f.text_field :family_name,class: 'form-control'
+                = f.text_field :family_name,class: 'required form-control'
               .form-group.col-6
                 = f.label :given_name,class: "require-label"
-                = f.text_field :given_name,class: 'form-control'
+                = f.text_field :given_name,class: 'required form-control'
             .row
               .form-group.col-4
                 = f.label :postal_code,class: "require-label"
-                = f.text_field :postal_code,class: 'form-control',placeholder: "例)0000000",maxlength: 7,oninput: "numberOnly(this.id)"
+                = f.text_field :postal_code,class: 'required form-control',placeholder: "例)0000000",maxlength: 7,oninput: "numberOnly(this.id)"
                 - if @address.errors.include?(:postal_code)
                   p.form-error = @address.errors.full_messages_for(:postal_code).first
               .form-group.col-4
-                = f.label :prefecture,class: "require-label"
-                = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control'}
+                = f.label :prefecture,class: "required require-label"
+                = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'required form-control'}
               .form-group.col-4
                 = f.label :city,class: "require-label"
-                = f.text_field :city,class: 'form-control'
+                = f.text_field :city,class: 'required form-control'
             .row
               .form-group.col-6
                 = f.label :address1,class: "require-label"
-                = f.text_field :address1,class: 'form-control'
+                = f.text_field :address1,class: 'required form-control'
               .form-group.col-6
                 = f.label :address2
                 = f.text_field :address2,class: 'form-control'
