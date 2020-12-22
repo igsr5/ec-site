@@ -7,7 +7,7 @@
           h3 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
           .form-check
-            = radio_button 'page', 'category', 1,id: 'new',class: 'form-check-input'
+            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input'
             = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
             = radio_button 'page', 'category', 2,id: '1',class: 'form-check-input'
             = label_tag '1',"新しい住所を追加する",class: 'form-check-label'
