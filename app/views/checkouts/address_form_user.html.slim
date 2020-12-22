@@ -6,12 +6,13 @@
         .form-title
           h3 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
-          .form-check
+          .form-check.mb-3
             = radio_button 'page', 'category', 2,id: '1',class: 'form-check-input'
             = label_tag '1',class: 'form-check-label'
               p 市古空
-              p 〒448-0008 愛知県刈谷市今岡町荒神91-1
-          .form-check
+              p 〒448-0008 
+              p 愛知県刈谷市今岡町荒神91-1
+          .form-check.mb-3
             = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input'
             = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
          
