@@ -15,4 +15,6 @@ window.numberAndHyphenOnly=function (id){
 }
 
 var postal_code = document.getElementById("postal_code");
-postal_code.textContent="〒"+postal_code.textContent.slice(0,3)+"-"+postal_code.textContent.slice(3,7)
+postal_code.textContent="〒"+postal_code.textContent.slice(0,3)+"-"+postal_code.textContent.slice(3,7);
+
+
