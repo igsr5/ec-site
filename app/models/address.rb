@@ -1,6 +1,6 @@
 class Address < ApplicationRecord
   has_one :receipt
-  belongs_to :user
+  belongs_to :user, optional: true
 
   validates :family_name, presence: true
   validates :given_name, presence: true
