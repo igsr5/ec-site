@@ -8,4 +8,8 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :password, presence: true, unless: -> { validation_context == :hoge }
   validates :password_confirmation, presence: true, unless: -> { validation_context == :hoge }
+
+  def full_name
+    @full_name = "#{self.family_name} #{self.given_name}"
+  end
 end

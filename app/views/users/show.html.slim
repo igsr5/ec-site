@@ -2,11 +2,11 @@
 .container.mt-5.user-mypage
   .row
     .col-7
-      h2.mb-3 = "#{current_user.name}さん"
+      h2.mb-3 = "#{current_user.full_name()}さん"
       = button_to "ログアウト",logout_path,method: :post,class: "btn btn-dark mb-3"
       .user-status
         h3 お客様の登録情報
-        p.mb-2.ml-2 = "名前　　　　　：#{current_user.name}"
+        p.mb-2.ml-2 = "名前　　　　　：#{current_user.full_name()}"
         p.mb-2.ml-2 = "メールアドレス：#{current_user.email}"
         p.ml-2 パスワード　　：******
         = link_to "編集",edit_users_path(current_user),class: "edit-user"
