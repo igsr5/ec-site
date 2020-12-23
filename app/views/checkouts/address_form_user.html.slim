@@ -13,7 +13,7 @@
                 p.postal_code = address.postal_code 
                 = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
           .form-check.mb-3
-            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input'
+            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input',required: true
             = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
          
           .d-none.form-new
