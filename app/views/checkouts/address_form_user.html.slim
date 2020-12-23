@@ -6,6 +6,8 @@
         .form-title
           h3 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
+          = @addresses.each do |address|
+            = address.email
           .form-check.mb-3
             = radio_button 'page', 'category', 2,id: '1',class: 'form-check-input'
             = label_tag '1',class: 'form-check-label'
@@ -17,13 +19,8 @@
             = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
          
           .d-none.form-new
-            .row
-              .form-group.col-6
-                = f.label :family_name,class: "require-label"
-                = f.text_field :family_name,class: 'required form-control'
-              .form-group.col-6
-                = f.label :given_name,class: "require-label"
-                = f.text_field :given_name,class: 'required form-control'
+            = f.hidden_field :family_name,class: 'required form-control',value: current_user.family_name
+            = f.hidden_field :given_name,class: 'required form-control',value: current_user.given_name
             .row
               .form-group.col-4
                 = f.label :postal_code,class: "require-label"
