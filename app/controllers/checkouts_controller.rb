@@ -25,6 +25,7 @@ class CheckoutsController < ApplicationController
       @address = Address.new(address_param)
       if @address.valid?
         session[:address] = address_param
+        session[:address][:user_id] = current_user.id if current_user
         redirect_to :checkouts_card
       else
         @cart = Cart.find(session[:cart_id])
@@ -69,7 +70,7 @@ class CheckoutsController < ApplicationController
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
     if session[:address_radio] == "new"
-      address = Address.create(session[:address])
+      address = Address.create!(session[:address])
     else
       address = Address.find(session[:address_radio])
     end
