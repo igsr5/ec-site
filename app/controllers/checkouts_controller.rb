@@ -25,7 +25,7 @@ class CheckoutsController < ApplicationController
       @address = Address.new(address_param)
       if @address.valid?
         session[:address] = address_param
-        session[:address][:user_id] = current_user.id if current_user
+        session[:address][:user_id] = current_user.id if current_user && params[:page][:is_save]
         redirect_to :checkouts_card
       else
         @cart = Cart.find(session[:cart_id])
