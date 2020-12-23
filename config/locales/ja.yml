@@ -23,7 +23,8 @@ ja:
         expiration_date: 有効期限
         security_code: CVC
       user:
-        name: 氏名
+        family_name: 姓 
+        given_name: 名
         email: メールアドレス
         password: パスワード
         password_confirmation: パスワード（確認）

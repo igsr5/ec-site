@@ -1,7 +1,7 @@
 - content_for :title ,"注文履歴"
 .container.mt-5.order-history
   h2 注文履歴
-  - if session[:receipt]
+  - if @receipts && !@receipts.empty?
     - @receipts.each do |receipt|
       .history-items.mt-4.mb-3
         .history-head.row
@@ -17,7 +17,7 @@
               span.mr-1.link.text = receipt.address.get_full_name
               .fukidashi
                 p.font-weight-bold = receipt.address.get_full_name
-                p#postal_code = receipt.address.postal_code
+                p.postal_code = receipt.address.postal_code
                 p = "#{receipt.address.prefecture} #{receipt.address.city}#{receipt.address.address1}"
                 p = receipt.address.address2
                 p = receipt.address.email
@@ -34,3 +34,4 @@
               p = "数量：#{order_detail.product_count}"
   - else
     p.mt-3.history-zero 注文はありません。
+= javascript_pack_tag 'checkout'

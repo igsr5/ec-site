@@ -1,3 +1,4 @@
+console.log("test");
 window.numberOnly=function (id) {
   var element = document.getElementById(id);
   var regex = /[^0-9]/gi;
@@ -14,5 +15,9 @@ window.numberAndHyphenOnly=function (id){
   element.value = element.value.replace(regex, "");
 }
 
-var postal_code = document.getElementById("postal_code");
-postal_code.textContent="〒"+postal_code.textContent.slice(0,3)+"-"+postal_code.textContent.slice(3,7)
+var postal_code = document.getElementsByClassName("postal_code");
+for(var i = 0; postal_code[i] != null; i++){
+  postal_code[i].textContent="〒"+postal_code[i].textContent.slice(0,3)+"-"+postal_code[i].textContent.slice(3,7);
+}
+
+

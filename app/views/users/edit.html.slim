@@ -4,10 +4,13 @@
     = image_tag  "nike_logo.png",width:"60px",class: "mt-4 mb-4"
   h1.mb-5 ご登録情報の編集 
   = form_with model: @user,url: users_path,class: 'user-form',local: true do |f|
-    .form-group
-      = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name),required: true,value: @user.name
-      - if @user.errors.include?(:name)
-        span.form-error = @user.errors.full_messages_for(:name).first
+    .form-group.d-flex
+      = f.text_field :family_name,class: 'form-control mr-3',placeholder: User.human_attribute_name(:family_name),required: true,value: @user.family_name
+      = f.text_field :given_name,class: 'form-control',placeholder: User.human_attribute_name(:given_name),required: true,value: @user.given_name
+    - if @user.errors.include?(:family_name)
+      span.form-error = @user.errors.full_messages_for(:family_name).first
+    - if @user.errors.include?(:givne_name)
+      span.form-error = @user.errors.full_messages_for(:given_name).first
 
     .form-group
       = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true

@@ -6,6 +6,10 @@
         .form-title
           h3 1．お届け先情報
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
+          .form-check.mb-3
+            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input',required: true, checked: true
+            = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
+
           .row
             .form-group.col-6
               = f.label :family_name,class: "require-label"
