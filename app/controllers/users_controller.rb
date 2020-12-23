@@ -25,7 +25,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.name = params[:user][:name]
+    @user.family_name = params[:user][:family_name]
+    @user.given_name = params[:user][:given_name]
     @user.email = params[:user][:email]
     if @user.save(context: :hoge)
       redirect_to :users
