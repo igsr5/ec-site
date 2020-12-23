@@ -20,14 +20,19 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
-    @address = Address.new(address_param)
-    if @address.valid?
-      session[:address] = address_param
-      redirect_to :checkouts_card
+    if params[:page][:category] == "new"
+      @address = Address.new(address_param)
+      if @address.valid?
+        session[:address] = address_param
+        redirect_to :checkouts_card
+      else
+        @cart = Cart.find(session[:cart_id])
+        @order_details = @cart.order_details
+        render :address_form
+      end
     else
-      @cart = Cart.find(session[:cart_id])
-      @order_details = @cart.order_details
-      render :address_form
+      session[:address] = Address.find(params[:page][:category])
+      redirect_to :checkouts_card
     end
   end
 
