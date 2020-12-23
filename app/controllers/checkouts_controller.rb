@@ -20,6 +20,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
+    session[:address_radio] = params[:page][:category]
     if params[:page][:category] == "new"
       @address = Address.new(address_param)
       if @address.valid?
