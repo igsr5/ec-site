@@ -39,7 +39,10 @@
                 = f.label :address2
                 = f.text_field :address2,class: 'form-control'
             = f.hidden_field :email,value: current_user.email,class: 'form-control'
-          .text-right.mt-5
+            .custom-control.custom-checkbox.mt-2
+              = check_box :page, :is_save,id: 'is_save',class: 'custom-control-input'
+              = label_tag :is_save, "この配送先を保存する",class: 'custom-control-label'
+          .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
       article.mb-3
         .form-title
