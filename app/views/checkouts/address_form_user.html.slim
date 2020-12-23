@@ -10,7 +10,7 @@
             .form-check.mb-3
               = radio_button 'page', 'category', 2,id: '1',class: 'form-check-input'
               = label_tag '1',class: 'form-check-label'
-                p#postal_code = address.postal_code 
+                p.postal_code = address.postal_code 
                 = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
           .form-check.mb-3
             = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input'
