@@ -1,5 +1,6 @@
 - content_for :title ,"購入手続き 配送先"
 .container.mt-5.checkouts
+  = session[:address_radio]
   .row
     .col-7.offset-1
       article.mb-4.current-form
@@ -8,12 +9,12 @@
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
           - @addresses.each do |address|
             .form-check.mb-3
-              = radio_button 'page', 'category', address.id,id: address.id,class: 'form-check-input'
+              = radio_button 'page', 'category', address.id,id: address.id,class: 'form-check-input',checked: session[:address_radio]=="#{address.id}" 
               = label_tag address.id,class: 'form-check-label'
                 p.postal_code = address.postal_code 
                 = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
           .form-check.mb-3
-            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input',required: true
+            = radio_button 'page', 'category', "new",id: 'new',class: 'form-check-input',required: true, checked: session[:address_radio] == "new"
             = label_tag 'new',"新しい住所を追加する",class: 'form-check-label'
          
           .d-none.form-new
