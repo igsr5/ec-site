@@ -12,6 +12,7 @@ class CheckoutsController < ApplicationController
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     if current_user
+      @addresses = current_user.addresses
       render :address_form_user
     else
       render :address_form
