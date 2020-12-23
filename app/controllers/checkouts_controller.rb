@@ -20,7 +20,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
-    session[:address_radio] = params[:page][:category]
+    session[:address_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
       @address = Address.new(address_param)
       if @address.valid?
@@ -68,7 +68,11 @@ class CheckoutsController < ApplicationController
   def issue_receipt
     cart = Cart.find(session[:cart_id])
     card = Card.create(session[:card])
-    address = Address.create(session[:address])
+    if session[:address_radio] == "new"
+      address = Address.create(session[:address])
+    else
+      address = Address.find(session[:address_radio])
+    end
     if current_user
       Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
@@ -112,7 +116,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_param
-    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
+    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email, :user_id)
   end
 
   def card_param
