@@ -5,10 +5,13 @@
   h1.mb-3 ナイキメンバーに登録する
   p.text-center.mb-4 ナイキ メンバーのプロフィールを作成して、Nikeの最高の商品、インスピレーション、コミュニティにいち早くアクセスしよう。
   = form_with model: @user,class: 'user-form',local: true do |f|
-    .form-group
-      = f.text_field :name,class: 'form-control',placeholder: User.human_attribute_name(:name),required: true
-      - if @user.errors.include?(:name)
-        span.form-error = @user.errors.full_messages_for(:name).first
+    .form-group.d-flex
+        = f.text_field :family_name,class: 'form-control mr-3',placeholder: User.human_attribute_name(:family_name),required: true
+        = f.text_field :given_name,class: 'form-control',placeholder: User.human_attribute_name(:given_name),required: true
+    - if @user.errors.include?(:family_name)
+      span.form-error = @user.errors.full_messages_for(:family_name).first
+    - if @user.errors.include?(:given_name)
+      span.form-error = @user.errors.full_messages_for(:given_name).first
 
     .form-group
       = f.email_field :email,class: 'form-control',placeholder: User.human_attribute_name(:email),required: true
