@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:family_name,:given_name, :email, :password, :password_confirmation)
   end
 
   def has_user_session
