@@ -8,8 +8,8 @@
         =form_with model: @address,url: checkouts_address_path,class: "checkout-form",local: true do |f|
           - @addresses.each do |address|
             .form-check.mb-3
-              = radio_button 'page', 'category', 2,id: '1',class: 'form-check-input'
-              = label_tag '1',class: 'form-check-label'
+              = radio_button 'page', 'category', address.id,id: address.id,class: 'form-check-input'
+              = label_tag address.id,class: 'form-check-label'
                 p.postal_code = address.postal_code 
                 = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
           .form-check.mb-3
