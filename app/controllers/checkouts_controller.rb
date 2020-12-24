@@ -30,7 +30,8 @@ class CheckoutsController < ApplicationController
       else
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
-        render :address_form
+        @addresses = current_user.addresses
+        render :address_form_user
       end
     else
       session[:address] = Address.find(params[:page][:category])
@@ -55,14 +56,22 @@ class CheckoutsController < ApplicationController
   end
 
   def card_set_session
-    @card = Card.new(card_param)
-    if @card.valid?
-      session[:card] = card_param
-      redirect_to :checkouts_confirm
+    session[:card_radio] = params[:page][:category] 
+    if params[:page][:category] == "new"
+      @card = Card.new(card_param)
+      if @card.valid?
+        session[:card] = card_param 
+        session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
+        redirect_to :checkouts_confirm 
+      else
+        @cart = Cart.find(session[:cart_id])
+        @order_details = @cart.order_details
+        @cards = current_user.cards
+        render :card_form_user
+      end
     else
-      @cart = Cart.find(session[:cart_id])
-      @order_details = @cart.order_details
-      render :card_form
+      session[:card] = Card.find(params[:page][:category])
+      redirect_to :checkouts_confirm
     end
   end
 
@@ -122,7 +131,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_param
-    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email, :user_id)
+    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
 
   def card_param
