@@ -1,0 +1,63 @@
+- content_for :title ,"購入手続き 支払情報"
+.container.mt-5.checkouts
+  .row
+    .col-7.offset-1
+      article.mb-4.border
+        .form-title.d-flex
+          = icon('fas', 'check')
+          h3 1．お届け先情報
+          = link_to "編集",checkouts_address_path
+        .form-section
+          h5 配送先住所
+          p = "#{session[:address]["family_name"]} #{session[:address]["given_name"]}"
+          p = session[:address]["email"]
+          p.postal_code = session[:address]["postal_code"]
+          p = "#{session[:address]["prefecture"]}#{session[:address]["city"]}#{session[:address]["address1"]}#{session[:address]["address2"]}"
+      article.mb-3.current-form
+        .form-title
+          h3 2．お支払方法/ご請求情報
+        =form_with model: @card,url: checkouts_card_path,class: "checkout-form",local: true do |f|
+          - @cards.each do |card|
+            .form-check.mb-3
+              = radio_button 'page', 'category',card.id ,id: card.id, class: 'form-check-input',checked: session[:card_radio]=="#{card.id}"
+              = label_tag card.id,class: 'form-check-label'
+                p = "************#{card.card_num[12..16]}"
+                p = "期限：#{card.expiration_date}"
+                p = "名義：#{card.name}"
+          .form-check.mb-3
+            = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: session[:card_radio]=="new"
+            = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'
+          .d-none.form-new
+            .row
+              .form-group.col-6
+                  = f.label :name,class: "require-label"
+                  = f.text_field :name,class: 'form-control required'
+            .row
+              .form-group.col-6
+                = f.label :card_num,class: "require-label"
+                = f.text_field :card_num,class: 'form-control required',maxlength: 16, placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
+                - if @card.errors.include?(:card_num)
+                  p.form-error = @card.errors.full_messages_for(:card_num).first
+              .form-group.col-3
+                = f.label :expiration_date,class: "require-label"
+                = f.text_field :expiration_date,class: 'form-control required',placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
+                - if @card.errors.include?(:expiration_date)
+                  p.form-error = @card.errors.full_messages_for(:expiration_date).first
+              .form-group.col-3
+                = f.label :security_code,class: "require-label"
+                = f.text_field :security_code,class: 'form-control required', placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
+                - if @card.errors.include?(:security_code)
+                  p.form-error = @card.errors.full_messages_for(:security_code).first
+            .custom-control.custom-checkbox.mt-2
+              = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input'},true,false
+              = label_tag :is_save, "この配送先を保存する",class: 'custom-control-label'
+
+          .text-right.mt-3
+            = f.submit "次に進む",class: 'btn btn-dark'
+      article.mb-3
+        .form-title
+          h3 3．ご注文の確認
+    .col-3
+      = render partial: "layouts/checkout-side"
+= javascript_pack_tag 'checkout'
+= javascript_pack_tag 'users_form'
