@@ -30,8 +30,12 @@ class CheckoutsController < ApplicationController
       else
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
-        @addresses = current_user.addresses
-        render :address_form_user
+        if current_user
+          @addresses = current_user.addresses 
+          render :address_form_user
+        else
+          render :address_form
+        end
       end
     else
       session[:address] = Address.find(params[:page][:category])
@@ -66,8 +70,12 @@ class CheckoutsController < ApplicationController
       else
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
-        @cards = current_user.cards
-        render :card_form_user
+        if current_user
+          @cards = current_user.cards
+          render :card_form_user
+        else
+          render :card_form
+        end
       end
     else
       session[:card] = Card.find(params[:page][:category])
