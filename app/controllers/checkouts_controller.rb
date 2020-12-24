@@ -46,7 +46,12 @@ class CheckoutsController < ApplicationController
     end
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
-    render :card_form
+     if current_user
+      @cards = current_user.cards
+      render :card_form_user
+    else
+      render :card_form 
+    end
   end
 
   def card_set_session
