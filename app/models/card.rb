@@ -1,5 +1,6 @@
 class Card < ApplicationRecord
   has_one :receipt
+  belongs_to :user,optional: true
 
   validates :name, presence: true
   validates :card_num, presence: true, length: { within: 16..16, message: 'は16桁です。' }
