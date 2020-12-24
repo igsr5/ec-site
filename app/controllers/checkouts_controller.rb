@@ -82,12 +82,18 @@ class CheckoutsController < ApplicationController
 
   def issue_receipt
     cart = Cart.find(session[:cart_id])
-    card = Card.create(session[:card])
     if session[:address_radio] == "new"
       address = Address.create!(session[:address])
     else
       address = Address.find(session[:address_radio])
     end
+
+    if session[:card_radio] == "new"
+      card = Card.create!(session[:card])
+    else
+      card = Card.find(session[:card_radio])
+    end
+
     if current_user
       Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
