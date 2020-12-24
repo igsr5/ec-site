@@ -17,6 +17,10 @@
         .form-title
           h3 2．お支払方法/ご請求情報
         =form_with model: @card,url: checkouts_card_path,class: "checkout-form",local: true do |f|
+          .form-check.mb-3
+            = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: true 
+            = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'
+
           .row
             .form-group.col-6
                 = f.label :name,class: "require-label"

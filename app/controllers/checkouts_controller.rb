@@ -30,7 +30,12 @@ class CheckoutsController < ApplicationController
       else
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
-        render :address_form
+        if current_user
+          @addresses = current_user.addresses 
+          render :address_form_user
+        else
+          render :address_form
+        end
       end
     else
       session[:address] = Address.find(params[:page][:category])
@@ -46,18 +51,35 @@ class CheckoutsController < ApplicationController
     end
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
-    render :card_form
+     if current_user
+      @cards = current_user.cards
+      render :card_form_user
+    else
+      render :card_form 
+    end
   end
 
   def card_set_session
-    @card = Card.new(card_param)
-    if @card.valid?
-      session[:card] = card_param
-      redirect_to :checkouts_confirm
+    session[:card_radio] = params[:page][:category] 
+    if params[:page][:category] == "new"
+      @card = Card.new(card_param)
+      if @card.valid?
+        session[:card] = card_param 
+        session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
+        redirect_to :checkouts_confirm 
+      else
+        @cart = Cart.find(session[:cart_id])
+        @order_details = @cart.order_details
+        if current_user
+          @cards = current_user.cards
+          render :card_form_user
+        else
+          render :card_form
+        end
+      end
     else
-      @cart = Cart.find(session[:cart_id])
-      @order_details = @cart.order_details
-      render :card_form
+      session[:card] = Card.find(params[:page][:category])
+      redirect_to :checkouts_confirm
     end
   end
 
@@ -68,12 +90,18 @@ class CheckoutsController < ApplicationController
 
   def issue_receipt
     cart = Cart.find(session[:cart_id])
-    card = Card.create(session[:card])
     if session[:address_radio] == "new"
       address = Address.create!(session[:address])
     else
       address = Address.find(session[:address_radio])
     end
+
+    if session[:card_radio] == "new"
+      card = Card.create!(session[:card])
+    else
+      card = Card.find(session[:card_radio])
+    end
+
     if current_user
       Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
@@ -117,7 +145,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_param
-    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email, :user_id)
+    params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
 
   def card_param

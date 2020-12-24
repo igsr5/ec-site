@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :carts
   has_many :addresses
+  has_many :cards 
   has_many :receipts
   has_secure_password
   validates :family_name, presence: true
