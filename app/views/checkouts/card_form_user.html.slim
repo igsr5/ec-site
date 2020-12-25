@@ -49,7 +49,7 @@
                 - if @card.errors.include?(:security_code)
                   p.form-error = @card.errors.full_messages_for(:security_code).first
             .custom-control.custom-checkbox.mt-2
-              = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input'},true,false
+              = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input',checked: session[:is_save_card]},"checked",false
               = label_tag :is_save, "このカード情報を保存する",class: 'custom-control-label'
 
           .text-right.mt-3

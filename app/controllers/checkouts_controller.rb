@@ -20,6 +20,7 @@ class CheckoutsController < ApplicationController
   end
 
   def address_set_session
+    session[:is_save_address] = params[:page][:is_save] if current_user
     session[:address_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
       @address = Address.new(address_param)
@@ -60,6 +61,7 @@ class CheckoutsController < ApplicationController
   end
 
   def card_set_session
+    session[:is_save_card] = params[:page][:is_save] if current_user
     session[:card_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
       @card = Card.new(card_param)
