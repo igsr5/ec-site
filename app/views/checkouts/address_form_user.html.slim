@@ -40,7 +40,7 @@
                 = f.text_field :address2,class: 'form-control'
             = f.hidden_field :email,value: current_user.email,class: 'form-control'
             .custom-control.custom-checkbox.mt-2
-              = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input'},true,false
+              = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input',checked:session[:is_save_address]},"checked",false
               = label_tag :is_save, "この配送先を保存する",class: 'custom-control-label'
           .text-right.mt-3
             = f.submit "次に進む",class: 'btn btn-dark'
