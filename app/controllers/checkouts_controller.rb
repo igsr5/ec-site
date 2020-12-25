@@ -112,6 +112,12 @@ class CheckoutsController < ApplicationController
       session[:receipt] << receipt.id
     end
     session.delete(:cart_id)
+    session.delete(:address)
+    session.delete(:card)
+    session.delete(:address_radio)
+    session.delete(:card_radio)
+    session.delete(:is_save_card)
+    session.delete(:is_save_address)
     cart = Cart.create!(user_id: current_user.id) if current_user
     redirect_to :checkouts_completion
   end
