@@ -2,12 +2,28 @@
   h3.mb-4 お届け先
   ul.user-data
     - @addresses.each do |address|
-      li.mb-4.pl-2 
+      li.mb-4.pl-2 id="address-#{address.id}"
         p.postal_code = address.postal_code 
         = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
         .d-flex.mt-2
-          .edit-link id="address-edit-#{address.id}" 編集
+          .edit-link 編集
           .delete-link.ml-2 削除
+
+      li.mb-4.pl-2.edit id="address-edit-#{address.id}"
+        = form_with model: address, url: root_path do |f|
+          .form-group
+            = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code)
+          .d-flex.form-group
+            = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
+            = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
+          .form-group
+            = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1)
+          .form-group
+            = f.text_field :address2,class: 'form-control', required: true, placeholder: Address.human_attribute_name(:address2)
+          .text-right
+            = f.submit "更新",class: 'btn btn-dark'
+
     li.pl-2.new-link
       = link_to root_path do
         = icon('fas','plus')
+
