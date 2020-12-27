@@ -6,7 +6,7 @@
         p.postal_code = address.postal_code 
         = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
         .d-flex.mt-2
-          .edit-link 編集
+          .edit-link data-id="#{address.id}" 編集
           .delete-link.ml-2 削除
 
       li.mb-4.pl-2.edit id="address-edit-#{address.id}"
