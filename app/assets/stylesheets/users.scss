@@ -67,6 +67,7 @@
 
 .edit-link{
   color: #333333;
+  cursor: pointer;
   &:hover{
     color: #333333;
     text-decoration: underline;
@@ -75,6 +76,7 @@
 }
 .delete-link{
   color: #ff0000;
+  cursor: pointer;
   &:hover{
     color: #ff0000;
     text-decoration: underline;
