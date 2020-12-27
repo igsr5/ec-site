@@ -1,20 +1,13 @@
 .col-md-6.border-right
   h3.mb-4 お届け先
   ul.user-data
-    li.mb-4.pl-2 
-      /p.postal_code = address.postal_code 
-      /= "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
-      p 〒448-0008
-      p 愛知県刈谷市今岡町荒神91-1
-      .d-flex.mt-2
-        = link_to "編集",root_path,class: "edit-link"
-        = link_to "削除",root_path,class: "ml-2 delete-link"
-    li.mb-4.pl-2 
-      p 〒448-0008
-      p 愛知県刈谷市今岡町荒神91-1
-      .d-flex.mt-2
-        = link_to "編集",root_path,class: "edit-link"
-        = link_to "削除",root_path,class: "ml-2 delete-link"
+    - @addresses.each do |address|
+      li.mb-4.pl-2 
+        p.postal_code = address.postal_code 
+        = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
+        .d-flex.mt-2
+          = link_to "編集",root_path,class: "edit-link"
+          = link_to "削除",root_path,class: "ml-2 delete-link"
     li.pl-2.new-link
       = link_to root_path do
         = icon('fas','plus')
