@@ -86,8 +86,10 @@ body{
   }
 }
 
-li:not(:last-child):not(.edit){
-  border-left: solid 4px #b1b1b1;
+.user-data{
+  li:not(:last-child):not(.edit){
+    border-left: solid 4px #b1b1b1;
+  }
 }
 .new-link{
   border: dashed 1px #b1b1b1;
