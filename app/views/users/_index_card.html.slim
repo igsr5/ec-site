@@ -1,10 +1,11 @@
 .col-md-6.pl-5
   h3.mb-4 カード情報 
   ul.user-data
-    li.mb-4.pl-2 
-      p = "************1234" 
-      p 期限：12/2023 
-      p 名義：イチゴ ソラ
+    - @cards.each do |card| 
+      li.mb-4.pl-2 
+        p = "************#{card.card_num[12..16]}" 
+        p = "期限：#{card.expiration_date}" 
+        p = "名義：#{card.name}"
       .d-flex.mt-2
         = link_to "編集",root_path,class: "edit-link"
         = link_to "削除",root_path,class: "ml-2 delete-link"
