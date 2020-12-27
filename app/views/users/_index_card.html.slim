@@ -6,9 +6,9 @@
         p = "************#{card.card_num[12..16]}" 
         p = "期限：#{card.expiration_date}" 
         p = "名義：#{card.name}"
-      .d-flex.mt-2
-        = link_to "編集",root_path,class: "edit-link"
-        = link_to "削除",root_path,class: "ml-2 delete-link"
+        .d-flex.mt-2
+          = link_to "編集",root_path,class: "edit-link"
+          = link_to "削除",root_path,class: "ml-2 delete-link"
     li.pl-2.new-link
       = link_to root_path do
         = icon('fas','plus')
