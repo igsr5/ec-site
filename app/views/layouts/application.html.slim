@@ -7,6 +7,7 @@ html
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application'
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
     body
     - if current_user 
       = render partial: "layouts/header_user"
