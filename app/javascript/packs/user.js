@@ -8,3 +8,8 @@ $(".edit-link").click(function(){
   $address.hide();
   $address_edit.show();
 })
+
+$(".address-edit-back").click(function(){
+  $('.address-data').show();
+  $('.edit').hide();
+})
