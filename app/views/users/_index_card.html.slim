@@ -1,0 +1,13 @@
+.col-md-6.pl-5
+  h3.mb-4 カード情報 
+  ul.user-data
+    li.mb-4.pl-2 
+      p = "************1234" 
+      p 期限：12/2023 
+      p 名義：イチゴ ソラ
+      .d-flex.mt-2
+        = link_to "編集",root_path,class: "edit-link"
+        = link_to "削除",root_path,class: "ml-2 delete-link"
+    li.pl-2.new-link
+      = link_to root_path do
+        = icon('fas','plus')
