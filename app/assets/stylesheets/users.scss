@@ -64,3 +64,25 @@
     text-decoration: underline;
   }
 }
+
+.edit-link{
+  color: #333333;
+  &:hover{
+    color: #333333;
+    text-decoration: underline;
+  }
+
+}
+.delete-link{
+  color: #ff0000;
+  &:hover{
+    color: #ff0000;
+    text-decoration: underline;
+  }
+}
+
+.user-data{
+  li{
+    border-left: solid 4px #b1b1b1;
+  }
+}
