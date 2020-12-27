@@ -2,7 +2,7 @@
   h3.mb-4 お届け先
   ul.user-data
     - @addresses.each do |address|
-      li.mb-4.pl-2 id="address-#{address.id}"
+      li.mb-4.pl-2.address-data id="address-#{address.id}"
         p.postal_code = address.postal_code 
         = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
         .d-flex.mt-2
