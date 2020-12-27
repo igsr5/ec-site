@@ -11,6 +11,9 @@
 
       li.mb-4.pl-2.edit id="address-edit-#{address.id}"
         = form_with model: address, url: root_path do |f|
+          = f.hidden_field :email,value: address.email
+          = f.hidden_field :given_name,value: address.given_name
+          = f.hidden_field :family_name,value: address.family_name
           .form-group
             = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code)
           .d-flex.form-group
