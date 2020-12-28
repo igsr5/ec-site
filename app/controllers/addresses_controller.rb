@@ -1,4 +1,7 @@
 class AddressesController < ApplicationController
-  def update,destroy
+  def update
+  end
+
+  def destroy
   end
 end

@@ -22,7 +22,7 @@
           .form-group
             = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1)
           .form-group
-            = f.text_field :address2,class: 'form-control', required: true, placeholder: Address.human_attribute_name(:address2)
+            = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2)
           .text-right
             .btn.btn-secondary.mr-2.address-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
