@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   def update
+    @id = params[:id]
     @param = address_param 
     @address = Address.new(@param)
     unless @address.save
