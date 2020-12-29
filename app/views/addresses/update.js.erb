@@ -1,3 +1,34 @@
 $(".address-data").show();
 $(".edit").hide();
-console.log("<%= @param %>")
+$(".form-error").hide();
+var postal_code = "<%= @param[:postal_code] %>";
+postal_code = `〒${postal_code.slice(0,3)}-${postal_code.slice(3,7)}`;
+var prefecture = "<%= @param[:prefecture] %>";
+var city = "<%= @param[:city] %>";
+var address1 = "<%= @param[:address1] %>";
+var address2 = "";
+<% unless @param[:address2] == "" %>
+  var address2 = "<%= @param[:address2] %>";
+<% end %>
+var id = <%= @id %>;
+var addressId = <%= @address.id %>;
+
+var $address = $(`#address-${id}`);
+var $addressEdit = $(`#address-edit-${id}`);
+
+$address.attr('id',`address-${addressId}`);
+
+$addressEdit.attr('id',`address-edit-${addressId}`);
+$('.address-id').attr('value',addressId);
+$(`#address-error-${id}`).attr('id',`address-error-${addressId}`);
+
+$address.html(`
+  <p class='postal_code'>${postal_code}</p> 
+  <p>${prefecture}${city}${address1}${address2}</p>
+  <div class="d-flex mt-2">
+    <div class="edit-link" data-id="${addressId}">編集</div>
+    <div class="delete-link ml-2" data-id=${addressId}>削除</div>
+  </div>
+`)
+
+
