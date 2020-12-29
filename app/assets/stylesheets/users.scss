@@ -1,6 +1,9 @@
 // Place all the styles related to the users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+body{
+  position: relative;
+}
 .user-create{
   padding: 28px;
   max-width: 380px;
@@ -67,6 +70,7 @@
 
 .edit-link{
   color: #333333;
+  cursor: pointer;
   &:hover{
     color: #333333;
     text-decoration: underline;
@@ -75,6 +79,7 @@
 }
 .delete-link{
   color: #ff0000;
+  cursor: pointer;
   &:hover{
     color: #ff0000;
     text-decoration: underline;
@@ -82,7 +87,7 @@
 }
 
 .user-data{
-  li:not(:last-child){
+  li:not(:last-child):not(.edit){
     border-left: solid 4px #b1b1b1;
   }
 }
@@ -102,4 +107,9 @@
     color: #b1b1b1;
     transition: .5s;
   }
+}
+
+.edit{
+  display: none;
+  border-left: solid 4px #FF5722;
 }

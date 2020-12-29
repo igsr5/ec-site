@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   # root
   root to: 'products#index'
-
   # users
   resource :users
+  # addresses
+  resources :addresses, only: [:update, :destroy]
   # products
   resources :products, only: [:index, :show]
   # order_details
