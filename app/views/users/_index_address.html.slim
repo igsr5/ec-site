@@ -14,6 +14,7 @@
           = f.hidden_field :email,value: address.email
           = f.hidden_field :given_name,value: address.given_name
           = f.hidden_field :family_name,value: address.family_name
+          = f.hidden_field :user_id,value: address.user_id
           .form-group
             = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code)
           .d-flex.form-group
