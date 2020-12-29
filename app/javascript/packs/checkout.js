@@ -1,4 +1,3 @@
-console.log("test");
 window.numberOnly=function (id) {
   var element = document.getElementById(id);
   var regex = /[^0-9]/gi;
