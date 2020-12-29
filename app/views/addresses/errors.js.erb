@@ -1,1 +1,7 @@
-console.log("<%= @address.errors.full_messages%>");
+var messages = <%== @address.errors.full_messages %>
+var id = <%== @id %>
+$formError = $(`#address-error-${id}`);
+$formError.html("");
+for (message of messages){
+  $formError.append(`<p>${message}</p>`);
+}
