@@ -1,0 +1,7 @@
+var postalCode = "<%= @address.postal_code %>";
+postalCode = `〒${postalCode.slice(0,3)}-${postalCode.slice(3,7)}`;
+$('#new-link-address').before("<%= escape_javascript(render partial: 'addresses/new', locals: { address: @address}) %>");
+$('#new-address').hide();
+$('#new-link-address').show();
+
+$('#postal-code-created').text(postalCode)

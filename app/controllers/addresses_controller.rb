@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
   def create
-
+    @address = Address.create!(address_param)
   end
 
   def update
