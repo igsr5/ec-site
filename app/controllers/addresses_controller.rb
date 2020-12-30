@@ -1,4 +1,8 @@
 class AddressesController < ApplicationController
+  def create
+
+  end
+
   def update
     @id = params[:address][:id]
     @param = address_param 
