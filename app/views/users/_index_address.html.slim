@@ -30,10 +30,10 @@
             .btn.btn-secondary.mr-2.address-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
-    li.new-link
+    li.new-link#new-link-address
       = link_to addresses_path,method: :post, remote: true do
         = icon('fas','plus')
-    li.mb-4.pl-2.new.new-address
+    li.mb-4.pl-2.new#new-address
       = form_with model: @address do |f|
         = f.hidden_field :email,value: current_user.email
         = f.hidden_field :given_name,value: current_user.given_name 

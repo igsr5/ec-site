@@ -1,6 +1,5 @@
 $("body").on('click','.edit-link',function(){
   address_id=$(this).data('id');
-  console.log(address_id);
   $address_edit=$("#address-edit-"+address_id);
   $address=$("#address-"+address_id);
   $('.address-data').show();
@@ -12,4 +11,12 @@ $("body").on('click','.edit-link',function(){
 $(".address-edit-back").on('click',function(){
   $('.address-data').show();
   $('.edit').hide();
+})
+
+$('body').on('click','.new-link',function(){
+  $(this).hide();
+  id = $(this).attr('id');
+  if(id === 'new-link-address'){
+    $('#new-address').show();
+  }
 })
