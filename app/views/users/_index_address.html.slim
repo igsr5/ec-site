@@ -33,4 +33,23 @@
     li.new-link
       = link_to addresses_path,method: :post, remote: true do
         = icon('fas','plus')
+    li.mb-4.pl-2.new.new-address
+      = form_with model: @address do |f|
+        = f.hidden_field :email,value: current_user.email
+        = f.hidden_field :given_name,value: current_user.given_name 
+        = f.hidden_field :family_name,value: current_user.family_name
+        = f.hidden_field :user_id,value: current_user.id
+        .form-group
+          = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)"
+        .d-flex.form-group
+          = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
+          = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
+        .form-group
+          = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1)
+        .form-group
+          = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2)
+        .form-error.pl-1 id="address-error-new"
+        .text-right
+          .btn.btn-secondary.mr-2.address-new-back 戻る
+          = f.submit "追加",class: 'btn btn-dark'
 

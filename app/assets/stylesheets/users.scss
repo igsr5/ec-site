@@ -87,10 +87,11 @@ body{
 }
 
 .user-data{
-  li:not(:last-child):not(.edit){
+  li:not(.new-link):not(.edit):not(.new){
     border-left: solid 4px #b1b1b1;
   }
 }
+
 .new-link{
   border: dashed 1px #b1b1b1;
   transition: .5s;
@@ -112,4 +113,9 @@ body{
 .edit{
   display: none;
   border-left: solid 4px #FF5722;
+}
+
+.new {
+  display: none;
+  border-left: solid 4px #61b527;
 }
