@@ -17,7 +17,7 @@
           = f.hidden_field :family_name,value: address.family_name
           = f.hidden_field :user_id,value: address.user_id
           .form-group
-            = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)"
+            = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id:  "#postal_code_edit_#{address.id}"
           .d-flex.form-group
             = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
             = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
@@ -40,7 +40,7 @@
         = f.hidden_field :family_name,value: current_user.family_name
         = f.hidden_field :user_id,value: current_user.id
         .form-group
-          = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)"
+          = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id: 'postal_code_new'
         .d-flex.form-group
           = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
           = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
