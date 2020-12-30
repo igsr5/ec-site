@@ -42,7 +42,7 @@
         .form-group
           = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id: 'postal-code-new'
         .d-flex.form-group
-          = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
+          = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',id: 'prefecture-new',required: true}
           = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city),id: 'city-new'
         .form-group
           = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1),id: 'address1-new'

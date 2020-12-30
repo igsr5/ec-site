@@ -9,3 +9,4 @@ $('#new-link-address').before("<%= escape_javascript(render partial: 'addresses/
 $('#new-address').hide();
 $('#new-link-address').show();
 $('#postal-code-created-<%= @address.id %>').text(postalCode)
+$('#address-error-new').hide();

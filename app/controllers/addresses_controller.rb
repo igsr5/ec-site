@@ -2,7 +2,7 @@ class AddressesController < ApplicationController
   def create
     @address = Address.new(address_param)
     unless @address.save
-      render :error
+      render :errors
     end
   end
 
