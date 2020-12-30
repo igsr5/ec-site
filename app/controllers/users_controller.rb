@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   def show
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
+    @address = Address.new
     @addresses = current_user.addresses
     @cards = current_user.cards
   end

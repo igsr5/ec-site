@@ -1,14 +1,14 @@
 $(".address-data").show();
 $(".edit").hide();
 $(".form-error").hide();
-var postal_code = "<%= @param[:postal_code] %>";
+var postal_code = "<%= @address.postal_code %>";
 postal_code = `〒${postal_code.slice(0,3)}-${postal_code.slice(3,7)}`;
-var prefecture = "<%= @param[:prefecture] %>";
-var city = "<%= @param[:city] %>";
-var address1 = "<%= @param[:address1] %>";
+var prefecture = "<%= @address.prefecture %>";
+var city = "<%= @address.city %>";
+var address1 = "<%= @address.address1 %>";
 var address2 = "";
-<% unless @param[:address2] == "" %>
-  var address2 = "<%= @param[:address2] %>";
+<% unless @address.address2 == "" %>
+  var address2 = "<%= @address.address2 %>";
 <% end %>
 var id = <%= @id %>;
 var addressId = <%= @address.id %>;

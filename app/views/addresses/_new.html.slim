@@ -1,0 +1,28 @@
+li.mb-4.pl-2.address-data id="address-#{address.id}"
+  p.postal_code id="postal-code-created-#{address.id}" = address.postal_code 
+  = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
+  .d-flex.mt-2
+    .edit-link data-id="#{address.id}" 編集
+    .delete-link.ml-2 削除
+
+li.mb-4.pl-2.edit id="address-edit-#{address.id}"
+  = form_with model: address do |f|
+    = f.hidden_field :id,value: address.id,class: 'address-id'
+    = f.hidden_field :email,value: address.email
+    = f.hidden_field :given_name,value: address.given_name
+    = f.hidden_field :family_name,value: address.family_name
+    = f.hidden_field :user_id,value: address.user_id
+    .form-group
+      = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id:  "#postal_code_edit_#{address.id}"
+    .d-flex.form-group
+      = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
+      = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
+    .form-group
+      = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1)
+    .form-group
+      = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2)
+    .form-error.pl-1 id="address-error-#{address.id}"
+    .text-right
+      .btn.btn-secondary.mr-2.address-edit-back 戻る
+      = f.submit "更新",class: 'btn btn-dark'
+

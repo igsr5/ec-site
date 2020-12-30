@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # users
   resource :users
   # addresses
-  resources :addresses, only: [:update, :destroy]
+  resources :addresses, only: [:create, :update, :destroy]
   # products
   resources :products, only: [:index, :show]
   # order_details

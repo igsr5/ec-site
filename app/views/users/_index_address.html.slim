@@ -17,7 +17,7 @@
           = f.hidden_field :family_name,value: address.family_name
           = f.hidden_field :user_id,value: address.user_id
           .form-group
-            = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)"
+            = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id:  "#postal_code_edit_#{address.id}"
           .d-flex.form-group
             = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',required: true}
             = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city)
@@ -30,7 +30,26 @@
             .btn.btn-secondary.mr-2.address-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
-    li.pl-2.new-link
-      = link_to root_path do
+    li.new-link#new-link-address
+      a
         = icon('fas','plus')
+    li.mb-4.pl-2.new#new-address
+      = form_with model: @address do |f|
+        = f.hidden_field :email,value: current_user.email
+        = f.hidden_field :given_name,value: current_user.given_name 
+        = f.hidden_field :family_name,value: current_user.family_name
+        = f.hidden_field :user_id,value: current_user.id
+        .form-group
+          = f.text_field :postal_code,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:postal_code),oninput: "numberOnly(this.id)",maxlength: 7,id: 'postal-code-new'
+        .d-flex.form-group
+          = f.select :prefecture, Prefecture.delivery_areas.keys, {include_blank: '都道府県を選択'}, {class: 'form-control',id: 'prefecture-new',required: true}
+          = f.text_field :city,class: 'ml-2 form-control', required: true,placeholder: Address.human_attribute_name(:city),id: 'city-new'
+        .form-group
+          = f.text_field :address1,class: 'form-control', required: true,placeholder: Address.human_attribute_name(:address1),id: 'address1-new'
+        .form-group
+          = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2),id: 'address2-new'
+        .form-error.pl-1 id="address-error-new"
+        .text-right
+          .btn.btn-secondary.mr-2.address-new-back 戻る
+          = f.submit "追加",class: 'btn btn-dark'
 

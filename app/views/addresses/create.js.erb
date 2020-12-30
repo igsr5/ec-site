@@ -1,0 +1,12 @@
+$('#postal-code-new').val('');
+$('#city-new').val('');
+$('#prefecture-new').prop('selectedIndex', 0);
+$('#address1-new').val('');
+$('#address2-new').val('');
+var postalCode = "<%= @address.postal_code %>";
+postalCode = `〒${postalCode.slice(0,3)}-${postalCode.slice(3,7)}`;
+$('#new-link-address').before("<%= escape_javascript(render partial: 'addresses/new', locals: { address: @address}) %>");
+$('#new-address').hide();
+$('#new-link-address').show();
+$('#postal-code-created-<%= @address.id %>').text(postalCode)
+$('#address-error-new').hide();
