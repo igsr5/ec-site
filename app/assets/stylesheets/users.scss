@@ -93,7 +93,6 @@ body{
 }
 .new-link{
   border: dashed 1px #b1b1b1;
-  padding: 30px;
   transition: .5s;
   &:hover{
     border: dashed 1px #000000;
@@ -102,6 +101,7 @@ body{
     }
   }
   a{
+    padding: 30px;
     display: block;
     text-align: center;
     color: #b1b1b1;

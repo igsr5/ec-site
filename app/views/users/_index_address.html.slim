@@ -30,7 +30,7 @@
             .btn.btn-secondary.mr-2.address-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
-    li.pl-2.new-link
+    li.new-link
       = link_to addresses_path,method: :post, remote: true do
         = icon('fas','plus')
 
