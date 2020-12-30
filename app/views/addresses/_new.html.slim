@@ -1,5 +1,5 @@
 li.mb-4.pl-2.address-data id="address-#{address.id}"
-  p.postal_code#postal-code-created = address.postal_code 
+  p.postal_code id="postal-code-created-#{address.id}" = address.postal_code 
   = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
   .d-flex.mt-2
     .edit-link data-id="#{address.id}" 編集
