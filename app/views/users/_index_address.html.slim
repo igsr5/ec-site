@@ -31,6 +31,6 @@
             = f.submit "更新",class: 'btn btn-dark'
 
     li.pl-2.new-link
-      = link_to root_path do
+      = link_to addresses_path,method: :post, remote: true do
         = icon('fas','plus')
 
