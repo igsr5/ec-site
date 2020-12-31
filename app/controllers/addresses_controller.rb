@@ -16,6 +16,8 @@ class AddressesController < ApplicationController
   end
 
   def destroy
+    @address = Address.find(params[:id])
+    @address.update!(user_id: nil)
   end
 
   private
