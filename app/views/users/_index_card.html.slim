@@ -25,6 +25,22 @@
             .btn.btn-secondary.mr-2.card-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
-    li.pl-2.new-link#new-link-card
-      = link_to root_path do
+    li.new-link#new-link-card data-type="card"
+      a style="color: #b1b1b1;"
         = icon('fas','plus')
+    li.mb-4.pl-2.new#new-card
+      = form_with model: @card do |f|
+          = f.hidden_field :id,value: @card.id,class: 'card-id'
+          = f.hidden_field :user_id,value: @card.user_id
+          .form-group
+            = f.text_field :name,class: 'form-control', required: true,placeholder: Card.human_attribute_name(:name)
+          .form-group
+            = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
+          .d-flex.form-group
+            = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
+            = f.text_field :security_code,class: 'ml-2 form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
+          .form-error.pl-1 id="card-error-new"
+          .text-right
+            .btn.btn-secondary.mr-2.new-back data-type="card" 戻る
+            = f.submit "更新",class: 'btn btn-dark'
+
