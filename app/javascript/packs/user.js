@@ -1,11 +1,12 @@
 $("body").on('click','.edit-link',function(){
-  address_id=$(this).data('id');
-  $address_edit=$("#address-edit-"+address_id);
-  $address=$("#address-"+address_id);
-  $('.address-data').show();
+  id = $(this).data('id');
+  type = $(this).data('type');
+  $edit=$("#"+type+"-edit-"+id);
+  $type=$("#"+type+"-"+id);
+  $('.'+type+'-data').show();
   $(".edit").hide();
-  $address.hide();
-  $address_edit.show();
+  $type.hide();
+  $edit.show();
 })
 
 

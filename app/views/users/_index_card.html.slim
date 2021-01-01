@@ -7,15 +7,15 @@
         p = "期限：#{card.expiration_date}" 
         p = "名義：#{card.name}"
         .d-flex.mt-2
-          = link_to "編集",root_path,class: "edit-link"
+          .edit-link data-id="#{card.id}" data-type="card" 編集
           = link_to "削除",root_path,class: "ml-2 delete-link"
       li.mb-4.pl-2.edit id="card-edit-#{card.id}"
         = form_with model: card do |f|
           = f.hidden_field :id,value: card.id,class: 'card-id'
           = f.hidden_field :user_id,value: card.user_id
-          .form-error.pl-1 id="address-error-#{address.id}"
+          .form-error.pl-1 id="card-error-#{card.id}"
           .text-right
-            .btn.btn-secondary.mr-2.address-edit-back 戻る
+            .btn.btn-secondary.mr-2.card-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
     li.pl-2.new-link

@@ -26,7 +26,7 @@ $address.html(`
   <p class='postal_code'>${postal_code}</p> 
   <p>${prefecture}${city}${address1}${address2}</p>
   <div class="d-flex mt-2">
-    <div class="edit-link" data-id="${addressId}">編集</div>
+    <div class="edit-link" data-id="${addressId}" data-type="address">編集</div>
     <a class="delete-link ml-2" href="/addresses/${addressId}" data-remote="true" data-method="delete">削除</a>
   </div>
 `)
