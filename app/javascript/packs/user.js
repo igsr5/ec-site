@@ -8,7 +8,9 @@ $("body").on('click','.edit-link',function(){
   $address_edit.show();
 })
 
-$(".address-edit-back").on('click',function(){
+
+
+$("body").on('click','.address-edit-back',function(){
   $('.address-data').show();
   $('.edit').hide();
 })
