@@ -16,6 +16,12 @@ $("body").on('click','.address-edit-back',function(){
   $('.edit').hide();
 })
 
+$("body").on('click','.card-edit-back',function(){
+  $('.card-data').show();
+  $('.edit').hide();
+})
+
+
 $('body').on('click','.new-link',function(){
   $(this).hide();
   id = $(this).attr('id');
