@@ -23,7 +23,7 @@ $card.html(`
   <p>名義：${name}</p>
   <div class="d-flex mt-2">
     <div class="edit-link" data-id="${cardId}" data-type="card">編集</div>
-    <a class="ml-2 delete-link" href="/">削除</a>
+    <a class="delete-link ml-2" href="/cards/${cardId}" data-remote="true" data-method="delete">削除</a>
   </div>
   `)
 
