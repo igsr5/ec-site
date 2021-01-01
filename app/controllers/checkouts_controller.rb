@@ -22,8 +22,8 @@ class CheckoutsController < ApplicationController
 
   def address_set_session
     session[:is_save_address] = params[:page][:is_save] if current_user
-    session[:address_radio] = params[:page][:category]
-    if params[:page][:category] == 'new'
+    session[:address_radio] = params[:page][:category] 
+    if params[:page][:category] == "new"
       @address = Address.new(address_param)
       if @address.valid?
         session[:address] = address_param
@@ -33,7 +33,7 @@ class CheckoutsController < ApplicationController
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
         if current_user
-          @addresses = current_user.addresses
+          @addresses = current_user.addresses 
           render :address_form_user
         else
           render :address_form
@@ -53,23 +53,23 @@ class CheckoutsController < ApplicationController
     end
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
-    if current_user
+     if current_user
       @cards = current_user.cards
       render :card_form_user
     else
-      render :card_form
+      render :card_form 
     end
   end
 
   def card_set_session
     session[:is_save_card] = params[:page][:is_save] if current_user
-    session[:card_radio] = params[:page][:category]
-    if params[:page][:category] == 'new'
+    session[:card_radio] = params[:page][:category] 
+    if params[:page][:category] == "new"
       @card = Card.new(card_param)
       if @card.valid?
-        session[:card] = card_param
+        session[:card] = card_param 
         session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
-        redirect_to :checkouts_confirm
+        redirect_to :checkouts_confirm 
       else
         @cart = Cart.find(session[:cart_id])
         @order_details = @cart.order_details
@@ -93,22 +93,22 @@ class CheckoutsController < ApplicationController
 
   def issue_receipt
     cart = Cart.find(session[:cart_id])
-    address = if session[:address_radio] == 'new'
-      Address.create!(session[:address])
+    if session[:address_radio] == "new"
+      address = Address.create!(session[:address])
     else
-      Address.find(session[:address_radio])
+      address = Address.find(session[:address_radio])
     end
 
-    card = if session[:card_radio] == 'new'
-      Card.create!(session[:card])
+    if session[:card_radio] == "new"
+      card = Card.create!(session[:card])
     else
-      Card.find(session[:card_radio])
+      card = Card.find(session[:card_radio])
     end
 
     if current_user
-      Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, user_id: current_user.id)
+      Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
-      receipt = Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+      receipt=Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
       session[:receipt] = [] unless session[:receipt]
       session[:receipt] << receipt.id
     end
@@ -125,9 +125,9 @@ class CheckoutsController < ApplicationController
 
   def completed
     if current_user
-      @pagy, @receipts = pagy(current_user.receipts.order(id: 'DESC'), items: 6)
+      @pagy,@receipts = pagy(current_user.receipts.order(id: "DESC"), items: 6)
     elsif session[:receipt]
-      @pagy, @receipts = pagy(Receipt.find(session[:receipt].sort!.reverse!), items: 6)
+      @pagy,@receipts = pagy(Receipt.where(id: session[:receipt]),items: 6)
     end
     render :completion
   end
