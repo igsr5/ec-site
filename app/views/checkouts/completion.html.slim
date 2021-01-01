@@ -36,6 +36,8 @@
                 p.pt-1.link = order_detail.product.title
               p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
               p = "数量：#{order_detail.product_count}"
+    .d-flex.justify-content-center.mb-3.paginate
+      == pagy_foundation_nav(@pagy)
   - else
     p.mt-3.history-zero 注文はありません。
 = javascript_pack_tag 'checkout'

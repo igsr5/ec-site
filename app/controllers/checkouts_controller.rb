@@ -1,4 +1,5 @@
 class CheckoutsController < ApplicationController
+  include Pagy::Backend
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
@@ -124,9 +125,9 @@ class CheckoutsController < ApplicationController
 
   def completed
     if current_user
-      @receipts = current_user.receipts.order(id: "DESC")
+      @pagy,@receipts = pagy(current_user.receipts.order(id: "DESC"), items: 6)
     elsif session[:receipt]
-      @receipts = Receipt.find(session[:receipt].sort!.reverse!)
+      @pagy,@receipts = pagy(Receipt.find(session[:receipt].sort!.reverse!), items: 6)
     end
     render :completion
   end
