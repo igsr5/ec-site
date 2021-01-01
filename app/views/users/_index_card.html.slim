@@ -2,7 +2,7 @@
   h3.mb-4 カード情報 
   ul.user-data
     - @cards.each do |card| 
-      li.mb-4.pl-2 
+      li.mb-4.pl-2.card-data id="card-#{card.id}"
         p = "************#{card.card_num[12..16]}" 
         p = "期限：#{card.expiration_date}" 
         p = "名義：#{card.name}"

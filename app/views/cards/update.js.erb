@@ -1,0 +1,30 @@
+$(".card-data").show();
+$(".edit").hide();
+$(".form-error").hide();
+var cardNum = "<%= @card.card_num %>";
+cardNum = `************${cardNum.slice(12,16)}`;
+var name = "<%= @card.name %>";
+var expirationDate = "<%= @card.expiration_date%>";
+var id = <%= @id %>;
+var cardId = <%= @card.id %>;
+
+var $card = $(`#card-${id}`);
+var $cardEdit = $(`#card-edit-${id}`);
+
+$card.attr('id',`card-${cardId}`);
+
+$cardEdit.attr('id',`card-edit-${cardId}`);
+$('.card-id').attr('value',cardId);
+$(`#card-error-${id}`).attr('id',`card-error-${cardId}`);
+
+$card.html(`
+  <p>${cardNum}</p>
+  <p>期限：${expirationDate}</p>
+  <p>名義：${name}</p>
+  <div class="d-flex mt-2">
+    <div class="edit-link" data-id="${cardId}" data-type="card">編集</div>
+    <a class="ml-2 delete-link" href="/">削除</a>
+  </div>
+  `)
+
+
