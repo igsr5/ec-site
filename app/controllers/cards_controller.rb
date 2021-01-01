@@ -1,6 +1,9 @@
 class CardsController < ApplicationController
   def create
-
+    @card = Card.new(card_param)
+    unless @card.save
+      render :errors
+    end
   end
 
   def update
