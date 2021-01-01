@@ -6,8 +6,10 @@ class CardsController < ApplicationController
   def update
     @id = params[:card][:id]
     @card = Card.new(card_param)
-    if @card.save!
+    if @card.save
       Card.find(@id).update!(user_id: nil)
+    else
+      render :errors
     end
   end
 
