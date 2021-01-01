@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resource :users
   # addresses
   resources :addresses, only: [:create, :update, :destroy]
-  # card 
+  # card
   resources :cards, only: [:create, :update, :destroy]
   # products
   resources :products, only: [:index, :show]
