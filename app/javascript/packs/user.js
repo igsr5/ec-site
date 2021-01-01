@@ -21,14 +21,13 @@ $("body").on('click','.card-edit-back',function(){
 
 
 $('body').on('click','.new-link',function(){
+  type = $(this).data('type');
   $(this).hide();
-  id = $(this).attr('id');
-  if(id === 'new-link-address'){
-    $('#new-address').show();
-  }
+  $('#new-'+type).show();
 })
 
-$('.address-new-back').on('click',function(){
-  $('#new-address').hide();
-  $('#new-link-address').show();
+$('.new-back').on('click',function(){
+  type = $(this).data('type');
+  $('#new-'+type).hide();
+  $('#new-link-'+type).show();
 })

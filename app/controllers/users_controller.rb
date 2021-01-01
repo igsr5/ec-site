@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     @address = Address.new
+    @card = Card.new
     @addresses = current_user.addresses
     @cards = current_user.cards
   end
