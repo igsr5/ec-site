@@ -2,7 +2,7 @@ li.mb-4.pl-2.address-data id="address-#{address.id}"
   p.postal_code id="postal-code-created-#{address.id}" = address.postal_code 
   = "#{address.prefecture}#{address.city}#{address.address1}#{address&.address2}"
   .d-flex.mt-2
-    .edit-link data-id="#{address.id}" 編集
+    .edit-link data-id="#{address.id}" data-type="address" 編集
     = link_to "削除", address_path(address),method: :delete,remote: true,class: "delete-link ml-2"
 
 li.mb-4.pl-2.edit id="address-edit-#{address.id}"

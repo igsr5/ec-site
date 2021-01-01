@@ -1,0 +1,12 @@
+var messages = <%== @card.errors.full_messages %>
+<% if @id %>
+  var id = <%== @id %>
+  $formError = $(`#card-error-${id}`);
+<% else %>
+  $formError = $('#card-error-new')
+<% end %>
+$formError.html("");
+for (message of messages){
+  $formError.append(`<p>${message}</p>`);
+}
+$formError.show();

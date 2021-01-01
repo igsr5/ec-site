@@ -8,9 +8,10 @@ class AddressesController < ApplicationController
 
   def update
     @id = params[:address][:id]
-    Address.find(@id).update!(user_id: nil)
     @address = Address.new(address_param)
-    unless @address.save
+    if @address.save
+      Address.find(@id).update!(user_id: nil)
+    else
       render :errors
     end
   end
