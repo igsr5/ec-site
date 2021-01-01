@@ -30,7 +30,7 @@
             .btn.btn-secondary.mr-2.address-edit-back 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
-    li.new-link#new-link-address
+    li.new-link#new-link-address data-type="address"
       a style="color: #b1b1b1;"
         = icon('fas','plus')
     li.mb-4.pl-2.new#new-address
@@ -50,6 +50,6 @@
           = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2),id: 'address2-new'
         .form-error.pl-1 id="address-error-new"
         .text-right
-          .btn.btn-secondary.mr-2.address-new-back 戻る
+          .btn.btn-secondary.mr-2.new-back data-type="address" 戻る
           = f.submit "追加",class: 'btn btn-dark'
 
