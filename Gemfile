@@ -43,7 +43,8 @@ gem 'bcrypt', '~> 3.1'
 gem 'activerecord-belongs_to_if', '~> 0.1'
 # Logical Delete
 gem 'paranoia', '~> 2.4'
-
+# Pay.jp
+gem 'payjp'
 
 # ------------------------------------------------------------------------------
 # Front
