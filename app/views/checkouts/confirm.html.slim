@@ -20,11 +20,8 @@
           = link_to "編集",checkouts_card_path
         .form-section
           h5 お支払情報
-          .d-flex
-            p = session[:payjp_token]
-          /  p = "************#{session[:card]["card_num"][12..16]}"
-          /  p.ml-3 = "期限：#{session[:card]["expiration_date"]}"
-          /p = "名義：#{session[:card]["name"]}"
+          p.mt-3 = "************#{@token.card.last4}"
+          p = "期限：#{@token.card.exp_month}/#{@token.card.exp_year}"
       article.mb-3.current-form
         .form-title
           h3 3．ご注文の確認

@@ -108,6 +108,8 @@ gem 'counter_culture', '~> 2.2'
 gem 'googleauth', '~> 0.10'
 # Google api client
 gem 'google-api-client', '~> 0.36'
+# dotenv
+gem 'dotenv-rails'
 
 # ------------------------------------------------------------------------------
 # Development and Test Only

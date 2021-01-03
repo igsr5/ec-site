@@ -46,10 +46,14 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
+    if session[:payjp_token]
+      Payjp.api_key = ENV['PAYJP_API_KEY']
+      @token = Payjp::Token.retrieve(session[:payjp_token])
+    end
     @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
-     if current_user
+    if current_user
       @cards = current_user.cards
       render :card_form_user
     else
@@ -71,6 +75,8 @@ class CheckoutsController < ApplicationController
   end
 
   def confirm
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    @token = Payjp::Token.retrieve(session[:payjp_token])
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
   end
@@ -93,7 +99,7 @@ class CheckoutsController < ApplicationController
     receipt = if current_user
       Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
-      Payjp.api_key = 'sk_test_509605c2828a4b1f7766a0b5' 
+      Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
       charge = Payjp::Charge.create(
         card: card.token,
         amount: cart.price_tax_add_fee,
@@ -109,10 +115,11 @@ class CheckoutsController < ApplicationController
   end
 
   def completed
+    Payjp.api_key = ENV['PAYJP_API_KEY']
     if current_user
       @pagy,@receipts = pagy(current_user.receipts.order(id: "DESC"), items: 6)
     elsif session[:receipt]
-      @pagy,@receipts = pagy(Receipt.where(id: session[:receipt]),items: 6)
+      @pagy,@receipts = pagy(Receipt.where(id: session[:receipt]).order(id: "DESC"),items: 6)
     end
     render :completion
   end
