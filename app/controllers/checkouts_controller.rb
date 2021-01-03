@@ -93,7 +93,7 @@ class CheckoutsController < ApplicationController
     receipt = if current_user
       Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
-      Payjp.api_key = 'sk_test_509605c2828a4b1f7766a0b5' 
+      Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
       charge = Payjp::Charge.create(
         card: card.token,
         amount: cart.price_tax_add_fee,
