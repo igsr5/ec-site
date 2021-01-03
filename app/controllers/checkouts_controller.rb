@@ -97,14 +97,7 @@ class CheckoutsController < ApplicationController
       session[:receipt] = [] unless session[:receipt]
       session[:receipt] << receipt.id
     end
-    session.delete(:cart_id)
-    session.delete(:address)
-    session.delete(:card)
-    session.delete(:payjp_token)
-    session.delete(:address_radio)
-    session.delete(:card_radio)
-    session.delete(:is_save_card)
-    session.delete(:is_save_address)
+    session_clear
     cart = Cart.create!(user_id: current_user.id) if current_user
     redirect_to :checkouts_completion
   end
@@ -143,6 +136,15 @@ class CheckoutsController < ApplicationController
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
 
-
+  def session_clear 
+    session.delete(:cart_id)
+    session.delete(:address)
+    session.delete(:card)
+    session.delete(:payjp_token)
+    session.delete(:address_radio)
+    session.delete(:card_radio)
+    session.delete(:is_save_card)
+    session.delete(:is_save_address)
+  end
 
 end
