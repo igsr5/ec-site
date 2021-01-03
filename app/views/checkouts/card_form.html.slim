@@ -20,7 +20,6 @@
           .form-check.mb-3
             = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: true 
             = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'
-
           .row
             .form-group.col-6
               = f.label :card_num,class: "require-label"
@@ -32,6 +31,7 @@
             .form-group.col-3
               = f.label :security_code,class: "require-label"
               .payjp-submit#cvc-form
+            .form-error.pl-3
           .text-right.mt-3
             = f.submit "次に進む",class: 'payjp-submit btn btn-dark'
       article.mb-3
