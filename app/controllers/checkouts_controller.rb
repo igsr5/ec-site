@@ -46,11 +46,7 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    @card = if session[:card]
-      Card.new(session[:card])
-    else
-      Card.new
-    end
+    @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
      if current_user
@@ -88,7 +84,8 @@ class CheckoutsController < ApplicationController
     end
 
     if session[:card_radio] == "new"
-      card = Card.create!(session[:card])
+      card = Card.new(token: session[:payjp_token])
+      card.save
     else
       card = Card.find(session[:card_radio])
     end
@@ -136,7 +133,7 @@ class CheckoutsController < ApplicationController
   end
 
   def has_card_session
-    unless session[:card]
+    unless session[:payjp_token]
       redirect_to carts_path
     end
   end
