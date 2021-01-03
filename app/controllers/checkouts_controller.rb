@@ -71,6 +71,8 @@ class CheckoutsController < ApplicationController
   end
 
   def confirm
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    @token = Payjp::Token.retrieve(session[:payjp_token])
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
   end
