@@ -65,21 +65,9 @@ class CheckoutsController < ApplicationController
     session[:is_save_card] = params[:page][:is_save] if current_user
     session[:card_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
-      @card = Card.new(card_param)
-      if @card.valid?
-        session[:card] = card_param 
-        session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
-        redirect_to :checkouts_confirm 
-      else
-        @cart = Cart.find(session[:cart_id])
-        @order_details = @cart.order_details
-        if current_user
-          @cards = current_user.cards
-          render :card_form_user
-        else
-          render :card_form
-        end
-      end
+      session[:payjp_token] = params[:payjp_token]
+      session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
+      redirect_to :checkouts_confirm 
     else
       session[:card] = Card.find(params[:page][:category])
       redirect_to :checkouts_confirm
@@ -157,8 +145,6 @@ class CheckoutsController < ApplicationController
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
 
-  def card_param
-    params.require(:card).permit(:name, :card_num, :expiration_date, :security_code)
-  end
+
 
 end

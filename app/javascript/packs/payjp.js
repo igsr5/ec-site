@@ -26,6 +26,7 @@ $form.on("click","input[type=submit]",function(e){
       $form.find("input[type=submit]").prop("disabled", false);
     }else{
       $form.append($('<input type="hidden" name="payjp_token" class="payjp-token" />').val(r.id));
+      $form.get(0).submit();
     }
   })
 })
