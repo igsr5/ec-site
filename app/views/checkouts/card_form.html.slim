@@ -16,36 +16,28 @@
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_card_path,class: "checkout-form",local: true do |f|
+        =form_with model: @card,url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
           .form-check.mb-3
             = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: true 
             = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'
 
           .row
             .form-group.col-6
-                = f.label :name,class: "require-label"
-                = f.text_field :name,class: 'form-control', required: true
-          .row
-            .form-group.col-6
               = f.label :card_num,class: "require-label"
-              = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
-              - if @card.errors.include?(:card_num)
-                p.form-error = @card.errors.full_messages_for(:card_num).first
+              .payjs-outer#number-form
+              div
             .form-group.col-3
               = f.label :expiration_date,class: "require-label"
-              = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
-              - if @card.errors.include?(:expiration_date)
-                p.form-error = @card.errors.full_messages_for(:expiration_date).first
+              .payjs-outer#expiry-form
             .form-group.col-3
               = f.label :security_code,class: "require-label"
-              = f.text_field :security_code,class: 'form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
-              - if @card.errors.include?(:security_code)
-                p.form-error = @card.errors.full_messages_for(:security_code).first
+              .payjp-submit#cvc-form
           .text-right.mt-3
-            = f.submit "次に進む",class: 'btn btn-dark'
+            = f.submit "次に進む",class: 'payjp-submit btn btn-dark'
       article.mb-3
         .form-title
           h3 3．ご注文の確認
     .col-3
       = render partial: "layouts/checkout-side"
 = javascript_pack_tag 'checkout'
+= javascript_pack_tag 'payjp'
