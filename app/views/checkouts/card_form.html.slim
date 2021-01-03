@@ -30,8 +30,8 @@
               .payjs-outer#expiry-form
             .form-group.col-3
               = f.label :security_code,class: "require-label"
-              .payjp-submit#cvc-form
-            .form-error.pl-3
+              .payjp-outer#cvc-form
+          .form-error.pl-3
           .text-right.mt-3
             = f.submit "次に進む",class: 'payjp-submit btn btn-dark'
       article.mb-3

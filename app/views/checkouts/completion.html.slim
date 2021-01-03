@@ -3,6 +3,7 @@
   h2 注文履歴
   - if @receipts && !@receipts.empty?
     - @receipts.each do |receipt|
+      - charge = Payjp::Charge.retrieve(receipt.charge_id)
       .history-items.mt-4.mb-3
         .history-head.row
           .col-2.mr-2
@@ -13,7 +14,7 @@
             p = "¥ #{receipt.cart.price_add_comma()}円"
           .col-2.mr-2
             p お支払情報 
-            /p = "************#{receipt.card.card_num[12..16]}"
+            p = "************#{charge.card.last4}"
 
           .address.col-2
             p お届け先
