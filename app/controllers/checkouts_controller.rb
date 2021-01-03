@@ -100,6 +100,7 @@ class CheckoutsController < ApplicationController
     session.delete(:cart_id)
     session.delete(:address)
     session.delete(:card)
+    session.delete(:payjp_token)
     session.delete(:address_radio)
     session.delete(:card_radio)
     session.delete(:is_save_card)
