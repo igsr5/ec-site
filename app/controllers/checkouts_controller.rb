@@ -90,10 +90,16 @@ class CheckoutsController < ApplicationController
       card = Card.find(session[:card_radio])
     end
 
-    if current_user
-      Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
+    receipt = if current_user
+      Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
     else
-      receipt=Receipt.create(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee)
+      Payjp.api_key = 'sk_test_509605c2828a4b1f7766a0b5' 
+      charge = Payjp::Charge.create(
+        card: card.token,
+        amount: cart.price_tax_add_fee,
+        currency: 'jpy',
+      )
+      receipt=Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,charge_id: charge.id)
       session[:receipt] = [] unless session[:receipt]
       session[:receipt] << receipt.id
     end
