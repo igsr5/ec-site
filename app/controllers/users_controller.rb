@@ -16,6 +16,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    customer = Payjp::Customer.create
+    @user.customer_id = customer.id
     if @user.save
       redirect_to :login if @user.valid?
     else
