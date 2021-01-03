@@ -119,7 +119,7 @@ class CheckoutsController < ApplicationController
     if current_user
       @pagy,@receipts = pagy(current_user.receipts.order(id: "DESC"), items: 6)
     elsif session[:receipt]
-      @pagy,@receipts = pagy(Receipt.where(id: session[:receipt]),items: 6)
+      @pagy,@receipts = pagy(Receipt.where(id: session[:receipt]).order(id: "DESC"),items: 6)
     end
     render :completion
   end
