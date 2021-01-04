@@ -47,14 +47,14 @@ class CheckoutsController < ApplicationController
 
   def card_form_show
     if session[:payjp_token]
-      Payjp.api_key = ENV['PAYJP_API_KEY']
-      @token = Payjp::Token.retrieve(session[:payjp_token])
     end
     @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     if current_user
-      @cards = current_user.cards
+      Payjp.api_key = ENV['PAYJP_API_KEY']
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      @customer_card = customer.cards.retrieve(customer.default_card)
       render :card_form_user
     else
       render :card_form 
@@ -66,7 +66,7 @@ class CheckoutsController < ApplicationController
     session[:card_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
       session[:payjp_token] = params[:payjp_token]
-      session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
+      session[:is_save_card] = current_user.id if current_user && params[:page][:is_save]
       redirect_to :checkouts_confirm 
     else
       session[:card] = Card.find(params[:page][:category])
@@ -95,12 +95,26 @@ class CheckoutsController < ApplicationController
     else
       card = Card.find(session[:card_radio])
     end
+
     Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
-    charge = Payjp::Charge.create(
-      card: card.token,
-      amount: cart.price_tax_add_fee,
-      currency: 'jpy',
-    )
+
+    if session[:is_save_card]
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer.card = card.token
+      customer.save
+      charge = Payjp::Charge.create(
+        customer: customer.id,
+        amount: cart.price_tax_add_fee,
+        currency: 'jpy',
+      )
+    else
+      charge = Payjp::Charge.create(
+        card: card.token,
+        amount: cart.price_tax_add_fee,
+        currency: 'jpy',
+      )
+    end
+
     if current_user
       Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id,charge_id: charge.id)
     else
@@ -108,6 +122,7 @@ class CheckoutsController < ApplicationController
       session[:receipt] = [] unless session[:receipt]
       session[:receipt] << receipt.id
     end
+
     session_clear
     cart = Cart.create!(user_id: current_user.id) if current_user
     redirect_to :checkouts_completion
