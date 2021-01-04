@@ -17,14 +17,15 @@
         .form-title
           h3 2．お支払方法/ご請求情報
         =form_with model: @card,url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
-          .form-check.mb-3
-            = radio_button 'page', 'category','default',id: "default", class: 'form-check-input',checked: session[:card_radio]=="default"
-            = label_tag 'default',class: 'form-check-label'
-              p.mb-2 
-                span 登録済みのカードを使う
-                = link_to '（登録カードの編集はこちら）', users_path
-              p = "************#{@customer_card.last4}"
-              p = "期限：#{@customer_card.exp_month}/#{@customer_card.exp_year}"
+          - if @customer_card
+            .form-check.mb-3
+              = radio_button 'page', 'category','default',id: "default", class: 'form-check-input',checked: session[:card_radio]=="default"
+              = label_tag 'default',class: 'form-check-label'
+                p.mb-2 
+                  span 登録済みのカードを使う
+                  = link_to '（登録カードの編集はこちら）', users_path
+                p = "************#{@customer_card.last4}"
+                p = "期限：#{@customer_card.exp_month}/#{@customer_card.exp_year}"
           .form-check.mb-3
             = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: session[:card_radio]=="new"
             = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'

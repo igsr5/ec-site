@@ -46,15 +46,13 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    if session[:payjp_token]
-    end
     @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     if current_user
       Payjp.api_key = ENV['PAYJP_API_KEY']
       customer = Payjp::Customer.retrieve(current_user.customer_id)
-      @customer_card = customer.cards.retrieve(customer.default_card)
+      @customer_card = customer.cards.retrieve(customer.default_card) if customer.default_card
       render :card_form_user
     else
       render :card_form 
