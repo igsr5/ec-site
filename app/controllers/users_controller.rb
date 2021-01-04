@@ -1,12 +1,14 @@
 class UsersController < ApplicationController
   before_action :has_user_session, except: [:new, :create]
   def show
+    Payjp.api_key = ENV['PAYJP_API_KEY']
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     @address = Address.new
-    @card = Card.new
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    @card = customer.cards.retrieve(customer.default_card) if customer.default_card
+
     @addresses = current_user.addresses
-    @cards = current_user.cards
   end
 
   def new
@@ -14,9 +16,8 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-
     Payjp.api_key = ENV['PAYJP_API_KEY']
+    @user = User.new(user_params)
     customer = Payjp::Customer.create
     @user.customer_id = customer.id
     if @user.save
