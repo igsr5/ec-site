@@ -9,13 +9,9 @@ $("body").on('click','.edit-link',function(){
   $edit.show();
 })
 
-$("body").on('click','.address-edit-back',function(){
-  $('.address-data').show();
-  $('.edit').hide();
-})
-
-$("body").on('click','.card-edit-back',function(){
-  $('.card-data').show();
+$("body").on('click','.edit-back',function(){
+  type = $(this).data('type');
+  $('.'+type+'-data').show();
   $('.edit').hide();
 })
 
