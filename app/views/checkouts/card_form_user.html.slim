@@ -22,8 +22,9 @@
               = radio_button 'page', 'category','default',id: "default", class: 'form-check-input',checked: session[:card_radio]=="default"
               = label_tag 'default',class: 'form-check-label'
                 p.mb-2 
-                  span 登録済みのカードを使う
-                  = link_to '（登録カードの編集はこちら）', users_path
+                  span 登録済みのカードを使う（
+                  = link_to '登録カードの編集はこちら', users_path,class: "users-link";
+                  span ）
                 p = "************#{@customer_card.last4}"
                 p = "期限：#{@customer_card.exp_month}/#{@customer_card.exp_year}"
           .form-check.mb-3
