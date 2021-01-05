@@ -59,6 +59,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def delete_card
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    if customer.default_card
+      card = customer.cards.retrieve(customer.default_card) 
+      card.delete
+    end
+    redirect_to :users
+  end
+
   private
 
   def user_params
