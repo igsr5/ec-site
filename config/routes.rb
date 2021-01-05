@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   # root
   root to: 'products#index'
   # users
-  resource :users
+  resource :users do
+    collection do
+      post 'add_card'
+      delete 'delete_card'
+    end
+  end
   # addresses
   resources :addresses, only: [:create, :update, :destroy]
   # card
