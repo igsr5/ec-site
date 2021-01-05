@@ -46,15 +46,13 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    if session[:payjp_token]
-      Payjp.api_key = ENV['PAYJP_API_KEY']
-      @token = Payjp::Token.retrieve(session[:payjp_token])
-    end
     @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     if current_user
-      @cards = current_user.cards
+      Payjp.api_key = ENV['PAYJP_API_KEY']
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      @customer_card = customer.cards.retrieve(customer.default_card) if customer.default_card
       render :card_form_user
     else
       render :card_form 
@@ -66,17 +64,19 @@ class CheckoutsController < ApplicationController
     session[:card_radio] = params[:page][:category] 
     if params[:page][:category] == "new"
       session[:payjp_token] = params[:payjp_token]
-      session[:card][:user_id] = current_user.id if current_user && params[:page][:is_save]
-      redirect_to :checkouts_confirm 
-    else
-      session[:card] = Card.find(params[:page][:category])
-      redirect_to :checkouts_confirm
+      session[:is_save_card] = current_user.id if current_user && params[:page][:is_save]
     end
+    redirect_to :checkouts_confirm
   end
 
   def confirm
     Payjp.api_key = ENV['PAYJP_API_KEY']
-    @token = Payjp::Token.retrieve(session[:payjp_token])
+    if session[:card_radio] == 'default'
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      @customer_card = customer.cards.retrieve(customer.default_card) 
+    else
+      @customer_card= Payjp::Token.retrieve(session[:payjp_token]).card
+    end
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
   end
@@ -89,26 +89,42 @@ class CheckoutsController < ApplicationController
       address = Address.find(session[:address_radio])
     end
 
-    if session[:card_radio] == "new"
-      card = Card.new(token: session[:payjp_token])
-      card.save
-    else
-      card = Card.find(session[:card_radio])
-    end
+    Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
 
-    receipt = if current_user
-      Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id)
-    else
-      Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
+    if session[:is_save_card]
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer.cards.create(
+        card: session[:payjp_token],
+        default: true
+      )
       charge = Payjp::Charge.create(
-        card: card.token,
+        customer: customer.id,
         amount: cart.price_tax_add_fee,
         currency: 'jpy',
       )
-      receipt=Receipt.create!(cart_id: cart.id, address_id: address.id, card_id: card.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,charge_id: charge.id)
+    elsif session[:card_radio] == 'default'
+      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      charge = Payjp::Charge.create(
+        customer: customer.id,
+        amount: cart.price_tax_add_fee,
+        currency: 'jpy',
+      )
+    else
+      charge = Payjp::Charge.create(
+        card: session[:payjp_token],
+        amount: cart.price_tax_add_fee,
+        currency: 'jpy',
+      )
+    end
+
+    if current_user
+      Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,user_id: current_user.id,charge_id: charge.id)
+    else
+      receipt=Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee,charge_id: charge.id)
       session[:receipt] = [] unless session[:receipt]
       session[:receipt] << receipt.id
     end
+
     session_clear
     cart = Cart.create!(user_id: current_user.id) if current_user
     redirect_to :checkouts_completion
@@ -140,7 +156,7 @@ class CheckoutsController < ApplicationController
   end
 
   def has_card_session
-    unless session[:payjp_token]
+    unless session[:payjp_token] || session[:card_radio] == 'default'
       redirect_to carts_path
     end
   end

@@ -20,8 +20,8 @@
           = link_to "編集",checkouts_card_path
         .form-section
           h5 お支払情報
-          p.mt-3 = "************#{@token.card.last4}"
-          p = "期限：#{@token.card.exp_month}/#{@token.card.exp_year}"
+          p.mt-3 = "************#{@customer_card.last4}"
+          p = "期限：#{@customer_card.exp_month}/#{@customer_card.exp_year}"
       article.mb-3.current-form
         .form-title
           h3 3．ご注文の確認

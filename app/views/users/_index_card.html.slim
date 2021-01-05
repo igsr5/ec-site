@@ -1,45 +1,28 @@
 .col-md-6.pl-5
-  h3.mb-4 カード情報 
+  h3.mb-2 カード情報 
+  p.mb-3.card-dsc 登録できるカードはおひとり様1枚までです。
   ul.user-data
-    - @cards.each do |card| 
-      li.mb-4.pl-2.card-data id="card-#{card.id}"
-        p = "************#{card.card_num[12..16]}" 
-        p = "期限：#{card.expiration_date}" 
-        p = "名義：#{card.name}"
-        .d-flex.mt-2
-          .edit-link data-id="#{card.id}" data-type="card" 編集
-          = link_to "削除",card_path(card),method: :delete,remote: true,class: "ml-2 delete-link"
-      li.mb-4.pl-2.edit id="card-edit-#{card.id}"
-        = form_with model: card do |f|
-          = f.hidden_field :id,value: card.id,class: 'card-id'
-          = f.hidden_field :user_id,value: card.user_id
+    - if @card
+      li.mb-4.pl-2.card-data 
+        p = "************#{@card.last4}" 
+        p.mb-2 = "期限：#{@card.exp_month}/#{@card.exp_year}" 
+        = link_to "削除",delete_card_users_path,method: :delete,class: "delete-link"
+    - else
+      li.new-link#new-link-card data-type="card"
+        a style="color: #b1b1b1;"
+          = icon('fas','plus')
+      li.mb-4.pl-2.new#new-card
+        = form_with url: add_card_users_path ,class: 'payjp-form', local: true do 
           .form-group
-            = f.text_field :name,class: 'form-control', required: true,placeholder: Card.human_attribute_name(:name)
-          .form-group
-            = f.text_field :card_num,class: 'form-control',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
-          .d-flex.form-group
-            = f.text_field :expiration_date,class: 'form-control', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
-            = f.text_field :security_code,class: 'ml-2 form-control', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
-          .form-error.pl-1 id="card-error-#{card.id}"
-          .text-right
-            .btn.btn-secondary.mr-2.card-edit-back 戻る
-            = f.submit "更新",class: 'btn btn-dark'
-
-    li.new-link#new-link-card data-type="card"
-      a style="color: #b1b1b1;"
-        = icon('fas','plus')
-    li.mb-4.pl-2.new#new-card
-      = form_with model: @card do |f|
-          = f.hidden_field :user_id,value: current_user.id 
-          .form-group
-            = f.text_field :name,class: 'form-control',id: 'name-new', required: true,placeholder: Card.human_attribute_name(:name)
-          .form-group
-            = f.text_field :card_num,class: 'form-control',id: 'card-num-new',maxlength: 16, required: true,placeholder: "例)0000000000000000",oninput: "numberOnly(this.id)"
-          .d-flex.form-group
-            = f.text_field :expiration_date,class: 'form-control',id: 'expiration-date-new', required: true,placeholder: "MM/YY",maxlength: 5,oninput: "numberAndHyphenOnly(this.id)"
-            = f.text_field :security_code,class: 'ml-2 form-control',id: 'security-code-new', required: true,placeholder: "×××",maxlength: 4,oninput: "numberOnly(this.id)"
-          .form-error.pl-1 id="card-error-new"
-          .text-right
+            .payjs-outer#number-form
+          .row
+            .form-group.col-6
+              .payjs-outer#expiry-form
+            .form-group.col-6
+              .payjp-outer#cvc-form
+          .form-error.pl-3
+          .text-right.mt-2
             .btn.btn-secondary.mr-2.new-back data-type="card" 戻る
-            = f.submit "更新",class: 'btn btn-dark'
+            = submit_tag "次に進む",class: 'payjp-submit btn btn-dark'
+= javascript_pack_tag 'payjp'
 

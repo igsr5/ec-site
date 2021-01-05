@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_03_103546) do
+ActiveRecord::Schema.define(version: 2021_01_04_124939) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 2021_01_03_103546) do
   create_table "receipts", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "address_id", null: false
-    t.integer "card_id", null: false
     t.integer "total_price", null: false
     t.integer "total_price_tax", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -76,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_01_03_103546) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "family_name", null: false
     t.text "given_name", null: false
+    t.string "customer_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

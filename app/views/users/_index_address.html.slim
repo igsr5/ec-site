@@ -27,7 +27,7 @@
             = f.text_field :address2,class: 'form-control', placeholder: Address.human_attribute_name(:address2)
           .form-error.pl-1 id="address-error-#{address.id}"
           .text-right
-            .btn.btn-secondary.mr-2.address-edit-back 戻る
+            .btn.btn-secondary.mr-2.edit-back data-type="address" 戻る
             = f.submit "更新",class: 'btn btn-dark'
 
     li.new-link#new-link-address data-type="address"

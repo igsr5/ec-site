@@ -1,12 +1,14 @@
 class UsersController < ApplicationController
   before_action :has_user_session, except: [:new, :create]
   def show
+    Payjp.api_key = ENV['PAYJP_API_KEY']
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     @address = Address.new
-    @card = Card.new
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    @card = customer.cards.retrieve(customer.default_card) if customer.default_card
+
     @addresses = current_user.addresses
-    @cards = current_user.cards
   end
 
   def new
@@ -14,8 +16,10 @@ class UsersController < ApplicationController
   end
 
   def create
+    Payjp.api_key = ENV['PAYJP_API_KEY']
     @user = User.new(user_params)
-
+    customer = Payjp::Customer.create
+    @user.customer_id = customer.id
     if @user.save
       redirect_to :login if @user.valid?
     else
@@ -53,6 +57,25 @@ class UsersController < ApplicationController
     else
       render :delete_confirm
     end
+  end
+
+  def add_card
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    customer.cards.create(
+      card: params[:payjp_token],
+      default: true
+    )
+    redirect_to :users
+  end
+
+  def delete_card
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    if customer.default_card
+      card = customer.cards.retrieve(customer.default_card) 
+      card.delete
+    end
+    redirect_to :users
   end
 
   private
