@@ -59,6 +59,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def add_card
+    customer = Payjp::Customer.retrieve(current_user.customer_id)
+    customer.cards.create(
+      card: params[:payjp_token],
+      default: true
+    )
+    redirect_to :users
+  end
+
   def delete_card
     Payjp.api_key = ENV['PAYJP_API_KEY']
     customer = Payjp::Customer.retrieve(current_user.customer_id)

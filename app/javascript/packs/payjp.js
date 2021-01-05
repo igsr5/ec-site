@@ -19,9 +19,8 @@ $('#cvc-form').addClass('form-control').addClass('payjp-input');
 
 // createTokenの引数には任意のElement1つを渡します
 $form.on("click","input[type=submit]",function(e){
-  isNew = $('#new').is(':checked');
-  console.log(isNew)
-  if (isNew){
+  isDefault = $('#default').is(':checked');
+  if (!isDefault){
     $form.find("input[type=submit]").prop("disabled", true);
     payjp.createToken(numberElement).then(function(r) {
       if (r.error){

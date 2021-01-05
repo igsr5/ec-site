@@ -12,8 +12,7 @@
         a style="color: #b1b1b1;"
           = icon('fas','plus')
       li.mb-4.pl-2.new#new-card
-        = form_with url: add_card_users_path do 
-
+        = form_with url: add_card_users_path ,class: 'payjp-form', local: true do 
           .form-group
             .payjs-outer#number-form
           .row
