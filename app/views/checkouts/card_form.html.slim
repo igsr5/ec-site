@@ -16,23 +16,23 @@
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
+        =form_with url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
           .form-check.mb-3
             = radio_button 'page', 'category','new',id: "new",class: 'form-check-input',required: true,checked: true 
             = label_tag 'new',"新しいカードを追加する",class: 'form-check-label'
           .row
             .form-group.col-6
-              = f.label :card_num,class: "require-label"
+              = label_tag 'cardNumber','カード番号',class: "require-label"
               .payjs-outer#number-form
             .form-group.col-3
-              = f.label :expiration_date,class: "require-label"
+              = label_tag 'cardExpiry','有効期限年',class: "require-label"
               .payjs-outer#expiry-form
             .form-group.col-3
-              = f.label :security_code,class: "require-label"
+              = label_tag 'cardCvc','CVC',class: "require-label"
               .payjp-outer#cvc-form
           .form-error.pl-3
           .text-right.mt-3
-            = f.submit "次に進む",class: 'payjp-submit btn btn-dark'
+            = submit_tag "次に進む",class: 'payjp-submit btn btn-dark'
       article.mb-3
         .form-title
           h3 3．ご注文の確認

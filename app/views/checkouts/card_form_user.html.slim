@@ -16,7 +16,7 @@
       article.mb-3.current-form
         .form-title
           h3 2．お支払方法/ご請求情報
-        =form_with model: @card,url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
+        =form_with url: checkouts_card_path,class: "checkout-form payjp-form",local: true do |f|
           - if @customer_card
             .form-check.mb-3
               = radio_button 'page', 'category','default',id: "default", class: 'form-check-input',checked: session[:card_radio]=="default"
@@ -33,13 +33,13 @@
           .d-none.form-new
             .row
               .form-group.col-6
-                = f.label :card_num,class: "require-label"
+                = label_tag 'cardNumber','カード番号',class: "require-label"
                 .payjs-outer#number-form
               .form-group.col-3
-                = f.label :expiration_date,class: "require-label"
+                = label_tag 'cardExpiry','有効期限年',class: "require-label"
                 .payjs-outer#expiry-form
               .form-group.col-3
-                = f.label :security_code,class: "require-label"
+                = label_tag 'cardCvc','CVC', class: "require-label"
                 .payjs-outer#cvc-form
             .form-error.pl-3
             - unless @customer_card
@@ -47,7 +47,7 @@
                 = check_box :page, :is_save,{id: 'is_save',class: 'custom-control-input',checked: session[:is_save_card]},"checked",false
                 = label_tag :is_save, "このカード情報を保存する",class: 'custom-control-label'
           .text-right.mt-3
-            = f.submit "次に進む",class: 'payjp-submit btn btn-dark'
+            = submit_tag "次に進む",class: 'payjp-submit btn btn-dark'
       article.mb-3
         .form-title
           h3 3．ご注文の確認
