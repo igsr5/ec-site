@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     customer = Payjp::Customer.retrieve(current_user.customer_id)
     customer.cards.create(
       card: params[:payjp_token],
-      default: true
+      default: true,
     )
     redirect_to :users
   end
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     Payjp.api_key = ENV['PAYJP_API_KEY']
     customer = Payjp::Customer.retrieve(current_user.customer_id)
     if customer.default_card
-      card = customer.cards.retrieve(customer.default_card) 
+      card = customer.cards.retrieve(customer.default_card)
       card.delete
     end
     redirect_to :users

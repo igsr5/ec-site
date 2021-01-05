@@ -46,7 +46,6 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    @card = Card.new
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
     if current_user
