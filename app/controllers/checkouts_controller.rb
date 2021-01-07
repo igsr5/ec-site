@@ -120,7 +120,7 @@ class CheckoutsController < ApplicationController
       Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, user_id: current_user.id, charge_id: charge.id)
     else
       receipt = Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id)
-      session[:receipt] = [] unless session[:receipt]
+      session[:receipt] = [] unless session[:receipt] 
       session[:receipt] << receipt.id
     end
 
