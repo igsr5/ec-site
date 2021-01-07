@@ -77,8 +77,6 @@ class CheckoutsController < ApplicationController
   end
 
   def issue_receipt
-    cart = Cart.find(session[:cart_id])
-
     # Receiptに紐づける配送先
     address = if session[:address_radio] == 'new'
       Address.create!(session[:address])
@@ -94,28 +92,28 @@ class CheckoutsController < ApplicationController
       )
       charge = Payjp::Charge.create(
         customer: customer.id,
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
     elsif session[:card_radio] == 'default' # ユーザーが保存したカードを使う場合
       customer = current_user.get_payjp_customer
       charge = Payjp::Charge.create(
         customer: customer.id,
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
     else
       charge = Payjp::Charge.create(
         card: session[:payjp_token],
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
     end
 
     if current_user
-      Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
+      Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
-      receipt = Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id)
+      receipt = Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id)
       session[:receipt] = [] unless session[:receipt] 
       session[:receipt] << receipt.id # 匿名時の注文履歴
     end
@@ -125,7 +123,7 @@ class CheckoutsController < ApplicationController
     redirect_to :checkouts_completion
   end
 
-  def completed
+  def completed # 注文履歴（名前が適切でない）
     if current_user
       @pagy, @receipts = pagy(current_user.receipts.order(id: 'DESC'), items: 6)
     elsif session[:receipt]
@@ -137,8 +135,7 @@ class CheckoutsController < ApplicationController
   private
 
   def is_cart
-    cart = Cart.find(session[:cart_id])
-    if cart.is_cart_empty
+    if current_cart.is_cart_empty
       redirect_to carts_path
     end
   end
@@ -156,7 +153,7 @@ class CheckoutsController < ApplicationController
   end
 
   def set_cart_and_order_details
-    @cart = Cart.find(session[:cart_id])
+    @cart = current_cart
     @order_details = @cart.order_details
   end
 
