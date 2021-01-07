@@ -30,7 +30,8 @@ class CheckoutsController < ApplicationController
 
       if @address.valid?
         session[:address] = address_param
-        session[:address][:user_id] = current_user.id if current_user && params[:page][:is_save]
+        # 配送先を保存する際にuser_idをパラメータに含める
+        session[:address][:user_id] = current_user.id if session[:is_save_address]
         redirect_to :checkouts_card
       else
         if current_user
