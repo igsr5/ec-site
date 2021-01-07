@@ -12,4 +12,10 @@ class User < ApplicationRecord
   def full_name
     @full_name = "#{self.family_name} #{self.given_name}"
   end
+
+  def get_payjp_customer
+    Payjp.api_key = ENV['PAYJP_API_KEY']
+    customer = Payjp::Customer.retrieve(self.customer_id)
+    customer
+  end
 end

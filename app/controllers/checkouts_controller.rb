@@ -3,6 +3,8 @@ class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
+  before_action :set_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
+  before_action :set_payjp_key, only: [:card_form_show, :confirm, :issue_receipt, :completed]
 
   def address_form_show
     @address = if session[:address]
@@ -10,8 +12,7 @@ class CheckoutsController < ApplicationController
     else
       Address.new
     end
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
+
     if current_user
       @addresses = current_user.addresses
       render :address_form_user
@@ -23,15 +24,16 @@ class CheckoutsController < ApplicationController
   def address_set_session
     session[:is_save_address] = params[:page][:is_save] if current_user
     session[:address_radio] = params[:page][:category]
-    if params[:page][:category] == 'new'
+
+    if session[:address_radio] == 'new' #配送先入力時
       @address = Address.new(address_param)
+
       if @address.valid?
         session[:address] = address_param
-        session[:address][:user_id] = current_user.id if current_user && params[:page][:is_save]
+        # 配送先を保存する際にuser_idをパラメータに含める
+        session[:address][:user_id] = current_user.id if session[:is_save_address]
         redirect_to :checkouts_card
       else
-        @cart = Cart.find(session[:cart_id])
-        @order_details = @cart.order_details
         if current_user
           @addresses = current_user.addresses
           render :address_form_user
@@ -39,18 +41,15 @@ class CheckoutsController < ApplicationController
           render :address_form
         end
       end
-    else
+    else #配送先選択（ログイン時）
       session[:address] = Address.find(params[:page][:category])
       redirect_to :checkouts_card
     end
   end
 
   def card_form_show
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
     if current_user
-      Payjp.api_key = ENV['PAYJP_API_KEY']
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = current_user.get_payjp_customer
       @customer_card = customer.cards.retrieve(customer.default_card) if customer.default_card
       render :card_form_user
     else
@@ -61,76 +60,70 @@ class CheckoutsController < ApplicationController
   def card_set_session
     session[:is_save_card] = params[:page][:is_save] if current_user
     session[:card_radio] = params[:page][:category]
+
     if params[:page][:category] == 'new'
       session[:payjp_token] = params[:payjp_token]
-      session[:is_save_card] = current_user.id if current_user && params[:page][:is_save]
     end
     redirect_to :checkouts_confirm
   end
 
   def confirm
-    Payjp.api_key = ENV['PAYJP_API_KEY']
     if session[:card_radio] == 'default'
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = current_user.get_payjp_customer
       @customer_card = customer.cards.retrieve(customer.default_card)
     else
       @customer_card = Payjp::Token.retrieve(session[:payjp_token]).card
     end
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
   end
 
   def issue_receipt
-    cart = Cart.find(session[:cart_id])
+    # Receiptに紐づける配送先
     address = if session[:address_radio] == 'new'
       Address.create!(session[:address])
     else
       Address.find(session[:address_radio])
     end
 
-    Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
-
-    if session[:is_save_card]
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+    if session[:is_save_card] # カードを保存する場合
+      customer = current_user.get_payjp_customer
       customer.cards.create(
         card: session[:payjp_token],
         default: true,
       )
       charge = Payjp::Charge.create(
         customer: customer.id,
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
-    elsif session[:card_radio] == 'default'
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+    elsif session[:card_radio] == 'default' # ユーザーが保存したカードを使う場合
+      customer = current_user.get_payjp_customer
       charge = Payjp::Charge.create(
         customer: customer.id,
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
     else
       charge = Payjp::Charge.create(
         card: session[:payjp_token],
-        amount: cart.price_tax_add_fee,
+        amount: current_cart.price_tax_add_fee,
         currency: 'jpy',
       )
     end
 
     if current_user
-      Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, user_id: current_user.id, charge_id: charge.id)
+      Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
-      receipt = Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id)
+      receipt = Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id)
       session[:receipt] = [] unless session[:receipt] 
-      session[:receipt] << receipt.id
+      session[:receipt] << receipt.id # 匿名時の注文履歴
     end
 
     session_clear
-    cart = Cart.create!(user_id: current_user.id) if current_user
+    cart = Cart.create!(user_id: current_user.id) if current_user # ユーザーのカート初期化
     redirect_to :checkouts_completion
   end
 
-  def completed
-    Payjp.api_key = ENV['PAYJP_API_KEY']
+  def completed # 注文履歴（名前が適切でない）
     if current_user
       @pagy, @receipts = pagy(current_user.receipts.order(id: 'DESC'), items: 6)
     elsif session[:receipt]
@@ -142,8 +135,7 @@ class CheckoutsController < ApplicationController
   private
 
   def is_cart
-    cart = Cart.find(session[:cart_id])
-    if cart.is_cart_empty
+    if current_cart.is_cart_empty
       redirect_to carts_path
     end
   end
@@ -158,6 +150,14 @@ class CheckoutsController < ApplicationController
     unless session[:payjp_token] || session[:card_radio] == 'default'
       redirect_to carts_path
     end
+  end
+
+  def set_order_details
+    @order_details = current_cart.order_details
+  end
+
+  def set_payjp_key
+    Payjp.api_key = ENV['PAYJP_API_KEY']
   end
 
   def address_param
