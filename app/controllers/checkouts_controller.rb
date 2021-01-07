@@ -4,6 +4,7 @@ class CheckoutsController < ApplicationController
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
   before_action :set_cart_and_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
+  before_action :set_payjp_key, only: [:card_form_show, :confirm, :issue_receipt, :completed]
 
   def address_form_show
     @address = if session[:address]
@@ -24,8 +25,9 @@ class CheckoutsController < ApplicationController
     session[:is_save_address] = params[:page][:is_save] if current_user
     session[:address_radio] = params[:page][:category]
 
-    if session[:address_radio] == 'new'
+    if session[:address_radio] == 'new' #配送先入力時
       @address = Address.new(address_param)
+
       if @address.valid?
         session[:address] = address_param
         session[:address][:user_id] = current_user.id if current_user && params[:page][:is_save]
@@ -38,7 +40,7 @@ class CheckoutsController < ApplicationController
           render :address_form
         end
       end
-    else
+    else #配送先選択（ログイン時）
       session[:address] = Address.find(params[:page][:category])
       redirect_to :checkouts_card
     end
@@ -46,7 +48,6 @@ class CheckoutsController < ApplicationController
 
   def card_form_show
     if current_user
-      Payjp.api_key = ENV['PAYJP_API_KEY']
       customer = Payjp::Customer.retrieve(current_user.customer_id)
       @customer_card = customer.cards.retrieve(customer.default_card) if customer.default_card
       render :card_form_user
@@ -66,7 +67,6 @@ class CheckoutsController < ApplicationController
   end
 
   def confirm
-    Payjp.api_key = ENV['PAYJP_API_KEY']
     if session[:card_radio] == 'default'
       customer = Payjp::Customer.retrieve(current_user.customer_id)
       @customer_card = customer.cards.retrieve(customer.default_card)
@@ -82,8 +82,6 @@ class CheckoutsController < ApplicationController
     else
       Address.find(session[:address_radio])
     end
-
-    Payjp.api_key = ENV.fetch('PAYJP_API_KEY')
 
     if session[:is_save_card]
       customer = Payjp::Customer.retrieve(current_user.customer_id)
@@ -125,7 +123,6 @@ class CheckoutsController < ApplicationController
   end
 
   def completed
-    Payjp.api_key = ENV['PAYJP_API_KEY']
     if current_user
       @pagy, @receipts = pagy(current_user.receipts.order(id: 'DESC'), items: 6)
     elsif session[:receipt]
@@ -158,6 +155,10 @@ class CheckoutsController < ApplicationController
   def set_cart_and_order_details
     @cart = Cart.find(session[:cart_id])
     @order_details = @cart.order_details
+  end
+
+  def set_payjp_key
+    Payjp.api_key = ENV['PAYJP_API_KEY']
   end
 
   def address_param
