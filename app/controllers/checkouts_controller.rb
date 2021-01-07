@@ -3,7 +3,7 @@ class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
-  before_action :set_cart_and_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
+  before_action :set_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
   before_action :set_payjp_key, only: [:card_form_show, :confirm, :issue_receipt, :completed]
 
   def address_form_show
@@ -152,9 +152,8 @@ class CheckoutsController < ApplicationController
     end
   end
 
-  def set_cart_and_order_details
-    @cart = current_cart
-    @order_details = @cart.order_details
+  def set_order_details
+    @order_details = current_cart.order_details
   end
 
   def set_payjp_key
