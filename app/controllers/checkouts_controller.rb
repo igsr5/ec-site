@@ -3,7 +3,7 @@ class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
-  before_action :set_cart_and_order_details, only: [:address_form_show, :card_form_show, :confirm]
+  before_action :set_cart_and_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
 
   def address_form_show
     @address = if session[:address]
@@ -23,15 +23,14 @@ class CheckoutsController < ApplicationController
   def address_set_session
     session[:is_save_address] = params[:page][:is_save] if current_user
     session[:address_radio] = params[:page][:category]
-    if params[:page][:category] == 'new'
+
+    if session[:address_radio] == 'new'
       @address = Address.new(address_param)
       if @address.valid?
         session[:address] = address_param
         session[:address][:user_id] = current_user.id if current_user && params[:page][:is_save]
         redirect_to :checkouts_card
       else
-        @cart = Cart.find(session[:cart_id])
-        @order_details = @cart.order_details
         if current_user
           @addresses = current_user.addresses
           render :address_form_user
