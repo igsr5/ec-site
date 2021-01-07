@@ -49,7 +49,7 @@ class CheckoutsController < ApplicationController
 
   def card_form_show
     if current_user
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = current_user.get_payjp_customer
       @customer_card = customer.cards.retrieve(customer.default_card) if customer.default_card
       render :card_form_user
     else
@@ -69,7 +69,7 @@ class CheckoutsController < ApplicationController
 
   def confirm
     if session[:card_radio] == 'default'
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = current_user.get_payjp_customer
       @customer_card = customer.cards.retrieve(customer.default_card)
     else
       @customer_card = Payjp::Token.retrieve(session[:payjp_token]).card
@@ -85,7 +85,7 @@ class CheckoutsController < ApplicationController
     end
 
     if session[:is_save_card]
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = get_payjp_customer
       customer.cards.create(
         card: session[:payjp_token],
         default: true,
@@ -96,7 +96,7 @@ class CheckoutsController < ApplicationController
         currency: 'jpy',
       )
     elsif session[:card_radio] == 'default'
-      customer = Payjp::Customer.retrieve(current_user.customer_id)
+      customer = current_user.get_payjp_customer
       charge = Payjp::Charge.create(
         customer: customer.id,
         amount: cart.price_tax_add_fee,
