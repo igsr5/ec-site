@@ -3,6 +3,7 @@ class CheckoutsController < ApplicationController
   before_action :is_cart, except: [:completed]
   before_action :has_address_session, only: [:card_form_show, :confirm]
   before_action :has_card_session, only: [:confirm]
+  before_action :set_cart_and_order_details, only: [:address_form_show, :card_form_show, :confirm]
 
   def address_form_show
     @address = if session[:address]
@@ -10,8 +11,7 @@ class CheckoutsController < ApplicationController
     else
       Address.new
     end
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
+
     if current_user
       @addresses = current_user.addresses
       render :address_form_user
@@ -46,8 +46,6 @@ class CheckoutsController < ApplicationController
   end
 
   def card_form_show
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
     if current_user
       Payjp.api_key = ENV['PAYJP_API_KEY']
       customer = Payjp::Customer.retrieve(current_user.customer_id)
@@ -76,8 +74,6 @@ class CheckoutsController < ApplicationController
     else
       @customer_card = Payjp::Token.retrieve(session[:payjp_token]).card
     end
-    @cart = Cart.find(session[:cart_id])
-    @order_details = @cart.order_details
   end
 
   def issue_receipt
@@ -158,6 +154,11 @@ class CheckoutsController < ApplicationController
     unless session[:payjp_token] || session[:card_radio] == 'default'
       redirect_to carts_path
     end
+  end
+
+  def set_cart_and_order_details
+    @cart = Cart.find(session[:cart_id])
+    @order_details = @cart.order_details
   end
 
   def address_param
