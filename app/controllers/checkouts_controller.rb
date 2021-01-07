@@ -60,9 +60,9 @@ class CheckoutsController < ApplicationController
   def card_set_session
     session[:is_save_card] = params[:page][:is_save] if current_user
     session[:card_radio] = params[:page][:category]
+
     if params[:page][:category] == 'new'
       session[:payjp_token] = params[:payjp_token]
-      session[:is_save_card] = current_user.id if current_user && params[:page][:is_save]
     end
     redirect_to :checkouts_confirm
   end
@@ -78,14 +78,16 @@ class CheckoutsController < ApplicationController
 
   def issue_receipt
     cart = Cart.find(session[:cart_id])
+
+    # Receiptに紐づける配送先
     address = if session[:address_radio] == 'new'
       Address.create!(session[:address])
     else
       Address.find(session[:address_radio])
     end
 
-    if session[:is_save_card]
-      customer = get_payjp_customer
+    if session[:is_save_card] # カードを保存する場合
+      customer = current_user.get_payjp_customer
       customer.cards.create(
         card: session[:payjp_token],
         default: true,
@@ -95,7 +97,7 @@ class CheckoutsController < ApplicationController
         amount: cart.price_tax_add_fee,
         currency: 'jpy',
       )
-    elsif session[:card_radio] == 'default'
+    elsif session[:card_radio] == 'default' # ユーザーが保存したカードを使う場合
       customer = current_user.get_payjp_customer
       charge = Payjp::Charge.create(
         customer: customer.id,
@@ -111,15 +113,15 @@ class CheckoutsController < ApplicationController
     end
 
     if current_user
-      Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, user_id: current_user.id, charge_id: charge.id)
+      Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
       receipt = Receipt.create!(cart_id: cart.id, address_id: address.id, total_price: cart.price_add_fee, total_price_tax: cart.price_tax_add_fee, charge_id: charge.id)
       session[:receipt] = [] unless session[:receipt] 
-      session[:receipt] << receipt.id
+      session[:receipt] << receipt.id # 匿名時の注文履歴
     end
 
     session_clear
-    cart = Cart.create!(user_id: current_user.id) if current_user
+    cart = Cart.create!(user_id: current_user.id) if current_user # ユーザーのカート初期化
     redirect_to :checkouts_completion
   end
 
