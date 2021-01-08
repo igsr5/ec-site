@@ -18,12 +18,7 @@ class Cart < ApplicationRecord
 
   def price_sum
     order_details = self.order_details
-    price_sum = 0
-    order_details.each do |order_detail|
-      price = order_detail.product.price * order_detail.product_count
-      price_sum += price
-    end
-    price_sum
+    price_sum = order_details.to_a.sum { |o| o.product.price * o.product_count }
   end
 
   def price_sum_tax
