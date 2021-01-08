@@ -136,7 +136,7 @@ class CheckoutsController < ApplicationController
 
   def is_cart
     if current_cart.empty?
-      redirect_to carts_path
+      redirect_to cart_path
     end
   end
 
@@ -148,7 +148,7 @@ class CheckoutsController < ApplicationController
 
   def has_card_session
     unless session[:payjp_token] || session[:card_radio] == 'default'
-      redirect_to carts_path
+      redirect_to cart_path
     end
   end
 

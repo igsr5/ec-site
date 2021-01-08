@@ -5,7 +5,7 @@ header.nav
                 = image_tag  "nike_logo.png",width:"80px"
             ul.col-3.offset-7.row
                 li.col-2
-                    = link_to carts_path(session[:cart_id])
+                    = link_to cart_path(session[:cart_id])
                         = icon('fas fa-2x', 'shopping-bag')
                 li.col-2.offset-1
                     = link_to checkouts_completion_path
