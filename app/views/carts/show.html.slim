@@ -15,8 +15,8 @@
               p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
 
             = form_with model: order_detail, local:true do |f|
-              = f.hidden_field :product_id,:value =>order_detail.product_id
-              = f.hidden_field :cart_id,:value =>session[:cart_id]
+              = f.hidden_field :product_id,value: order_detail.product_id
+              = f.hidden_field :cart_id,value: session[:cart_id]
               .row.mt-4.ml-1
                 = f.number_field :product_count,min: 1,value: order_detail.product_count,class: "form-control mr-2 order-count"
                 = f.submit '変更',class: "btn btn-dark order-submit"
