@@ -19,9 +19,9 @@
           .address.col-2
             p お届け先
             article
-              span.mr-1.link.text = receipt.address.get_full_name
+              span.mr-1.link.text = receipt.address.full_name
               .fukidashi
-                p.font-weight-bold = receipt.address.get_full_name
+                p.font-weight-bold = receipt.address.full_name
                 p.postal_code = receipt.address.postal_code
                 p = "#{receipt.address.prefecture} #{receipt.address.city}#{receipt.address.address1}"
                 p = receipt.address.address2
