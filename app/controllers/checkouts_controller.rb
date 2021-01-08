@@ -135,7 +135,7 @@ class CheckoutsController < ApplicationController
   private
 
   def is_cart
-    if current_cart.is_cart_empty
+    if current_cart.empty?
       redirect_to carts_path
     end
   end

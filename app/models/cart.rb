@@ -3,7 +3,7 @@ class Cart < ApplicationRecord
   belongs_to :user, optional: true
   has_one :receipt
 
-  def is_cart_empty
+  def empty?
     order_count = self.order_details.count
     order_count.zero?
   end
