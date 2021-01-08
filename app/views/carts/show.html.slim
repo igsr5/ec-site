@@ -25,7 +25,7 @@
       h2.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
         p 小計
-        p = "¥ #{@cart.price_sum_tax()}"
+        p = "¥ #{@cart.price_add_comma()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
         - if @cart.empty?
@@ -37,5 +37,5 @@
         - if @cart.empty?
           p ¥ 0
         - else
-          p ="¥ #{@cart.price_tax_add_fee()}"
+          p ="¥ #{@cart.price_all_add_comma()}"
       = link_to 'ご購入の手続き',checkouts_address_path,class: 'btn btn-info mt-3'
