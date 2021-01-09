@@ -17,7 +17,7 @@ class Cart < ApplicationRecord
   end
 
   def price_sum
-    order_details = self.order_details
+    order_details = self.order_details.preload(:product)
     price_sum = order_details.to_a.sum { |o| o.product.price * o.product_count }
   end
 
