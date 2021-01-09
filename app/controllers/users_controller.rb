@@ -45,9 +45,9 @@ class UsersController < ApplicationController
     if @user&.authenticate(params[:password])
       current_user.destroy!
       session.clear
-      redirect_to :root
+      redirect_to :root, flash: {success: 'ユーザーの退会が完了しました。'}
     else
-      @error_msg = 'パスワードが違います。' if params[:password]
+      flash.now[:danger] = 'パスワードが違います。' if params[:password]
       render :delete_confirm
     end
   end
