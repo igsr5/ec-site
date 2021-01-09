@@ -16,6 +16,5 @@ class User < ApplicationRecord
   def get_payjp_customer
     Payjp.api_key = ENV['PAYJP_API_KEY']
     customer = Payjp::Customer.retrieve(self.customer_id)
-    customer
   end
 end

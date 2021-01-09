@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def create
     Payjp.api_key = ENV['PAYJP_API_KEY']
     @user = User.new(user_params)
-    customer = current_user.get_payjp_customer
+    customer = Payjp::Customer.create
     @user.customer_id = customer.id
     if @user.save
       redirect_to :login if @user.valid?
@@ -42,16 +42,12 @@ class UsersController < ApplicationController
 
   def destroy
     @user = current_user
-    if params[:password]
-      if @user&.authenticate(params[:password])
-        current_user.destroy!
-        session.clear
-        redirect_to :root
-      else
-        @error_msg = 'パスワードが違います。'
-        render :delete_confirm
-      end
+    if @user&.authenticate(params[:password])
+      current_user.destroy!
+      session.clear
+      redirect_to :root
     else
+      @error_msg = 'パスワードが違います。' if params[:password]
       render :delete_confirm
     end
   end
