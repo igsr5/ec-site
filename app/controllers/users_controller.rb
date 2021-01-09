@@ -32,10 +32,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.family_name = params[:user][:family_name]
-    @user.given_name = params[:user][:given_name]
-    @user.email = params[:user][:email]
-    if @user.save(context: :hoge)
+    @user.assign_attributes(user_edit_params)
+    if @user.save(context: :no_password)
       redirect_to :users
     else
       render :edit
@@ -81,6 +79,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:family_name, :given_name, :email, :password, :password_confirmation)
+  end
+
+  def user_edit_params
+    params.require(:user).permit(:family_name, :given_name, :email)
   end
 
   def has_user_session

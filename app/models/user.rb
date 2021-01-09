@@ -6,8 +6,8 @@ class User < ApplicationRecord
   validates :family_name, presence: true
   validates :given_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :password, presence: true, unless: -> { validation_context == :hoge }
-  validates :password_confirmation, presence: true, unless: -> { validation_context == :hoge }
+  validates :password, presence: true, unless: -> { validation_context == :no_password }
+  validates :password_confirmation, presence: true, unless: -> { validation_context == :no_password }
 
   def full_name
     @full_name = "#{self.family_name} #{self.given_name}"
