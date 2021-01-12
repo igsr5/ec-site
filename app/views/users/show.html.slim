@@ -18,22 +18,22 @@
       h4.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
         p 小計
-        p = "¥ #{current_cart.price_sum_tax()}"
+        p = "¥ #{current_cart.price_add_comma()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
-        - if @order_details.count.zero?
+        - if current_cart.empty?
           p ¥ 0
         - else
           p ¥ 550 
       .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
         p 合計
-        - if @order_details.count.zero?
+        - if current_cart.empty?
           p ¥ 0
         - else
-          p ="¥ #{current_cart.price_tax_add_fee()}"
+          p ="¥ #{current_cart.price_all_add_comma()}"
       = link_to 'ご購入の手続き',checkouts_address_path,class: 'btn btn-info mt-3'
       h4.mt-4.mb-4 ご注文商品
-      - if @order_details.count.zero?
+      - if current_cart.empty?
         p カートに商品はありません。 
       - @order_details.each do |order_detail|
         .row.mb-3

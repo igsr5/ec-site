@@ -1,9 +1,7 @@
 class AddressesController < ApplicationController
   def create
     @address = Address.new(address_param)
-    unless @address.save
-      render :errors
-    end
+    render :errors unless @address.save
   end
 
   def update

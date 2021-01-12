@@ -14,4 +14,8 @@ html
       = render partial: "layouts/header_user"
     - else
       = render partial: "layouts/header"
+
+    .notifications
+      - flash.each do |message_type, message|
+        = content_tag(:div, message, class: "alert alert-#{message_type}")
     = yield

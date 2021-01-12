@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # order_details
   resources :order_details, only: [:create, :update, :destroy]
   # carts
-  resource :carts, only: [:show]
+  resource :cart, only: [:show]
   # admin
   get 'login', to: 'admins#new'
   post 'login', to: 'admins#create'

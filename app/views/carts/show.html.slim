@@ -3,11 +3,11 @@
   .row
     .col-6.offset-1
       h2.mb-3 カート
-      - if @cart.is_cart_empty
+      - if @cart.empty?
         p.cart_zero カートに商品はありません。
       - @order_details.each do |order_detail|
         .row.pb-4.border-bottom.order-detail-item
-          .col-3.mr-4
+          .col-3.mr-2
             img src= -order_detail.product.image
           .col-8
             .row.justify-content-between
@@ -15,8 +15,8 @@
               p.pt-1 = "¥ #{order_detail.product.price_add_tax_comma()}"
 
             = form_with model: order_detail, local:true do |f|
-              = f.hidden_field :product_id,:value =>order_detail.product_id
-              = f.hidden_field :cart_id,:value =>session[:cart_id]
+              = f.hidden_field :product_id,value: order_detail.product_id
+              = f.hidden_field :cart_id,value: current_cart.id
               .row.mt-4.ml-1
                 = f.number_field :product_count,min: 1,value: order_detail.product_count,class: "form-control mr-2 order-count"
                 = f.submit '変更',class: "btn btn-dark order-submit"
@@ -25,17 +25,17 @@
       h2.mb-4 ご注文金額
       .row.justify-content-between.mb-2.ml-1
         p 小計
-        p = "¥ #{@cart.price_sum_tax()}"
+        p = "¥ #{@cart.price_add_comma()}"
       .row.justify-content-between.mb-3.ml-1
         p 配送手数料
-        - if @cart.is_cart_empty
+        - if @cart.empty?
           p ¥ 0
         - else
           p ¥ 550
       .row.justify-content-between.ml-1.pt-2.pb-2.border-top.border-bottom
         p 合計
-        - if @cart.is_cart_empty
+        - if @cart.empty?
           p ¥ 0
         - else
-          p ="¥ #{@cart.price_tax_add_fee()}"
+          p ="¥ #{@cart.price_all_add_comma()}"
       = link_to 'ご購入の手続き',checkouts_address_path,class: 'btn btn-info mt-3'

@@ -11,7 +11,7 @@
             p = receipt.created_at.strftime('%Y年%m月%d日')
           .col-2.mr-1
             p 合計
-            p = "¥ #{receipt.cart.price_add_comma()}円"
+            p = "¥ #{receipt.cart.price_all_add_comma()}円"
           .col-2.mr-2
             p お支払情報 
             p = "************#{charge.card.last4}"
@@ -19,9 +19,9 @@
           .address.col-2
             p お届け先
             article
-              span.mr-1.link.text = receipt.address.get_full_name
+              span.mr-1.link.text = receipt.address.full_name
               .fukidashi
-                p.font-weight-bold = receipt.address.get_full_name
+                p.font-weight-bold = receipt.address.full_name
                 p.postal_code = receipt.address.postal_code
                 p = "#{receipt.address.prefecture} #{receipt.address.city}#{receipt.address.address1}"
                 p = receipt.address.address2

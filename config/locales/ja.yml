@@ -13,7 +13,7 @@ ja:
         given_name: 名
         postal_code: 郵便番号
         prefecture: 都道府県
-        city: 市町村
+        city: 市区町村
         address1: 住所１
         address2: 住所２
         email: メールアドレス

@@ -5,6 +5,7 @@ class CheckoutsController < ApplicationController
   before_action :has_card_session, only: [:confirm]
   before_action :set_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
   before_action :set_payjp_key, only: [:card_form_show, :confirm, :issue_receipt, :completed]
+  before_action :summarize_order_details, only: [:issue_receipt]
 
   def address_form_show
     @address = if session[:address]
@@ -110,6 +111,7 @@ class CheckoutsController < ApplicationController
       )
     end
 
+    
     if current_user
       Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
@@ -135,8 +137,8 @@ class CheckoutsController < ApplicationController
   private
 
   def is_cart
-    if current_cart.is_cart_empty
-      redirect_to carts_path
+    if current_cart.empty?
+      redirect_to cart_path
     end
   end
 
@@ -148,7 +150,7 @@ class CheckoutsController < ApplicationController
 
   def has_card_session
     unless session[:payjp_token] || session[:card_radio] == 'default'
-      redirect_to carts_path
+      redirect_to cart_path
     end
   end
 
@@ -158,6 +160,21 @@ class CheckoutsController < ApplicationController
 
   def set_payjp_key
     Payjp.api_key = ENV['PAYJP_API_KEY']
+  end
+
+  def summarize_order_details
+    order_details = current_cart.order_details
+    order_details.update(cart_id: nil)
+    order_details.each do |order|
+      # ここで処理が重くなってる気がするからどうにかしたい
+      order_detail = current_cart.order_details.find_by(product_id: order.product_id)
+      if order_detail.nil?
+        order.update(cart_id: current_cart.id)
+      else
+        order_detail.product_count += order.product_count
+        order_detail.save
+      end
+    end
   end
 
   def address_param

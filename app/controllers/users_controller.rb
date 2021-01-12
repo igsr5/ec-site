@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def create
     Payjp.api_key = ENV['PAYJP_API_KEY']
     @user = User.new(user_params)
-    customer = current_user.get_payjp_customer
+    customer = Payjp::Customer.create
     @user.customer_id = customer.id
     if @user.save
       redirect_to :login if @user.valid?
@@ -32,10 +32,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    @user.family_name = params[:user][:family_name]
-    @user.given_name = params[:user][:given_name]
-    @user.email = params[:user][:email]
-    if @user.save(context: :hoge)
+    @user.assign_attributes(user_edit_params)
+    if @user.save(context: :no_password)
       redirect_to :users
     else
       render :edit
@@ -44,16 +42,12 @@ class UsersController < ApplicationController
 
   def destroy
     @user = current_user
-    if params[:password]
-      if @user&.authenticate(params[:password])
-        current_user.destroy!
-        session.clear
-        redirect_to :root
-      else
-        @error_msg = 'パスワードが違います。'
-        render :delete_confirm
-      end
+    if @user&.authenticate(params[:password])
+      current_user.destroy!
+      session.clear
+      redirect_to :root, flash: {success: 'ユーザーの退会が完了しました。'}
     else
+      flash.now[:danger] = 'パスワードが違います。' if params[:password]
       render :delete_confirm
     end
   end
@@ -81,6 +75,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:family_name, :given_name, :email, :password, :password_confirmation)
+  end
+
+  def user_edit_params
+    params.require(:user).permit(:family_name, :given_name, :email)
   end
 
   def has_user_session
