@@ -5,6 +5,7 @@ class CheckoutsController < ApplicationController
   before_action :has_card_session, only: [:confirm]
   before_action :set_order_details, only: [:address_form_show, :address_set_session, :card_form_show, :confirm]
   before_action :set_payjp_key, only: [:card_form_show, :confirm, :issue_receipt, :completed]
+  before_action :summarize_order_details, only: [:issue_receipt]
 
   def address_form_show
     @address = if session[:address]
@@ -84,19 +85,6 @@ class CheckoutsController < ApplicationController
       Address.find(session[:address_radio])
     end
 
-    order_details = current_cart.order_details
-    order_details.update(cart_id: nil)
-    order_details.each do |order|
-      order_detail = current_cart.order_details.find_by(product_id: order.product_id)
-      if order_detail.nil?
-        order.update(cart_id: current_cart.id)
-      else
-        order_detail.product_count += order.product_count
-        order_detail.save
-      end
-    end
-
-
     if session[:is_save_card] # カードを保存する場合
       customer = current_user.get_payjp_customer
       customer.cards.create(
@@ -174,6 +162,19 @@ class CheckoutsController < ApplicationController
     Payjp.api_key = ENV['PAYJP_API_KEY']
   end
 
+  def summarize_order_details
+    order_details = current_cart.order_details
+    order_details.update(cart_id: nil)
+    order_details.each do |order|
+      order_detail = current_cart.order_details.find_by(product_id: order.product_id)
+      if order_detail.nil?
+        order.update(cart_id: current_cart.id)
+      else
+        order_detail.product_count += order.product_count
+        order_detail.save
+      end
+    end
+ end
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
