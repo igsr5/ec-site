@@ -84,6 +84,19 @@ class CheckoutsController < ApplicationController
       Address.find(session[:address_radio])
     end
 
+    order_details = current_cart.order_details
+    order_details.update(cart_id: nil)
+    order_details.each do |order|
+      order_detail = current_cart.order_details.find_by(product_id: order.product_id)
+      if order_detail.nil?
+        order.update(cart_id: current_cart.id)
+      else
+        order_detail.product_count += order.product_count
+        order_detail.save
+      end
+    end
+
+
     if session[:is_save_card] # カードを保存する場合
       customer = current_user.get_payjp_customer
       customer.cards.create(
@@ -110,6 +123,7 @@ class CheckoutsController < ApplicationController
       )
     end
 
+    
     if current_user
       Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
