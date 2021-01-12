@@ -166,6 +166,7 @@ class CheckoutsController < ApplicationController
     order_details = current_cart.order_details
     order_details.update(cart_id: nil)
     order_details.each do |order|
+      # ここで処理が重くなってる気がするからどうにかしたい
       order_detail = current_cart.order_details.find_by(product_id: order.product_id)
       if order_detail.nil?
         order.update(cart_id: current_cart.id)
@@ -174,7 +175,8 @@ class CheckoutsController < ApplicationController
         order_detail.save
       end
     end
- end
+  end
+
   def address_param
     params.require(:address).permit(:postal_code, :prefecture, :city, :address1, :address2, :family_name, :given_name, :email)
   end
