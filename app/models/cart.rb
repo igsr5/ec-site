@@ -35,4 +35,8 @@ class Cart < ApplicationRecord
   def price_tax_add_fee
     price_add_fee = self.price_sum_tax + 550
   end
+  
+  def pay_with_card!(user: nil, pajp_token: nil)
+
+  end
 end

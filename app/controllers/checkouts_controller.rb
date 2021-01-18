@@ -81,33 +81,25 @@ class CheckoutsController < ApplicationController
       Address.find(session[:address_radio])
     end
 
+    options = {
+      amount: current_cart.price_tax_add_fee,
+      currency: "jqy"
+    }
     if session[:is_save_card] # カードを保存する場合
       customer = current_user.get_payjp_customer
       customer.cards.create(
         card: session[:payjp_token],
         default: true,
       )
-      charge = Payjp::Charge.create(
-        customer: customer.id,
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
+      options[:customer] = customer.id
     elsif session[:card_radio] == 'default' # ユーザーが保存したカードを使う場合
       customer = current_user.get_payjp_customer
-      charge = Payjp::Charge.create(
-        customer: customer.id,
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
+      options[:customer] = customer.id
     else
-      charge = Payjp::Charge.create(
-        card: session[:payjp_token],
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
+      options[:card] = session[:payjp_token]
     end
-
-    
+    charge = Payjp::Charge.create(options)
+   
     if current_user
       Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else
