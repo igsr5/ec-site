@@ -8,11 +8,7 @@ class CheckoutsController < ApplicationController
   before_action :summarize_order_details, only: [:issue_receipt]
 
   def address_form_show
-    @address = if session[:address]
-      Address.new(session[:address])
-    else
-      Address.new
-    end
+    @address = Address.new(session[:address]) || Address.new()
 
     if current_user
       @addresses = current_user.addresses
@@ -85,33 +81,8 @@ class CheckoutsController < ApplicationController
       Address.find(session[:address_radio])
     end
 
-    if session[:is_save_card] # カードを保存する場合
-      customer = current_user.get_payjp_customer
-      customer.cards.create(
-        card: session[:payjp_token],
-        default: true,
-      )
-      charge = Payjp::Charge.create(
-        customer: customer.id,
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
-    elsif session[:card_radio] == 'default' # ユーザーが保存したカードを使う場合
-      customer = current_user.get_payjp_customer
-      charge = Payjp::Charge.create(
-        customer: customer.id,
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
-    else
-      charge = Payjp::Charge.create(
-        card: session[:payjp_token],
-        amount: current_cart.price_tax_add_fee,
-        currency: 'jpy',
-      )
-    end
-
-    
+    charge = current_cart.pay_with_card!(current_user&.get_payjp_customer, session[:payjp_token], session[:is_save_card])
+       
     if current_user
       Receipt.create!(cart_id: current_cart.id, address_id: address.id, total_price: current_cart.price_add_fee, total_price_tax: current_cart.price_tax_add_fee, charge_id: charge.id, user_id: current_user.id)
     else

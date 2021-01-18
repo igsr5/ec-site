@@ -35,4 +35,23 @@ class Cart < ApplicationRecord
   def price_tax_add_fee
     price_add_fee = self.price_sum_tax + 550
   end
+  
+  def pay_with_card!(customer = nil, payjp_token = nil, save_card = false)
+    options = {
+      amount: self.price_tax_add_fee,
+      currency: "jpy"
+    }
+    if save_card
+      customer.cards.create(
+        card: payjp_token,
+        default: true,
+      )
+      options[:customer] = customer.id
+    elsif payjp_token
+      options[:card] = payjp_token
+    else
+      options[:customer] = customer.id
+    end
+    Payjp::Charge.create(options)
+  end
 end
