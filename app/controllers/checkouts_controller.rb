@@ -8,11 +8,7 @@ class CheckoutsController < ApplicationController
   before_action :summarize_order_details, only: [:issue_receipt]
 
   def address_form_show
-    @address = if session[:address]
-      Address.new(session[:address])
-    else
-      Address.new
-    end
+    @address = Address.new(session[:address]) || Address.new()
 
     if current_user
       @addresses = current_user.addresses
